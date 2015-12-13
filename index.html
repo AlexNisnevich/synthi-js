@@ -4,6 +4,10 @@
   <script src="lib/flocking/dist/flocking-all.js"></script>
   <script src="lib/jQuery-Knob/dist/jquery.knob.min.js"></script>
 
+  <script src="lib/knobKnob/transform.js"></script>
+  <script src="lib/knobKnob/knobKnob.jquery.js"></script>
+  <link href="lib/knobKnob/knobKnob.css" rel="stylesheet">
+
   <script>
     function Float32Concat(first, second) {
       var firstLength = first.length,
@@ -118,12 +122,21 @@
     environment.start();
 
     $(function () {
-      $(".dialOsc1Freq").knob({
-        'change': function (v) { 
-          pin1sin.set("pin1sin.freq", v); 
-          pin1ramp.set("pin1ramp.freq", v); 
+      $(".dialOsc1Freq").knobKnob({
+        value: 0,
+        turn: function (ratio) { 
+          console.log(ratio + ": " + (ratio * 9600 + 40));
+          pin1sin.set("pin1sin.freq", ratio * 9600 + 40); 
+          pin1ramp.set("pin1ramp.freq", ratio * 9600 + 40); 
         }
       });
+
+    //  $(".dialOsc1Freq").knob({
+    //    'change': function (v) { 
+    //      pin1sin.set("pin1sin.freq", v); 
+    //      pin1ramp.set("pin1ramp.freq", v); 
+    //    }
+    //  });
 
       $(".dialOsc1Shape").knob({
         'change': function (v) { pin1sin.set("pin1sin.table", tables.sin(v)); }
@@ -163,7 +176,8 @@
 </head>
 <body>
   <div id="oscillator1">
-    <input type="text" value="440" class="dialOsc1Freq" data-min="40" data-max="10000">
+    <div class="dialOsc1Freq">
+    <!-- <input type="text" value="440" class="dialOsc1Freq" data-min="40" data-max="10000" data-cursor=true> -->
     <input type="text" value="5" class="dialOsc1Shape" data-min="0" data-max="10">
     <input type="text" value="1" class="dialOsc1SinLevel" data-min="0" data-max="10">
     <input type="text" value="1" class="dialOsc1RampLevel" data-min="0" data-max="10">
