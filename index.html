@@ -24,18 +24,18 @@
       }
     }
 
-    var pin1 = flock.synth({
+    var pin1sin = flock.synth({
       synthDef: {
-        id: "pin1",
+        id: "pin1sin",
         ugen: "flock.ugen.sinOsc",
         freq: 440,
         mul: 0.1
       }
     });
 
-    var pin2 = flock.synth({
+    var pin1ramp = flock.synth({
       synthDef: {
-        id: "pin2",
+        id: "pin1ramp",
         ugen: "flock.ugen.osc",
         table: tables.ramp,
         freq: 440,
@@ -46,31 +46,79 @@
       }
     });
 
+    var pin2square = flock.synth({
+      synthDef: {
+        id: "pin2square",
+        ugen: "flock.ugen.squareOsc",
+        freq: 440,
+        mul: 0.1
+      }
+    });
+
+    var pin2triangle = flock.synth({
+      synthDef: {
+        id: "pin2triangle",
+        ugen: "flock.ugen.triOsc",
+        freq: 440,
+        mul: 0.1
+      }
+    });
+
     environment.start();
 
     $(function () {
       $(".dialOsc1Freq").knob({
-        'change': function (v) { pin1.set("pin1.freq", v); pin2.set("pin2.freq", v); }
+        'change': function (v) { 
+          pin1sin.set("pin1sin.freq", v); 
+          pin1ramp.set("pin1ramp.freq", v); 
+        }
       });
 
       $(".dialOsc1Shape").knob({
-        'change': function (v) { pin1.set("pin1.table", tables.sin(v)); }
+        'change': function (v) { pin1sin.set("pin1sin.table", tables.sin(v)); }
       });
 
       $(".dialOsc1SinLevel").knob({
-        'change': function (v) { pin1.set("pin1.mul", v / 10); }
+        'change': function (v) { pin1sin.set("pin1sin.mul", v / 10); }
       });
 
       $(".dialOsc1RampLevel").knob({
-        'change': function (v) { pin2.set("pin2.mul", v / 10); }
+        'change': function (v) { pin1ramp.set("pin1ramp.mul", v / 10); }
+      });
+
+      $(".dialOsc2Freq").knob({
+        'change': function (v) { 
+          pin2square.set("pin2square.freq", v); 
+          pin2triangle.set("pin2triangle.freq", v); 
+        }
+      });
+
+      $(".dialOsc2Shape").knob({
+        'change': function (v) { }
+      });
+
+      $(".dialOsc2SquareLevel").knob({
+        'change': function (v) { pin2square.set("pin2square.mul", v / 10); }
+      });
+
+      $(".dialOsc2TriangleLevel").knob({
+        'change': function (v) { pin2triangle.set("pin2triangle.mul", v / 10); }
       });
     })
   </script>
 </head>
 <body>
-  <input type="text" value="440" class="dialOsc1Freq" data-min="40" data-max="10000">
-  <input type="text" value="5" class="dialOsc1Shape" data-min="0" data-max="10">
-  <input type="text" value="1" class="dialOsc1SinLevel" data-min="0" data-max="10">
-  <input type="text" value="1" class="dialOsc1RampLevel" data-min="0" data-max="10">
+  <div id="oscillator1">
+    <input type="text" value="440" class="dialOsc1Freq" data-min="40" data-max="10000">
+    <input type="text" value="5" class="dialOsc1Shape" data-min="0" data-max="10">
+    <input type="text" value="1" class="dialOsc1SinLevel" data-min="0" data-max="10">
+    <input type="text" value="1" class="dialOsc1RampLevel" data-min="0" data-max="10">
+  </div>
+  <div id="oscillator1">
+    <input type="text" value="440" class="dialOsc2Freq" data-min="40" data-max="10000">
+    <input type="text" value="5" class="dialOsc2Shape" data-min="0" data-max="10">
+    <input type="text" value="1" class="dialOsc2SquareLevel" data-min="0" data-max="10">
+    <input type="text" value="1" class="dialOsc2TriangleLevel" data-min="0" data-max="10">
+  </div>
 </body>
 </html>
