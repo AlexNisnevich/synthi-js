@@ -59,6 +59,15 @@
         </tr>
         <tr>
           <td>oscillator 2</td>
+          <td><input data-in="4" data-out="A" type="checkbox"></td>
+          <td><input data-in="4" data-out="B" type="checkbox"></td>
+          <td><input data-in="4" data-out="C" type="checkbox"></td>
+          <td><input data-in="4" data-out="D" type="checkbox"></td>
+          <td><input data-in="4" data-out="I" type="checkbox"></td>
+          <td><input data-in="4" data-out="J" type="checkbox"></td>
+        </tr>
+        <tr>
+          <td>oscillator 3</td>
           <td><input data-in="5" data-out="A" type="checkbox"></td>
           <td><input data-in="5" data-out="B" type="checkbox"></td>
           <td><input data-in="5" data-out="C" type="checkbox"></td>
@@ -67,22 +76,13 @@
           <td><input data-in="5" data-out="J" type="checkbox"></td>
         </tr>
         <tr>
-          <td>oscillator 3</td>
-          <td><input data-in="7" data-out="A" type="checkbox"></td>
-          <td><input data-in="7" data-out="B" type="checkbox"></td>
-          <td><input data-in="7" data-out="C" type="checkbox"></td>
-          <td><input data-in="7" data-out="D" type="checkbox"></td>
-          <td><input data-in="7" data-out="I" type="checkbox"></td>
-          <td><input data-in="7" data-out="J" type="checkbox"></td>
-        </tr>
-        <tr>
           <td>env</td>
-          <td><input data-in="13" data-out="A" type="checkbox"></td>
-          <td><input data-in="13" data-out="B" type="checkbox"></td>
-          <td><input data-in="13" data-out="C" type="checkbox"></td>
-          <td><input data-in="13" data-out="D" type="checkbox"></td>
-          <td><input data-in="13" data-out="I" type="checkbox"></td>
-          <td><input data-in="13" data-out="J" type="checkbox"></td>
+          <td><input data-in="12" data-out="A" type="checkbox"></td>
+          <td><input data-in="12" data-out="B" type="checkbox"></td>
+          <td><input data-in="12" data-out="C" type="checkbox"></td>
+          <td><input data-in="12" data-out="D" type="checkbox"></td>
+          <td><input data-in="12" data-out="I" type="checkbox"></td>
+          <td><input data-in="12" data-out="J" type="checkbox"></td>
         </tr>
       </table>
     </div>
@@ -162,10 +162,18 @@
     // This restriction reduces our capabilities a lot! This is why these synths are defined in 
     // the order that they are. (TODO: Figure out how to get around this ...) 
 
+    var pins = {
+      0: flock.enviro.shared.acquireNextBus("interconnect"),
+      3: flock.enviro.shared.acquireNextBus("interconnect"),
+      4: flock.enviro.shared.acquireNextBus("interconnect"),
+      5: flock.enviro.shared.acquireNextBus("interconnect"),
+      12: flock.enviro.shared.acquireNextBus("interconnect")
+    }
+
     var pin5square = flock.synth({
       synthDef: {
         ugen: "flock.ugen.out",
-        bus: 7,
+        bus: pins[5],
         sources: {
           id: "pin5square",
           ugen: "flock.ugen.squareOsc",
@@ -178,7 +186,7 @@
     var pin5triangle = flock.synth({
       synthDef: {
         ugen: "flock.ugen.out",
-        bus: 7,
+        bus: pins[5],
         sources: {
           id: "pin5triangle",
           ugen: "flock.ugen.triOsc",
@@ -191,7 +199,7 @@
     var pin3sin = flock.synth({
       synthDef: {
         ugen: "flock.ugen.out",
-        bus: 3,
+        bus: pins[3],
         sources: {
           id: "pin3sin",
           ugen: "flock.ugen.sinOsc",
@@ -213,7 +221,7 @@
     var pin3ramp = flock.synth({
       synthDef: {
         ugen: "flock.ugen.out",
-        bus: 3,
+        bus: pins[3],
         sources: {
           id: "pin3ramp",
           ugen: "flock.ugen.osc",
@@ -239,7 +247,7 @@
     var pin4square = flock.synth({
       synthDef: {
         ugen: "flock.ugen.out",
-        bus: 5,
+        bus: pins[4],
         sources: {
           id: "pin4square",
           ugen: "flock.ugen.squareOsc",
@@ -261,7 +269,7 @@
     var pin4triangle = flock.synth({
       synthDef: {
         ugen: "flock.ugen.out",
-        bus: 5,
+        bus: pins[4],
         sources: {
           id: "pin4triangle",
           ugen: "flock.ugen.triOsc",
@@ -283,7 +291,7 @@
     var pin12 = flock.synth({
       synthDef: {
         ugen: "flock.ugen.out",
-        bus: 13,
+        bus: pins[12],
         sources: {
           id: "envelopeInput",
           ugen: "flock.ugen.in",
@@ -437,17 +445,17 @@
       });
 
       $("#patches input").change(function () {
-        output.set("left.bus", $("#patches [data-out=A]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
-        scope.set("input.bus", $("#patches [data-out=B]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
-        output.set("right.bus", $("#patches [data-out=C]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
+        output.set("left.bus", $("#patches [data-out=A]:checked").map(function (i, x) {return pins[parseInt($(this).attr("data-in"))]; }));
+        scope.set("input.bus", $("#patches [data-out=B]:checked").map(function (i, x) {return pins[parseInt($(this).attr("data-in"))]; }));
+        output.set("right.bus", $("#patches [data-out=C]:checked").map(function (i, x) {return pins[parseInt($(this).attr("data-in"))]; }));
         
-        pin12.set("envelopeInput.bus", $("#patches [data-out=D]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
+        pin12.set("envelopeInput.bus", $("#patches [data-out=D]:checked").map(function (i, x) {return pins[parseInt($(this).attr("data-in"))]; }));
       
-        pin3sin.set("pin3sin.freq.mul.bus", $("#patches [data-out=I]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
-        pin3ramp.set("pin3ramp.freq.mul.bus", $("#patches [data-out=I]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
+        pin3sin.set("pin3sin.freq.mul.bus", $("#patches [data-out=I]:checked").map(function (i, x) {return pins[parseInt($(this).attr("data-in"))]; }));
+        pin3ramp.set("pin3ramp.freq.mul.bus", $("#patches [data-out=I]:checked").map(function (i, x) {return pins[parseInt($(this).attr("data-in"))]; }));
       
-        pin4triangle.set("pin4triangle.freq.mul.bus", $("#patches [data-out=J]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
-        pin4square.set("pin4square.freq.mul.bus", $("#patches [data-out=J]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
+        pin4triangle.set("pin4triangle.freq.mul.bus", $("#patches [data-out=J]:checked").map(function (i, x) {return pins[parseInt($(this).attr("data-in"))]; }));
+        pin4square.set("pin4square.freq.mul.bus", $("#patches [data-out=J]:checked").map(function (i, x) {return pins[parseInt($(this).attr("data-in"))]; }));
       });
     })
   </script>
