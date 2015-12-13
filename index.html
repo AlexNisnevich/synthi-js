@@ -8,16 +8,25 @@
   <div>
     <div style="float: left;">
       <div id="oscillator1">
-        <input type="text" value="440" class="dialOsc1Freq" data-min="40" data-max="10000">
+        OSCILLATOR 1<br>
+        <input type="text" value="440" class="dialOsc1Freq" data-min="1" data-max="10000">
         <input type="text" value="5" class="dialOsc1Shape" data-min="0" data-max="10">
         <input type="text" value="1" class="dialOsc1SinLevel" data-min="0" data-max="10">
-        <input type="text" value="1" class="dialOsc1RampLevel" data-min="0" data-max="10">
+        <input type="text" value="0" class="dialOsc1RampLevel" data-min="0" data-max="10">
       </div>
-      <div id="oscillator1">
-        <input type="text" value="440" class="dialOsc2Freq" data-min="40" data-max="10000">
+      <div id="oscillator2">
+        OSCILLATOR 2<br>
+        <input type="text" value="440" class="dialOsc2Freq" data-min="1" data-max="10000">
         <input type="text" value="5" class="dialOsc2Shape" data-min="0" data-max="10">
         <input type="text" value="1" class="dialOsc2SquareLevel" data-min="0" data-max="10">
-        <input type="text" value="1" class="dialOsc2TriangleLevel" data-min="0" data-max="10">
+        <input type="text" value="0" class="dialOsc2TriangleLevel" data-min="0" data-max="10">
+      </div>
+      <div id="envelopeShaper">
+        ENVELOPE SHAPER<br>
+        <input type="text" value="0.02" class="dialEnvAttack" data-min="0.01" data-max="1" data-step="0.01">
+        <input type="text" value="1" class="dialEnvOn" data-min="0" data-max="2.5" data-step="0.01">
+        <input type="text" value="1" class="dialEnvDecay" data-min="0.01" data-max="15" data-step="0.01">
+        <input type="text" value="1" class="dialEnvOff" data-min="0.01" data-max="10" data-step="0.01">
       </div>
     </div>
     <div style="float: left;">
@@ -28,18 +37,28 @@
           <td>output ch 1</td>
           <td>scope</td>
           <td>output ch 2</td>
+          <td>envelope</td>
         </tr>
         <tr>
           <td>oscillator 1</td>
           <td><input data-in="3" data-out="A" type="checkbox"></td>
           <td><input data-in="3" data-out="B" type="checkbox"></td>
           <td><input data-in="3" data-out="C" type="checkbox"></td>
+          <td><input data-in="3" data-out="D" type="checkbox"></td>
         </tr>
         <tr>
           <td>oscillator 2</td>
           <td><input data-in="5" data-out="A" type="checkbox"></td>
           <td><input data-in="5" data-out="B" type="checkbox"></td>
           <td><input data-in="5" data-out="C" type="checkbox"></td>
+          <td><input data-in="5" data-out="D" type="checkbox"></td>
+        </tr>
+        <tr>
+          <td>env</td>
+          <td><input data-in="13" data-out="A" type="checkbox"></td>
+          <td><input data-in="13" data-out="B" type="checkbox"></td>
+          <td><input data-in="13" data-out="C" type="checkbox"></td>
+          <td><input data-in="13" data-out="D" type="checkbox"></td>
         </tr>
       </table>
     </div>
@@ -140,7 +159,7 @@
           ugen: "flock.ugen.osc",
           table: tables.ramp,
           freq: 440,
-          mul: 0.4,
+          mul: 0,
           options: {
               interpolation: "linear"
           }
@@ -169,10 +188,46 @@
           id: "pin4triangle",
           ugen: "flock.ugen.triOsc",
           freq: 440,
-          mul: 0.6
+          mul: 0
         }
       }
     });
+
+    var pin12 = flock.synth({
+      synthDef: {
+        ugen: "flock.ugen.out",
+        bus: 13,
+        sources: {
+          id: "envelopeInput",
+          ugen: "flock.ugen.in",
+          bus: [],
+          mul: {
+            id: "envelope",
+            ugen: "flock.ugen.asr",
+            start: 0.0,
+            attack: 0.01,
+            sustain: 1.0,
+            on: 1.0,
+            release: 1.0,
+            off: 1.0,
+            gate: {
+              ugen: "flock.ugen.lfPulse",
+              rate: "control",
+              freq: (1 / 3.01) * 2,
+              width: 0.5
+            }
+          }
+        }
+      }
+    });
+
+    function updateEnvelopeGate() {
+      var totalTime = pin12.get("envelope.attack") + pin12.get("envelope.on") + pin12.get("envelope.release") + pin12.get("envelope.off");
+      var attackTime = pin12.get("envelope.attack") + pin12.get("envelope.on")
+
+      pin12.set("envelope.gate.freq", 1 / totalTime);
+      pin12.set("envelope.gate.width", attackTime / totalTime);
+    }
 
     var output = flock.synth({
       synthDef: {
@@ -217,19 +272,16 @@
     $(function () {
       $(".dialOsc1Freq").knob({
         'change': function (v) { 
-          pin3sin.set("pin3sin.freq", v); 
+          pin3sin.set("pin3sin.freq.value", v); 
           pin3ramp.set("pin3ramp.freq", v); 
         }
       });
-
       $(".dialOsc1Shape").knob({
         'change': function (v) { pin3sin.set("pin3sin.table", tables.sin(v)); }
       });
-
       $(".dialOsc1SinLevel").knob({
         'change': function (v) { pin3sin.set("pin3sin.mul", v * 3 / 10); }
       });
-
       $(".dialOsc1RampLevel").knob({
         'change': function (v) { pin3ramp.set("pin3ramp.mul", v * 4 / 10); }
       });
@@ -240,26 +292,50 @@
           pin4triangle.set("pin4triangle.freq", v); 
         }
       });
-
       $(".dialOsc2Shape").knob({
         'change': function (v) { 
           pin4square.set("pin4square.table", tables.square(v));
           pin4triangle.set("pin4triangle.table", tables.triangle(v));
         }
       });
-
       $(".dialOsc2SquareLevel").knob({
         'change': function (v) { pin4square.set("pin4square.mul", v * 4 / 10); }
       });
-
       $(".dialOsc2TriangleLevel").knob({
         'change': function (v) { pin4triangle.set("pin4triangle.mul", v * 6 / 10); }
+      });
+
+      $(".dialEnvAttack").knob({
+        'change': function (v) { 
+          pin12.set("envelope.attack", v);
+          updateEnvelopeGate();
+        }
+      });
+      $(".dialEnvOn").knob({
+        'change': function (v) { 
+          pin12.set("envelope.on", v);
+          updateEnvelopeGate();
+        }
+      });
+      $(".dialEnvDecay").knob({
+        'change': function (v) { 
+          pin12.set("envelope.release", v);
+          updateEnvelopeGate();
+        }
+      });
+      $(".dialEnvOff").knob({
+        'change': function (v) { 
+          pin12.set("envelope.off", v);
+          updateEnvelopeGate();
+        }
       });
 
       $("#patches input").change(function () {
         output.set("left.bus", $("#patches [data-out=A]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
         scope.set("input.bus", $("#patches [data-out=B]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
         output.set("right.bus", $("#patches [data-out=C]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
+        
+        pin12.set("envelopeInput.bus", $("#patches [data-out=D]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
       });
     })
   </script>
