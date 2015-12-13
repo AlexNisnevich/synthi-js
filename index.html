@@ -1,0 +1,31 @@
+<html>
+<head>
+  <!-- This includes Flocking and all its dependencies, including jQuery 2.1.3 and Infusion -->
+  <script src="lib/flocking/dist/flocking-all.js"></script>
+  <script src="lib/jQuery-Knob/dist/jquery.knob.min.js"></script>
+
+  <script>
+    var environment = flock.init();
+
+    var synth = flock.synth({
+      synthDef: {
+        id: "osc1",
+        ugen: "flock.ugen.sinOsc",
+        freq: 440,
+        mul: 1
+      }
+    });
+
+    environment.start();
+
+    $(function () {
+      $(".dial").knob({
+        'release': function (v) { synth.set("osc1.freq", v); }
+      })
+    })
+  </script>
+</head>
+<body>
+  <input type="text" value="440" class="dial" data-min="40" data-max="10000">
+</body>
+</html>
