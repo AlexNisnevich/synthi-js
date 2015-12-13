@@ -11,32 +11,32 @@
       <div id="oscillator1">
         OSCILLATOR 1<br>
         <input style="float: left;" type="text" value="440" class="dialOsc1Freq" data-min="1" data-max="10000" data-width="100" data-height="100">
-        <input type="text" value="5" class="dialOsc1Shape" data-min="0" data-max="10" data-width="100" data-height="100">
-        <input type="text" value="1" class="dialOsc1SinLevel" data-min="0" data-max="10" data-width="100" data-height="100">
-        <input type="text" value="0" class="dialOsc1RampLevel" data-min="0" data-max="10" data-width="100" data-height="100">
+        <input type="text" value="5" class="dialOsc1Shape" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#0c0">
+        <input type="text" value="1" class="dialOsc1SinLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
+        <input type="text" value="0" class="dialOsc1RampLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
       </div>
       <div id="oscillator2">
         OSCILLATOR 2<br>
         <input type="text" value="440" class="dialOsc2Freq" data-min="1" data-max="10000" data-width="100" data-height="100">
-        <input type="text" value="5" class="dialOsc2Shape" data-min="0" data-max="10" data-width="100" data-height="100">
-        <input type="text" value="1" class="dialOsc2SquareLevel" data-min="0" data-max="10" data-width="100" data-height="100">
-        <input type="text" value="0" class="dialOsc2TriangleLevel" data-min="0" data-max="10" data-width="100" data-height="100">
+        <input type="text" value="5" class="dialOsc2Shape" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#0c0">
+        <input type="text" value="1" class="dialOsc2SquareLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
+        <input type="text" value="0" class="dialOsc2TriangleLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
       </div>
       <div id="oscillator3">
         OSCILLATOR 3<br>
         <input type="text" value="1" class="dialOsc3Freq" data-min="0.05" data-max="500" data-step="0.05" data-width="100" data-height="100">
-        <input type="text" value="5" class="dialOsc3Shape" data-min="0" data-max="10" data-width="100" data-height="100">
-        <input type="text" value="1" class="dialOsc3SquareLevel" data-min="0" data-max="10" data-width="100" data-height="100">
-        <input type="text" value="0" class="dialOsc3TriangleLevel" data-min="0" data-max="10" data-width="100" data-height="100">
+        <input type="text" value="5" class="dialOsc3Shape" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#0c0">
+        <input type="text" value="1" class="dialOsc3SquareLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
+        <input type="text" value="0" class="dialOsc3TriangleLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
       </div>
     </div>
     <div style="float: left;">
       <div id="envelopeShaper">
         ENVELOPE SHAPER<br>
-        <input type="text" value="0.02" class="dialEnvAttack" data-min="0.01" data-max="1" data-step="0.01" data-width="100" data-height="100">
-        <input type="text" value="1" class="dialEnvOn" data-min="0" data-max="2.5" data-step="0.01" data-width="100" data-height="100">
-        <input type="text" value="1" class="dialEnvDecay" data-min="0.01" data-max="15" data-step="0.01" data-width="100" data-height="100">
-        <input type="text" value="1" class="dialEnvOff" data-min="0.01" data-max="10" data-step="0.01" data-width="100" data-height="100">
+        <input type="text" value="0.02" class="dialEnvAttack" data-min="0.01" data-max="1" data-step="0.01" data-width="100" data-height="100" data-fgColor="#c00">
+        <input type="text" value="1" class="dialEnvOn" data-min="0" data-max="2.5" data-step="0.01" data-width="100" data-height="100" data-fgColor="#c00">
+        <input type="text" value="1" class="dialEnvDecay" data-min="0.01" data-max="15" data-step="0.01" data-width="100" data-height="100" data-fgColor="#c00">
+        <input type="text" value="1" class="dialEnvOff" data-min="0.01" data-max="10" data-step="0.01" data-width="100" data-height="100" data-fgColor="#c00">
       </div>
       <table id="patches" border="1">
         <tr>
@@ -148,14 +148,11 @@
 
         if (shape >= 5) {
           // 10 = only increasing section
-          var increasingTriangle = Float32Concat(
-            flock.fillTable(128, flock.tableGenerators.tri).slice(0,32),
-            flock.fillTable(128, flock.tableGenerators.tri).slice(96,128)
-          );
+          var increasingTriangle = flock.fillTable(128, flock.tableGenerators.tri).slice(64,128);
           return Float32Interpolate(increasingTriangle, baseTriangle, (shape - 5) / 5);
         } else {
           // 0 = only decreasing section
-          var decreasingTriangle = flock.fillTable(128, flock.tableGenerators.tri).slice(32,96);
+          var decreasingTriangle = flock.fillTable(128, flock.tableGenerators.tri).slice(0,64);
           return Float32Interpolate(decreasingTriangle, baseTriangle, (5 - shape) / 5);
         }
       }
