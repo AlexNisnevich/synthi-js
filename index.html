@@ -126,7 +126,7 @@
           id: "pin3sin",
           ugen: "flock.ugen.sinOsc",
           freq: 440,
-          mul: 0.1
+          mul: 0.3
         }
       }
     });
@@ -140,7 +140,7 @@
           ugen: "flock.ugen.osc",
           table: tables.ramp,
           freq: 440,
-          mul: 0.1,
+          mul: 0.4,
           options: {
               interpolation: "linear"
           }
@@ -156,7 +156,7 @@
           id: "pin4square",
           ugen: "flock.ugen.squareOsc",
           freq: 440,
-          mul: 0.1,
+          mul: 0.4,
         }
       }
     });
@@ -169,7 +169,7 @@
           id: "pin4triangle",
           ugen: "flock.ugen.triOsc",
           freq: 440,
-          mul: 0.1
+          mul: 0.6
         }
       }
     });
@@ -198,7 +198,8 @@
           source: {
             id: "input",
             ugen: "flock.ugen.in",
-            bus: []
+            bus: [],
+            mul: 1/6  // up to 6V p-p input -> 1V p-p scope output
           },
           options: {
             canvas: gfx,
@@ -226,11 +227,11 @@
       });
 
       $(".dialOsc1SinLevel").knob({
-        'change': function (v) { pin3sin.set("pin3sin.mul", v / 10); }
+        'change': function (v) { pin3sin.set("pin3sin.mul", v * 3 / 10); }
       });
 
       $(".dialOsc1RampLevel").knob({
-        'change': function (v) { pin3ramp.set("pin3ramp.mul", v / 10); }
+        'change': function (v) { pin3ramp.set("pin3ramp.mul", v * 4 / 10); }
       });
 
       $(".dialOsc2Freq").knob({
@@ -248,11 +249,11 @@
       });
 
       $(".dialOsc2SquareLevel").knob({
-        'change': function (v) { pin4square.set("pin4square.mul", v / 10); }
+        'change': function (v) { pin4square.set("pin4square.mul", v * 4 / 10); }
       });
 
       $(".dialOsc2TriangleLevel").knob({
-        'change': function (v) { pin4triangle.set("pin4triangle.mul", v / 10); }
+        'change': function (v) { pin4triangle.set("pin4triangle.mul", v * 6 / 10); }
       });
 
       $("#patches input").change(function () {
