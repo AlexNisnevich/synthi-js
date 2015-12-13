@@ -21,6 +21,13 @@
         <input type="text" value="1" class="dialOsc2SquareLevel" data-min="0" data-max="10">
         <input type="text" value="0" class="dialOsc2TriangleLevel" data-min="0" data-max="10">
       </div>
+      <div id="oscillator3">
+        OSCILLATOR 3<br>
+        <input type="text" value="1" class="dialOsc3Freq" data-min="0.05" data-max="500" data-step="0.05">
+        <input type="text" value="5" class="dialOsc3Shape" data-min="0" data-max="10">
+        <input type="text" value="1" class="dialOsc3SquareLevel" data-min="0" data-max="10">
+        <input type="text" value="0" class="dialOsc3TriangleLevel" data-min="0" data-max="10">
+      </div>
       <div id="envelopeShaper">
         ENVELOPE SHAPER<br>
         <input type="text" value="0.02" class="dialEnvAttack" data-min="0.01" data-max="1" data-step="0.01">
@@ -31,13 +38,15 @@
     </div>
     <div style="float: left;">
       <canvas id="gfx" height="45" width="240" class=""></canvas>
-      <table id="patches">
+      <table id="patches" border="1">
         <tr>
           <td></td>
           <td>output ch 1</td>
           <td>scope</td>
           <td>output ch 2</td>
           <td>envelope</td>
+          <td>osc freq 1</td>
+          <td>osc freq 2</td>
         </tr>
         <tr>
           <td>oscillator 1</td>
@@ -45,6 +54,8 @@
           <td><input data-in="3" data-out="B" type="checkbox"></td>
           <td><input data-in="3" data-out="C" type="checkbox"></td>
           <td><input data-in="3" data-out="D" type="checkbox"></td>
+          <td><input data-in="3" data-out="I" type="checkbox"></td>
+          <td><input data-in="3" data-out="J" type="checkbox"></td>
         </tr>
         <tr>
           <td>oscillator 2</td>
@@ -52,6 +63,17 @@
           <td><input data-in="5" data-out="B" type="checkbox"></td>
           <td><input data-in="5" data-out="C" type="checkbox"></td>
           <td><input data-in="5" data-out="D" type="checkbox"></td>
+          <td><input data-in="5" data-out="I" type="checkbox"></td>
+          <td><input data-in="5" data-out="J" type="checkbox"></td>
+        </tr>
+        <tr>
+          <td>oscillator 3</td>
+          <td><input data-in="7" data-out="A" type="checkbox"></td>
+          <td><input data-in="7" data-out="B" type="checkbox"></td>
+          <td><input data-in="7" data-out="C" type="checkbox"></td>
+          <td><input data-in="7" data-out="D" type="checkbox"></td>
+          <td><input data-in="7" data-out="I" type="checkbox"></td>
+          <td><input data-in="7" data-out="J" type="checkbox"></td>
         </tr>
         <tr>
           <td>env</td>
@@ -59,6 +81,8 @@
           <td><input data-in="13" data-out="B" type="checkbox"></td>
           <td><input data-in="13" data-out="C" type="checkbox"></td>
           <td><input data-in="13" data-out="D" type="checkbox"></td>
+          <td><input data-in="13" data-out="I" type="checkbox"></td>
+          <td><input data-in="13" data-out="J" type="checkbox"></td>
         </tr>
       </table>
     </div>
@@ -137,6 +161,36 @@
       }
     }
 
+    // NOTE: it appears that synths can only read from buses that are defined in preceding synths
+    // This restriction reduces our capabilities a lot! This is why these synths are defined in 
+    // the order that they are. (TODO: Figure out how to get around this ...) 
+
+    var pin5square = flock.synth({
+      synthDef: {
+        ugen: "flock.ugen.out",
+        bus: 7,
+        sources: {
+          id: "pin5square",
+          ugen: "flock.ugen.squareOsc",
+          freq: 1,
+          mul: 0.4,
+        }
+      }
+    });
+
+    var pin5triangle = flock.synth({
+      synthDef: {
+        ugen: "flock.ugen.out",
+        bus: 7,
+        sources: {
+          id: "pin5triangle",
+          ugen: "flock.ugen.triOsc",
+          freq: 440,
+          mul: 0
+        }
+      }
+    });
+
     var pin3sin = flock.synth({
       synthDef: {
         ugen: "flock.ugen.out",
@@ -144,7 +198,16 @@
         sources: {
           id: "pin3sin",
           ugen: "flock.ugen.sinOsc",
-          freq: 440,
+          freq: {
+            ugen: "flock.ugen.value",
+            rate: "audio",
+            value: 440,
+            mul: {
+              ugen: "flock.ugen.in",
+              bus: [],
+              add: 1
+            }
+          },
           mul: 0.3
         }
       }
@@ -158,7 +221,16 @@
           id: "pin3ramp",
           ugen: "flock.ugen.osc",
           table: tables.ramp,
-          freq: 440,
+          freq: {
+            ugen: "flock.ugen.value",
+            rate: "audio",
+            value: 440,
+            mul: {
+              ugen: "flock.ugen.in",
+              bus: [],
+              add: 1
+            }
+          },
           mul: 0,
           options: {
               interpolation: "linear"
@@ -174,7 +246,16 @@
         sources: {
           id: "pin4square",
           ugen: "flock.ugen.squareOsc",
-          freq: 440,
+          freq: {
+            ugen: "flock.ugen.value",
+            rate: "audio",
+            value: 440,
+            mul: {
+              ugen: "flock.ugen.in",
+              bus: [],
+              add: 1
+            }
+          },
           mul: 0.4,
         }
       }
@@ -187,7 +268,16 @@
         sources: {
           id: "pin4triangle",
           ugen: "flock.ugen.triOsc",
-          freq: 440,
+          freq: {
+            ugen: "flock.ugen.value",
+            rate: "audio",
+            value: 440,
+            mul: {
+              ugen: "flock.ugen.in",
+              bus: [],
+              add: 1
+            }
+          },
           mul: 0
         }
       }
@@ -273,7 +363,7 @@
       $(".dialOsc1Freq").knob({
         'change': function (v) { 
           pin3sin.set("pin3sin.freq.value", v); 
-          pin3ramp.set("pin3ramp.freq", v); 
+          pin3ramp.set("pin3ramp.freq.value", v); 
         }
       });
       $(".dialOsc1Shape").knob({
@@ -288,8 +378,8 @@
 
       $(".dialOsc2Freq").knob({
         'change': function (v) { 
-          pin4square.set("pin4square.freq", v); 
-          pin4triangle.set("pin4triangle.freq", v); 
+          pin4square.set("pin4square.freq.value", v); 
+          pin4triangle.set("pin4triangle.freq.value", v); 
         }
       });
       $(".dialOsc2Shape").knob({
@@ -303,6 +393,25 @@
       });
       $(".dialOsc2TriangleLevel").knob({
         'change': function (v) { pin4triangle.set("pin4triangle.mul", v * 6 / 10); }
+      });
+
+      $(".dialOsc3Freq").knob({
+        'change': function (v) { 
+          pin5square.set("pin5square.freq", v); 
+          pin5triangle.set("pin5triangle.freq", v); 
+        }
+      });
+      $(".dialOsc3Shape").knob({
+        'change': function (v) { 
+          pin5square.set("pin5square.table", tables.square(v));
+          pin5triangle.set("pin5triangle.table", tables.triangle(v));
+        }
+      });
+      $(".dialOsc3SquareLevel").knob({
+        'change': function (v) { pin5square.set("pin5square.mul", v * 4 / 10); }
+      });
+      $(".dialOsc3TriangleLevel").knob({
+        'change': function (v) { pin5triangle.set("pin5triangle.mul", v * 6 / 10); }
       });
 
       $(".dialEnvAttack").knob({
@@ -336,6 +445,12 @@
         output.set("right.bus", $("#patches [data-out=C]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
         
         pin12.set("envelopeInput.bus", $("#patches [data-out=D]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
+      
+        pin3sin.set("pin3sin.freq.mul.bus", $("#patches [data-out=I]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
+        pin3ramp.set("pin3ramp.freq.mul.bus", $("#patches [data-out=I]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
+      
+        pin4triangle.set("pin4triangle.freq.mul.bus", $("#patches [data-out=J]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
+        pin4square.set("pin4square.freq.mul.bus", $("#patches [data-out=J]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
       });
     })
   </script>
