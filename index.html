@@ -75,43 +75,74 @@
       }
     }
 
-    var pin1sin = flock.synth({
+    var pin3sin = flock.synth({
       synthDef: {
-        id: "pin1sin",
-        ugen: "flock.ugen.sinOsc",
-        freq: 440,
-        mul: 0.1
-      }
-    });
-
-    var pin1ramp = flock.synth({
-      synthDef: {
-        id: "pin1ramp",
-        ugen: "flock.ugen.osc",
-        table: tables.ramp,
-        freq: 440,
-        mul: 0.1,
-        options: {
-            interpolation: "linear"
+        ugen: "flock.ugen.out",
+        bus: 3,
+        sources: {
+          id: "pin3sin",
+          ugen: "flock.ugen.sinOsc",
+          freq: 440,
+          mul: 0.1
         }
       }
     });
 
-    var pin2square = flock.synth({
+    var pin3ramp = flock.synth({
       synthDef: {
-        id: "pin2square",
-        ugen: "flock.ugen.squareOsc",
-        freq: 440,
-        mul: 0.1
+        ugen: "flock.ugen.out",
+        bus: 3,
+        sources: {
+          id: "pin3ramp",
+          ugen: "flock.ugen.osc",
+          table: tables.ramp,
+          freq: 440,
+          mul: 0.1,
+          options: {
+              interpolation: "linear"
+          }
+        }
       }
     });
 
-    var pin2triangle = flock.synth({
+    var pin4square = flock.synth({
       synthDef: {
-        id: "pin2triangle",
-        ugen: "flock.ugen.triOsc",
-        freq: 440,
-        mul: 0.1
+        ugen: "flock.ugen.out",
+        bus: 4,
+        sources: {
+          id: "pin4square",
+          ugen: "flock.ugen.squareOsc",
+          freq: 440,
+          mul: 0.1,
+        }
+      }
+    });
+
+    var pin4triangle = flock.synth({
+      synthDef: {
+        ugen: "flock.ugen.out",
+        bus: 4,
+        sources: {
+          id: "pin4triangle",
+          ugen: "flock.ugen.triOsc",
+          freq: 440,
+          mul: 0.1
+        }
+      }
+    });
+
+    var output = flock.synth({
+      synthDef: {
+        ugen: "flock.ugen.out",
+        sources: [{
+          id: "left",
+          ugen: "flock.ugen.in",
+          bus: []
+        }, {
+          id: "right",
+          ugen: "flock.ugen.in",
+          bus: []
+        }]
       }
     });
 
@@ -120,59 +151,87 @@
     $(function () {
       $(".dialOsc1Freq").knob({
         'change': function (v) { 
-          pin1sin.set("pin1sin.freq", v); 
-          pin1ramp.set("pin1ramp.freq", v); 
+          pin3sin.set("pin3sin.freq", v); 
+          pin3ramp.set("pin3ramp.freq", v); 
         }
       });
 
       $(".dialOsc1Shape").knob({
-        'change': function (v) { pin1sin.set("pin1sin.table", tables.sin(v)); }
+        'change': function (v) { pin3sin.set("pin3sin.table", tables.sin(v)); }
       });
 
       $(".dialOsc1SinLevel").knob({
-        'change': function (v) { pin1sin.set("pin1sin.mul", v / 10); }
+        'change': function (v) { pin3sin.set("pin3sin.mul", v / 10); }
       });
 
       $(".dialOsc1RampLevel").knob({
-        'change': function (v) { pin1ramp.set("pin1ramp.mul", v / 10); }
+        'change': function (v) { pin3ramp.set("pin3ramp.mul", v / 10); }
       });
 
       $(".dialOsc2Freq").knob({
         'change': function (v) { 
-          pin2square.set("pin2square.freq", v); 
-          pin2triangle.set("pin2triangle.freq", v); 
+          pin4square.set("pin4square.freq", v); 
+          pin4triangle.set("pin4triangle.freq", v); 
         }
       });
 
       $(".dialOsc2Shape").knob({
         'change': function (v) { 
-          pin2square.set("pin2square.table", tables.square(v));
-          pin2triangle.set("pin2triangle.table", tables.triangle(v));
+          pin4square.set("pin4square.table", tables.square(v));
+          pin4triangle.set("pin4triangle.table", tables.triangle(v));
         }
       });
 
       $(".dialOsc2SquareLevel").knob({
-        'change': function (v) { pin2square.set("pin2square.mul", v / 10); }
+        'change': function (v) { pin4square.set("pin4square.mul", v / 10); }
       });
 
       $(".dialOsc2TriangleLevel").knob({
-        'change': function (v) { pin2triangle.set("pin2triangle.mul", v / 10); }
+        'change': function (v) { pin4triangle.set("pin4triangle.mul", v / 10); }
+      });
+
+      $("#patches input").change(function () {
+        output.set("left.bus", $("#patches [data-out=A]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
+        output.set("right.bus", $("#patches [data-out=B]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
       });
     })
   </script>
 </head>
 <body>
-  <div id="oscillator1">
-    <input type="text" value="440" class="dialOsc1Freq" data-min="40" data-max="10000">
-    <input type="text" value="5" class="dialOsc1Shape" data-min="0" data-max="10">
-    <input type="text" value="1" class="dialOsc1SinLevel" data-min="0" data-max="10">
-    <input type="text" value="1" class="dialOsc1RampLevel" data-min="0" data-max="10">
-  </div>
-  <div id="oscillator1">
-    <input type="text" value="440" class="dialOsc2Freq" data-min="40" data-max="10000">
-    <input type="text" value="5" class="dialOsc2Shape" data-min="0" data-max="10">
-    <input type="text" value="1" class="dialOsc2SquareLevel" data-min="0" data-max="10">
-    <input type="text" value="1" class="dialOsc2TriangleLevel" data-min="0" data-max="10">
+  <div>
+    <div style="float: left;">
+      <div id="oscillator1">
+        <input type="text" value="440" class="dialOsc1Freq" data-min="40" data-max="10000">
+        <input type="text" value="5" class="dialOsc1Shape" data-min="0" data-max="10">
+        <input type="text" value="1" class="dialOsc1SinLevel" data-min="0" data-max="10">
+        <input type="text" value="1" class="dialOsc1RampLevel" data-min="0" data-max="10">
+      </div>
+      <div id="oscillator1">
+        <input type="text" value="440" class="dialOsc2Freq" data-min="40" data-max="10000">
+        <input type="text" value="5" class="dialOsc2Shape" data-min="0" data-max="10">
+        <input type="text" value="1" class="dialOsc2SquareLevel" data-min="0" data-max="10">
+        <input type="text" value="1" class="dialOsc2TriangleLevel" data-min="0" data-max="10">
+      </div>
+    </div>
+    <div style="float: left;">
+      <table id="patches">
+        <tr>
+          <td></td>
+          <td>output ch 1</td>
+          <td>output ch 2</td>
+        </tr>
+        <tr>
+          <td>oscillator 1</td>
+          <td><input data-in="3" data-out="A" type="checkbox"></td>
+          <td><input data-in="3" data-out="B" type="checkbox"></td>
+        </tr>
+        <tr>
+          <td>oscillator 2</td>
+          <td><input data-in="4" data-out="A" type="checkbox"></td>
+          <td><input data-in="4" data-out="B" type="checkbox"></td>
+        </tr>
+      </table>
+    </div>
   </div>
 </body>
 </html>
