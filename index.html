@@ -7,25 +7,48 @@
   <script>
     var environment = flock.init();
 
-    var synth = flock.synth({
+    var pin1 = flock.synth({
       synthDef: {
-        id: "osc1",
+        id: "pin1",
         ugen: "flock.ugen.sinOsc",
         freq: 440,
-        mul: 1
+        mul: 0.1
+      }
+    });
+
+    var pin2 = flock.synth({
+      synthDef: {
+        id: "pin2",
+        ugen: "flock.ugen.osc", // ramp = backwards sawtooth
+        table: flock.fillTable(64, flock.tableGenerators.saw).map(function (x) {return -x;}),
+        freq: 440,
+        mul: 0.1,
+        options: {
+            interpolation: "linear"
+        }
       }
     });
 
     environment.start();
 
     $(function () {
-      $(".dial").knob({
-        'release': function (v) { synth.set("osc1.freq", v); }
-      })
+      $(".dialOsc1Freq").knob({
+        'release': function (v) { pin1.set("pin1.freq", v); pin2.set("pin2.freq", v); }
+      });
+
+      $(".dialOsc1SinLevel").knob({
+        'release': function (v) { pin1.set("pin1.mul", v / 10); }
+      });
+
+      $(".dialOsc1RampLevel").knob({
+        'release': function (v) { pin2.set("pin2.mul", v / 10); }
+      });
     })
   </script>
 </head>
 <body>
-  <input type="text" value="440" class="dial" data-min="40" data-max="10000">
+  <input type="text" value="440" class="dialOsc1Freq" data-min="40" data-max="10000">
+  <input type="text" value="1" class="dialOsc1SinLevel" data-min="0" data-max="10">
+  <input type="text" value="1" class="dialOsc1RampLevel" data-min="0" data-max="10">
 </body>
 </html>
