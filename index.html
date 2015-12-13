@@ -3,6 +3,47 @@
   <!-- This includes Flocking and all its dependencies, including jQuery 2.1.3 and Infusion -->
   <script src="lib/flocking/dist/flocking-all.js"></script>
   <script src="lib/jQuery-Knob/dist/jquery.knob.min.js"></script>
+</head>
+<body>
+  <div>
+    <div style="float: left;">
+      <div id="oscillator1">
+        <input type="text" value="440" class="dialOsc1Freq" data-min="40" data-max="10000">
+        <input type="text" value="5" class="dialOsc1Shape" data-min="0" data-max="10">
+        <input type="text" value="1" class="dialOsc1SinLevel" data-min="0" data-max="10">
+        <input type="text" value="1" class="dialOsc1RampLevel" data-min="0" data-max="10">
+      </div>
+      <div id="oscillator1">
+        <input type="text" value="440" class="dialOsc2Freq" data-min="40" data-max="10000">
+        <input type="text" value="5" class="dialOsc2Shape" data-min="0" data-max="10">
+        <input type="text" value="1" class="dialOsc2SquareLevel" data-min="0" data-max="10">
+        <input type="text" value="1" class="dialOsc2TriangleLevel" data-min="0" data-max="10">
+      </div>
+    </div>
+    <div style="float: left;">
+      <canvas id="gfx" height="45" width="240" class=""></canvas>
+      <table id="patches">
+        <tr>
+          <td></td>
+          <td>output ch 1</td>
+          <td>scope</td>
+          <td>output ch 2</td>
+        </tr>
+        <tr>
+          <td>oscillator 1</td>
+          <td><input data-in="3" data-out="A" type="checkbox"></td>
+          <td><input data-in="3" data-out="B" type="checkbox"></td>
+          <td><input data-in="3" data-out="C" type="checkbox"></td>
+        </tr>
+        <tr>
+          <td>oscillator 2</td>
+          <td><input data-in="5" data-out="A" type="checkbox"></td>
+          <td><input data-in="5" data-out="B" type="checkbox"></td>
+          <td><input data-in="5" data-out="C" type="checkbox"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
 
   <script>
     function Float32Concat(first, second) {
@@ -23,7 +64,9 @@
       return result;
     }
 
-    var environment = flock.init();
+    var environment = flock.init({
+      numBuses: 20
+    });
 
     var tables = {
       // ramp = backwards sawtooth
@@ -108,7 +151,7 @@
     var pin4square = flock.synth({
       synthDef: {
         ugen: "flock.ugen.out",
-        bus: 4,
+        bus: 5,
         sources: {
           id: "pin4square",
           ugen: "flock.ugen.squareOsc",
@@ -121,7 +164,7 @@
     var pin4triangle = flock.synth({
       synthDef: {
         ugen: "flock.ugen.out",
-        bus: 4,
+        bus: 5,
         sources: {
           id: "pin4triangle",
           ugen: "flock.ugen.triOsc",
@@ -143,6 +186,28 @@
           ugen: "flock.ugen.in",
           bus: []
         }]
+      }
+    });
+
+    var scope = flock.synth({
+      synthDef: {
+        ugen: "flock.ugen.out",
+        bus: 17, // unused bus = no output
+        sources: {
+          ugen: "flock.ugen.scope",
+          source: {
+            id: "input",
+            ugen: "flock.ugen.in",
+            bus: []
+          },
+          options: {
+            canvas: gfx,
+            styles: {
+                strokeColor: "#777777",
+                strokeWidth: 2
+            }
+          }
+        }
       }
     });
 
@@ -192,46 +257,10 @@
 
       $("#patches input").change(function () {
         output.set("left.bus", $("#patches [data-out=A]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
-        output.set("right.bus", $("#patches [data-out=B]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
+        scope.set("input.bus", $("#patches [data-out=B]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
+        output.set("right.bus", $("#patches [data-out=C]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
       });
     })
   </script>
-</head>
-<body>
-  <div>
-    <div style="float: left;">
-      <div id="oscillator1">
-        <input type="text" value="440" class="dialOsc1Freq" data-min="40" data-max="10000">
-        <input type="text" value="5" class="dialOsc1Shape" data-min="0" data-max="10">
-        <input type="text" value="1" class="dialOsc1SinLevel" data-min="0" data-max="10">
-        <input type="text" value="1" class="dialOsc1RampLevel" data-min="0" data-max="10">
-      </div>
-      <div id="oscillator1">
-        <input type="text" value="440" class="dialOsc2Freq" data-min="40" data-max="10000">
-        <input type="text" value="5" class="dialOsc2Shape" data-min="0" data-max="10">
-        <input type="text" value="1" class="dialOsc2SquareLevel" data-min="0" data-max="10">
-        <input type="text" value="1" class="dialOsc2TriangleLevel" data-min="0" data-max="10">
-      </div>
-    </div>
-    <div style="float: left;">
-      <table id="patches">
-        <tr>
-          <td></td>
-          <td>output ch 1</td>
-          <td>output ch 2</td>
-        </tr>
-        <tr>
-          <td>oscillator 1</td>
-          <td><input data-in="3" data-out="A" type="checkbox"></td>
-          <td><input data-in="3" data-out="B" type="checkbox"></td>
-        </tr>
-        <tr>
-          <td>oscillator 2</td>
-          <td><input data-in="4" data-out="A" type="checkbox"></td>
-          <td><input data-in="4" data-out="B" type="checkbox"></td>
-        </tr>
-      </table>
-    </div>
-  </div>
 </body>
 </html>
