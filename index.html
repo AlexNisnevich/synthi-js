@@ -124,10 +124,12 @@
     $(function () {
       $(".dialOsc1Freq").knobKnob({
         value: 0,
-        turn: function (ratio) { 
-          console.log(ratio + ": " + (ratio * 9600 + 40));
-          pin1sin.set("pin1sin.freq", ratio * 9600 + 40); 
-          pin1ramp.set("pin1ramp.freq", ratio * 9600 + 40); 
+        min: 40,
+        max: 10000,
+        diameter: '200px',
+        turn: function (v) { 
+          pin1sin.set("pin1sin.freq", v); 
+          pin1ramp.set("pin1ramp.freq", v); 
         }
       });
 
