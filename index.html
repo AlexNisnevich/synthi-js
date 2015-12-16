@@ -143,9 +143,23 @@
     //    }
     //  });
 
-      $(".dialOsc1Shape").knob({
-        'change': function (v) { pin1sin.set("pin1sin.table", tables.sin(v)); }
+      $(".dialOsc1Shape").knobKnob({
+        min: 0,
+        max: 10,
+        diameter: '100px',
+        label: 'Shape',
+        value: 0,
+        startOffset: 30,
+        endOffset: 30,
+        turn: function (v) { 
+          console.log(v);
+          pin1sin.set("pin1sin.table", tables.sin(v)); 
+        }
       });
+
+    // $(".dialOsc1Shape").knob({
+    //   'change': function (v) { pin1sin.set("pin1sin.table", tables.sin(v)); }
+    // });
 
       $(".dialOsc1SinLevel").knob({
         'change': function (v) { pin1sin.set("pin1sin.mul", v / 10); }
@@ -183,7 +197,8 @@
   <div id="oscillator1">
     <div class="dialOsc1Freq">
     <!-- <input type="text" value="440" class="dialOsc1Freq" data-min="40" data-max="10000" data-cursor=true> -->
-    <input type="text" value="5" class="dialOsc1Shape" data-min="0" data-max="10">
+    <div class="dialOsc1Shape">
+    <!-- <input type="text" value="5" class="dialOsc1Shape" data-min="0" data-max="10"> -->
     <input type="text" value="1" class="dialOsc1SinLevel" data-min="0" data-max="10">
     <input type="text" value="1" class="dialOsc1RampLevel" data-min="0" data-max="10">
   </div>
