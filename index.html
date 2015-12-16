@@ -50,406 +50,48 @@
         </tr>
         <tr>
           <td>oscillator 1</td>
-          <td><input data-in="3" data-out="A" type="checkbox"></td>
-          <td><input data-in="3" data-out="B" type="checkbox"></td>
-          <td><input data-in="3" data-out="C" type="checkbox"></td>
-          <td><input data-in="3" data-out="D" type="checkbox"></td>
-          <td><input data-in="3" data-out="I" type="checkbox"></td>
-          <td><input data-in="3" data-out="J" type="checkbox"></td>
+          <td><input data-in="A" data-out="3" type="checkbox"></td>
+          <td><input data-in="B" data-out="3" type="checkbox"></td>
+          <td><input data-in="C" data-out="3" type="checkbox"></td>
+          <td><input data-in="D" data-out="3" type="checkbox"></td>
+          <td><input data-in="I" data-out="3" type="checkbox"></td>
+          <td><input data-in="J" data-out="3" type="checkbox"></td>
         </tr>
         <tr>
           <td>oscillator 2</td>
-          <td><input data-in="5" data-out="A" type="checkbox"></td>
-          <td><input data-in="5" data-out="B" type="checkbox"></td>
-          <td><input data-in="5" data-out="C" type="checkbox"></td>
-          <td><input data-in="5" data-out="D" type="checkbox"></td>
-          <td><input data-in="5" data-out="I" type="checkbox"></td>
-          <td><input data-in="5" data-out="J" type="checkbox"></td>
+          <td><input data-in="A" data-out="4" type="checkbox"></td>
+          <td><input data-in="B" data-out="4" type="checkbox"></td>
+          <td><input data-in="C" data-out="4" type="checkbox"></td>
+          <td><input data-in="D" data-out="4" type="checkbox"></td>
+          <td><input data-in="I" data-out="4" type="checkbox"></td>
+          <td><input data-in="J" data-out="4" type="checkbox"></td>
         </tr>
         <tr>
           <td>oscillator 3</td>
-          <td><input data-in="7" data-out="A" type="checkbox"></td>
-          <td><input data-in="7" data-out="B" type="checkbox"></td>
-          <td><input data-in="7" data-out="C" type="checkbox"></td>
-          <td><input data-in="7" data-out="D" type="checkbox"></td>
-          <td><input data-in="7" data-out="I" type="checkbox"></td>
-          <td><input data-in="7" data-out="J" type="checkbox"></td>
+          <td><input data-in="A" data-out="5" type="checkbox"></td>
+          <td><input data-in="B" data-out="5" type="checkbox"></td>
+          <td><input data-in="C" data-out="5" type="checkbox"></td>
+          <td><input data-in="D" data-out="5" type="checkbox"></td>
+          <td><input data-in="I" data-out="5" type="checkbox"></td>
+          <td><input data-in="J" data-out="5" type="checkbox"></td>
         </tr>
         <tr>
           <td>env</td>
-          <td><input data-in="13" data-out="A" type="checkbox"></td>
-          <td><input data-in="13" data-out="B" type="checkbox"></td>
-          <td><input data-in="13" data-out="C" type="checkbox"></td>
-          <td><input data-in="13" data-out="D" type="checkbox"></td>
-          <td><input data-in="13" data-out="I" type="checkbox"></td>
-          <td><input data-in="13" data-out="J" type="checkbox"></td>
+          <td><input data-in="A" data-out="12" type="checkbox"></td>
+          <td><input data-in="B" data-out="12" type="checkbox"></td>
+          <td><input data-in="C" data-out="12" type="checkbox"></td>
+          <td><input data-in="D" data-out="12" type="checkbox"></td>
+          <td><input data-in="I" data-out="12" type="checkbox"></td>
+          <td><input data-in="J" data-out="12" type="checkbox"></td>
         </tr>
       </table>
     </div>
   </div>
 
-  <script>
-    function Float32Concat(first, second) {
-      var firstLength = first.length,
-          result = new Float32Array(firstLength + second.length);
-
-      result.set(first);
-      result.set(second, firstLength);
-
-      return result;
-    }
-
-    function Float32Interpolate(first, second, delta) {
-      var result = new Float32Array(Math.min(first.length, second.length));
-      for (var i=result.length; i-->0;) {
-        result[i] = first[i] * delta + second[i] * (1 - delta);
-      }
-      return result;
-    }
-
-    var environment = flock.init({
-      numBuses: 20
-    });
-
-    var tables = {
-      // ramp = backwards sawtooth
-      ramp: flock.fillTable(64, flock.tableGenerators.saw).map(function (x) {return -x;}),
-      
-      sin: function (shape) {
-        if (shape >= 5) {
-          // 10 = full positive rectification
-          var rectification = (shape - 5) / 5;
-          return flock.fillTable(64, flock.tableGenerators.sin).map(function (x) {
-            return x * (1 - rectification) + (Math.abs(x)) * rectification;
-          });
-        } else {
-          // 0 = full negative rectification
-          var rectification = (5 - shape) / 5;
-          return flock.fillTable(64, flock.tableGenerators.sin).map(function (x) {
-            return x * (1 - rectification) + (-Math.abs(x)) * rectification;
-          });
-        }
-      },
-      
-      square: function (shape) {
-        // pulse width modulation (5 = normal square wave)
-
-        var posLength = Math.floor(64 * shape / 10);
-        var negLength = 64 - posLength;
-
-        var posValues = flock.fillTable(posLength * 2, flock.tableGenerators.saw).filter(function (x) {return x > 0});
-        var negValues = flock.fillTable(negLength * 2, flock.tableGenerators.saw).filter(function (x) {return x < 0});
-
-        return Float32Concat(posValues, negValues);
-      },
-
-      triangle: function (shape) {
-        var baseTriangle = flock.fillTable(64, flock.tableGenerators.tri);
-
-        if (shape >= 5) {
-          // 10 = only increasing section
-          var increasingTriangle = flock.fillTable(128, flock.tableGenerators.tri).slice(64,128);
-          return Float32Interpolate(increasingTriangle, baseTriangle, (shape - 5) / 5);
-        } else {
-          // 0 = only decreasing section
-          var decreasingTriangle = flock.fillTable(128, flock.tableGenerators.tri).slice(0,64);
-          return Float32Interpolate(decreasingTriangle, baseTriangle, (5 - shape) / 5);
-        }
-      }
-    }
-
-    // NOTE: it appears that synths can only read from buses that are defined in preceding synths
-    // This restriction reduces our capabilities a lot! This is why these synths are defined in 
-    // the order that they are. (TODO: Figure out how to get around this ...) 
-
-    var pin5square = flock.synth({
-      synthDef: {
-        ugen: "flock.ugen.out",
-        bus: 7,
-        sources: {
-          id: "pin5square",
-          ugen: "flock.ugen.squareOsc",
-          freq: 1,
-          mul: 0.4,
-        }
-      }
-    });
-
-    var pin5triangle = flock.synth({
-      synthDef: {
-        ugen: "flock.ugen.out",
-        bus: 7,
-        sources: {
-          id: "pin5triangle",
-          ugen: "flock.ugen.triOsc",
-          freq: 440,
-          mul: 0
-        }
-      }
-    });
-
-    var pin3sin = flock.synth({
-      synthDef: {
-        ugen: "flock.ugen.out",
-        bus: 3,
-        sources: {
-          id: "pin3sin",
-          ugen: "flock.ugen.sinOsc",
-          freq: {
-            ugen: "flock.ugen.value",
-            rate: "audio",
-            value: 440,
-            mul: {
-              ugen: "flock.ugen.in",
-              bus: [],
-              add: 1
-            }
-          },
-          mul: 0.3
-        }
-      }
-    });
-
-    var pin3ramp = flock.synth({
-      synthDef: {
-        ugen: "flock.ugen.out",
-        bus: 3,
-        sources: {
-          id: "pin3ramp",
-          ugen: "flock.ugen.osc",
-          table: tables.ramp,
-          freq: {
-            ugen: "flock.ugen.value",
-            rate: "audio",
-            value: 440,
-            mul: {
-              ugen: "flock.ugen.in",
-              bus: [],
-              add: 1
-            }
-          },
-          mul: 0,
-          options: {
-              interpolation: "linear"
-          }
-        }
-      }
-    });
-
-    var pin4square = flock.synth({
-      synthDef: {
-        ugen: "flock.ugen.out",
-        bus: 5,
-        sources: {
-          id: "pin4square",
-          ugen: "flock.ugen.squareOsc",
-          freq: {
-            ugen: "flock.ugen.value",
-            rate: "audio",
-            value: 440,
-            mul: {
-              ugen: "flock.ugen.in",
-              bus: [],
-              add: 1
-            }
-          },
-          mul: 0.4,
-        }
-      }
-    });
-
-    var pin4triangle = flock.synth({
-      synthDef: {
-        ugen: "flock.ugen.out",
-        bus: 5,
-        sources: {
-          id: "pin4triangle",
-          ugen: "flock.ugen.triOsc",
-          freq: {
-            ugen: "flock.ugen.value",
-            rate: "audio",
-            value: 440,
-            mul: {
-              ugen: "flock.ugen.in",
-              bus: [],
-              add: 1
-            }
-          },
-          mul: 0
-        }
-      }
-    });
-
-    var pin12 = flock.synth({
-      synthDef: {
-        ugen: "flock.ugen.out",
-        bus: 13,
-        sources: {
-          id: "envelopeInput",
-          ugen: "flock.ugen.in",
-          bus: [],
-          mul: {
-            id: "envelope",
-            ugen: "flock.ugen.asr",
-            start: 0.0,
-            attack: 0.01,
-            sustain: 1.0,
-            on: 1.0,
-            release: 1.0,
-            off: 1.0,
-            gate: {
-              ugen: "flock.ugen.lfPulse",
-              rate: "control",
-              freq: (1 / 3.01) * 2,
-              width: 0.5
-            }
-          }
-        }
-      }
-    });
-
-    function updateEnvelopeGate() {
-      var totalTime = pin12.get("envelope.attack") + pin12.get("envelope.on") + pin12.get("envelope.release") + pin12.get("envelope.off");
-      var attackTime = pin12.get("envelope.attack") + pin12.get("envelope.on")
-
-      pin12.set("envelope.gate.freq", 1 / totalTime);
-      pin12.set("envelope.gate.width", attackTime / totalTime);
-    }
-
-    var output = flock.synth({
-      synthDef: {
-        ugen: "flock.ugen.out",
-        sources: [{
-          id: "left",
-          ugen: "flock.ugen.in",
-          bus: []
-        }, {
-          id: "right",
-          ugen: "flock.ugen.in",
-          bus: []
-        }]
-      }
-    });
-
-    var scope = flock.synth({
-      synthDef: {
-        ugen: "flock.ugen.out",
-        bus: 17, // unused bus = no output
-        sources: {
-          ugen: "flock.ugen.scope",
-          source: {
-            id: "input",
-            ugen: "flock.ugen.in",
-            bus: [],
-            mul: 1/6  // up to 6V p-p input -> 1V p-p scope output
-          },
-          options: {
-            canvas: gfx,
-            styles: {
-                strokeColor: "#777777",
-                strokeWidth: 2
-            }
-          }
-        }
-      }
-    });
-
-    environment.start();
-
-    $(function () {
-      $(".dialOsc1Freq").knob({
-        'change': function (v) { 
-          pin3sin.set("pin3sin.freq.value", v); 
-          pin3ramp.set("pin3ramp.freq.value", v); 
-        }
-      });
-      $(".dialOsc1Shape").knob({
-        'change': function (v) { pin3sin.set("pin3sin.table", tables.sin(v)); }
-      });
-      $(".dialOsc1SinLevel").knob({
-        'change': function (v) { pin3sin.set("pin3sin.mul", v * 3 / 10); }
-      });
-      $(".dialOsc1RampLevel").knob({
-        'change': function (v) { pin3ramp.set("pin3ramp.mul", v * 4 / 10); }
-      });
-
-      $(".dialOsc2Freq").knob({
-        'change': function (v) { 
-          pin4square.set("pin4square.freq.value", v); 
-          pin4triangle.set("pin4triangle.freq.value", v); 
-        }
-      });
-      $(".dialOsc2Shape").knob({
-        'change': function (v) { 
-          pin4square.set("pin4square.table", tables.square(v));
-          pin4triangle.set("pin4triangle.table", tables.triangle(v));
-        }
-      });
-      $(".dialOsc2SquareLevel").knob({
-        'change': function (v) { pin4square.set("pin4square.mul", v * 4 / 10); }
-      });
-      $(".dialOsc2TriangleLevel").knob({
-        'change': function (v) { pin4triangle.set("pin4triangle.mul", v * 6 / 10); }
-      });
-
-      $(".dialOsc3Freq").knob({
-        'change': function (v) { 
-          pin5square.set("pin5square.freq", v); 
-          pin5triangle.set("pin5triangle.freq", v); 
-        }
-      });
-      $(".dialOsc3Shape").knob({
-        'change': function (v) { 
-          pin5square.set("pin5square.table", tables.square(v));
-          pin5triangle.set("pin5triangle.table", tables.triangle(v));
-        }
-      });
-      $(".dialOsc3SquareLevel").knob({
-        'change': function (v) { pin5square.set("pin5square.mul", v * 4 / 10); }
-      });
-      $(".dialOsc3TriangleLevel").knob({
-        'change': function (v) { pin5triangle.set("pin5triangle.mul", v * 6 / 10); }
-      });
-
-      $(".dialEnvAttack").knob({
-        'change': function (v) { 
-          pin12.set("envelope.attack", v);
-          updateEnvelopeGate();
-        }
-      });
-      $(".dialEnvOn").knob({
-        'change': function (v) { 
-          pin12.set("envelope.on", v);
-          updateEnvelopeGate();
-        }
-      });
-      $(".dialEnvDecay").knob({
-        'change': function (v) { 
-          pin12.set("envelope.release", v);
-          updateEnvelopeGate();
-        }
-      });
-      $(".dialEnvOff").knob({
-        'change': function (v) { 
-          pin12.set("envelope.off", v);
-          updateEnvelopeGate();
-        }
-      });
-
-      $("#patches input").change(function () {
-        output.set("left.bus", $("#patches [data-out=A]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
-        scope.set("input.bus", $("#patches [data-out=B]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
-        output.set("right.bus", $("#patches [data-out=C]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
-        
-        pin12.set("envelopeInput.bus", $("#patches [data-out=D]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
-      
-        pin3sin.set("pin3sin.freq.mul.bus", $("#patches [data-out=I]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
-        pin3ramp.set("pin3ramp.freq.mul.bus", $("#patches [data-out=I]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
-      
-        pin4triangle.set("pin4triangle.freq.mul.bus", $("#patches [data-out=J]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
-        pin4square.set("pin4square.freq.mul.bus", $("#patches [data-out=J]:checked").map(function (i, x) {return parseInt($(this).attr("data-in"))}));
-      });
-    })
-  </script>
+  <script src="js/util.js"></script>
+  <script src="js/synthi.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/knobs.js"></script>
+  <script src="js/patchboard.js"></script>
 </body>
 </html>
