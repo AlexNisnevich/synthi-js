@@ -58,8 +58,8 @@ $(function () {
 
   $(".dialOsc3Freq").knob({
     'change': function (v) { 
-      Vco3square.set("freq", v); 
-      Vco3triangle.set("freq", v); 
+      Vco3square.set("freq.value", v); 
+      Vco3triangle.set("freq.value", v); 
     }
   });
 
@@ -72,15 +72,31 @@ $(function () {
 
   $(".dialOsc3SquareLevel").knob({
     'change': function (v) { 
-      Vco3square.set("mul", v * 4 / 10); 
+      Vco3square.set("mul", v * 4 / 10);  // up to 4V p-p output
     }
   });
 
   $(".dialOsc3TriangleLevel").knob({
     'change': function (v) { 
-      Vco3triangle.set("mul", v * 6 / 10); 
+      Vco3triangle.set("mul", v * 6 / 10);  // up to 6V p-p output
     }
   });
+
+  // Noise Generator
+
+  $(".dialNoiseLevel").knob({
+    'change': function (v) { 
+      NoiseGenerator.set("source.mul", v * 3 / 10);  // up to 3V p-p output
+    }
+  });
+
+  $(".dialNoiseShape").knob({
+    'change': function (v) { 
+      NoiseGenerator.set("freq", 440 * Math.pow(2, v - 5));  // modulate filter frequency to simulate colored noise
+    }
+  });
+
+  // Envelope Shaper
 
   $(".dialEnvAttack").knob({
     'change': function (v) { 
