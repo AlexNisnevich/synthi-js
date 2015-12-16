@@ -118,4 +118,12 @@ $(function () {
       EnvelopeShaper.set("off", v);
     }
   });
+
+  // Ring Modulator
+
+  $(".dialRingModLevel").knob({
+    'change': function (v) { 
+      RingModulator.set("source.mul", v / 10);
+    }
+  });
 });

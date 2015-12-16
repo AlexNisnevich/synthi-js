@@ -36,6 +36,10 @@
       </div>
     </div>
     <div style="float: left;">
+      <div id="ringModulator">
+        RING MOD<br>
+        <input type="text" value="5" class="dialRingModLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
+      </div>
       <div id="envelopeShaper">
         ENVELOPE SHAPER<br>
         <input type="text" value="0.02" class="dialEnvAttack" data-min="0.01" data-max="1" data-step="0.01" data-width="100" data-height="100" data-fgColor="#c00">
@@ -50,9 +54,11 @@
           <td>scope</td>
           <td>output ch 2</td>
           <td>envelope</td>
+          <td>ring mod A</td>
+          <td>(B)</td>
           <td>osc freq 1</td>
-          <td>osc freq 2</td>
-          <td>osc freq 3</td>
+          <td>(2)</td>
+          <td>(3)</td>
         </tr>
         <tr>
           <td>oscillator 1</td>
@@ -60,6 +66,8 @@
           <td><input data-in="B" data-out="3" type="checkbox"></td>
           <td><input data-in="C" data-out="3" type="checkbox"></td>
           <td><input data-in="D" data-out="3" type="checkbox"></td>
+          <td><input data-in="E" data-out="3" type="checkbox"></td>
+          <td><input data-in="F" data-out="3" type="checkbox"></td>
           <td><input data-in="I" data-out="3" type="checkbox"></td>
           <td><input data-in="J" data-out="3" type="checkbox"></td>
           <td><input data-in="K" data-out="3" type="checkbox"></td>
@@ -70,6 +78,8 @@
           <td><input data-in="B" data-out="4" type="checkbox"></td>
           <td><input data-in="C" data-out="4" type="checkbox"></td>
           <td><input data-in="D" data-out="4" type="checkbox"></td>
+          <td><input data-in="E" data-out="4" type="checkbox"></td>
+          <td><input data-in="F" data-out="4" type="checkbox"></td>
           <td><input data-in="I" data-out="4" type="checkbox"></td>
           <td><input data-in="J" data-out="4" type="checkbox"></td>
           <td><input data-in="K" data-out="4" type="checkbox"></td>
@@ -80,6 +90,8 @@
           <td><input data-in="B" data-out="5" type="checkbox"></td>
           <td><input data-in="C" data-out="5" type="checkbox"></td>
           <td><input data-in="D" data-out="5" type="checkbox"></td>
+          <td><input data-in="E" data-out="5" type="checkbox"></td>
+          <td><input data-in="F" data-out="5" type="checkbox"></td>
           <td><input data-in="I" data-out="5" type="checkbox"></td>
           <td><input data-in="J" data-out="5" type="checkbox"></td>
           <td><input data-in="K" data-out="5" type="checkbox"></td>
@@ -90,6 +102,8 @@
           <td><input data-in="B" data-out="7" type="checkbox"></td>
           <td><input data-in="C" data-out="7" type="checkbox"></td>
           <td><input data-in="D" data-out="7" type="checkbox"></td>
+          <td><input data-in="E" data-out="7" type="checkbox"></td>
+          <td><input data-in="F" data-out="7" type="checkbox"></td>
           <td><input data-in="I" data-out="7" type="checkbox"></td>
           <td><input data-in="J" data-out="7" type="checkbox"></td>
           <td><input data-in="K" data-out="7" type="checkbox"></td>
@@ -100,9 +114,23 @@
           <td><input data-in="B" data-out="12" type="checkbox"></td>
           <td><input data-in="C" data-out="12" type="checkbox"></td>
           <td><input data-in="D" data-out="12" type="checkbox"></td>
+          <td><input data-in="E" data-out="12" type="checkbox"></td>
+          <td><input data-in="F" data-out="12" type="checkbox"></td>
           <td><input data-in="I" data-out="12" type="checkbox"></td>
           <td><input data-in="J" data-out="12" type="checkbox"></td>
           <td><input data-in="K" data-out="12" type="checkbox"></td>
+        </tr>
+        <tr>
+          <td>ring mod</td>
+          <td><input data-in="A" data-out="13" type="checkbox"></td>
+          <td><input data-in="B" data-out="13" type="checkbox"></td>
+          <td><input data-in="C" data-out="13" type="checkbox"></td>
+          <td><input data-in="D" data-out="13" type="checkbox"></td>
+          <td><input data-in="E" data-out="13" type="checkbox"></td>
+          <td><input data-in="F" data-out="13" type="checkbox"></td>
+          <td><input data-in="I" data-out="13" type="checkbox"></td>
+          <td><input data-in="J" data-out="13" type="checkbox"></td>
+          <td><input data-in="K" data-out="13" type="checkbox"></td>
         </tr>
       </table>
     </div>
