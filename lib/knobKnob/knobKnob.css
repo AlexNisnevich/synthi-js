@@ -23,6 +23,11 @@
 	right: 50%;
 }
 
+.knob-label {
+	text-align: center;
+	margin: 20px 0;
+}
+
 .metal {
 	outline: none;
 		
