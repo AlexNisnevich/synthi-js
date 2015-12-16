@@ -122,8 +122,22 @@ $(function () {
   // Ring Modulator
 
   $(".dialRingModLevel").knob({
-    'change': function (v) { 
+    'change': function (v) {
       RingModulator.set("source.mul", v / 10);
+    }
+  });
+
+  // Reverb
+
+  $(".dialReverbMix").knob({
+    'change': function (v) {
+      Reverb.set("mix", v / 10);
+    }
+  });
+
+  $(".dialReverbLevel").knob({
+    'change': function (v) {
+      Reverb.set("mul", v / 10);
     }
   });
 });

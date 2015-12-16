@@ -1,15 +1,18 @@
 var environment = flock.init({
-  numBuses: 20
+  numBuses: 32
 });
 
+environment.start();
+
 var buses = {
-  0: 17,  // (unused bus)
+  0: 19,  // (unused bus)
   3: 3,
   4: 5,
   5: 7,
   7: 11,
   12: 13,
-  13: 15
+  13: 15,
+  14: 17
 }
 
 var components = [];
@@ -57,5 +60,3 @@ function Component(inputPins, outputPin, synthDef) {
 
   this.init();
 }
-
-environment.start();
