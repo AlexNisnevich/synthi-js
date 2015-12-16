@@ -96,6 +96,26 @@ $(function () {
     }
   });
 
+  // Filter / Oscillator
+
+  $(".dialFilterFrequency").knob({
+    'change': function (v) { 
+      FilterOscillator.set("cutoff", 440 * Math.pow(2, v - 5) + 80);
+    }
+  });
+
+  $(".dialFilterResponse").knob({
+    'change': function (v) { 
+      FilterOscillator.set("resonance", v * 4 / 10);  // 0-4 scale (4 = self-oscillation)
+    }
+  });
+
+  $(".dialFilterLevel").knob({
+    'change': function (v) { 
+      FilterOscillator.set("mul", v / 10);
+    }
+  });
+
   // Envelope Shaper
 
   $(".dialEnvAttack").knob({
@@ -103,16 +123,19 @@ $(function () {
       EnvelopeShaper.set("attack", v);
     }
   });
+
   $(".dialEnvOn").knob({
     'change': function (v) { 
       EnvelopeShaper.set("on", v);
     }
   });
+
   $(".dialEnvDecay").knob({
     'change': function (v) { 
       EnvelopeShaper.set("release", v);
     }
   });
+
   $(".dialEnvOff").knob({
     'change': function (v) { 
       EnvelopeShaper.set("off", v);

@@ -36,17 +36,26 @@
       </div>
     </div>
     <div style="float: left;">
-      <div id="ringModulator">
-        RING MOD<br>
-        <input type="text" value="5" class="dialRingModLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
+      <div>
+        <div id="filterOscillator" style="float: left;">
+          FILTER / OSCILLATOR<br>
+          <input type="text" value="10" class="dialFilterFrequency" data-min="0" data-max="10" data-width="100" data-height="100">
+          <input type="text" value="0" class="dialFilterResponse" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CC0">
+          <input type="text" value="5" class="dialFilterLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
+        </div>
+        <div id="ringModulator" style="float: left;">
+          RING MOD<br>
+          <input type="text" value="5" class="dialRingModLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
+        </div>
       </div>
-      <div id="envelopeShaper">
+      <div id="envelopeShaper" style="clear: both;">
         ENVELOPE SHAPER<br>
         <input type="text" value="0.02" class="dialEnvAttack" data-min="0.01" data-max="1" data-step="0.01" data-width="100" data-height="100" data-fgColor="#c00">
         <input type="text" value="1" class="dialEnvOn" data-min="0" data-max="2.5" data-step="0.01" data-width="100" data-height="100" data-fgColor="#c00">
         <input type="text" value="1" class="dialEnvDecay" data-min="0.01" data-max="15" data-step="0.01" data-width="100" data-height="100" data-fgColor="#c00">
         <input type="text" value="1" class="dialEnvOff" data-min="0.01" data-max="10" data-step="0.01" data-width="100" data-height="100" data-fgColor="#c00">
       </div>
+      <div id="reverb">
         REVERB<br>
         <input type="text" value="0" class="dialReverbMix" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#0c0">
         <input type="text" value="5" class="dialReverbLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
@@ -61,6 +70,7 @@
           <td>ring mod A</td>
           <td>(B)</td>
           <td>reverb</td>
+          <td>filter</td>
           <td>osc freq 1</td>
           <td>(2)</td>
           <td>(3)</td>
@@ -74,6 +84,7 @@
           <td><input data-in="E" data-out="3" type="checkbox"></td>
           <td><input data-in="F" data-out="3" type="checkbox"></td>
           <td><input data-in="G" data-out="3" type="checkbox"></td>
+          <td><input data-in="H" data-out="3" type="checkbox"></td>
           <td><input data-in="I" data-out="3" type="checkbox"></td>
           <td><input data-in="J" data-out="3" type="checkbox"></td>
           <td><input data-in="K" data-out="3" type="checkbox"></td>
@@ -87,6 +98,7 @@
           <td><input data-in="E" data-out="4" type="checkbox"></td>
           <td><input data-in="F" data-out="4" type="checkbox"></td>
           <td><input data-in="G" data-out="4" type="checkbox"></td>
+          <td><input data-in="H" data-out="4" type="checkbox"></td>
           <td><input data-in="I" data-out="4" type="checkbox"></td>
           <td><input data-in="J" data-out="4" type="checkbox"></td>
           <td><input data-in="K" data-out="4" type="checkbox"></td>
@@ -100,6 +112,7 @@
           <td><input data-in="E" data-out="5" type="checkbox"></td>
           <td><input data-in="F" data-out="5" type="checkbox"></td>
           <td><input data-in="G" data-out="5" type="checkbox"></td>
+          <td><input data-in="H" data-out="5" type="checkbox"></td>
           <td><input data-in="I" data-out="5" type="checkbox"></td>
           <td><input data-in="J" data-out="5" type="checkbox"></td>
           <td><input data-in="K" data-out="5" type="checkbox"></td>
@@ -113,9 +126,24 @@
           <td><input data-in="E" data-out="7" type="checkbox"></td>
           <td><input data-in="F" data-out="7" type="checkbox"></td>
           <td><input data-in="G" data-out="7" type="checkbox"></td>
+          <td><input data-in="H" data-out="7" type="checkbox"></td>
           <td><input data-in="I" data-out="7" type="checkbox"></td>
           <td><input data-in="J" data-out="7" type="checkbox"></td>
           <td><input data-in="K" data-out="7" type="checkbox"></td>
+        </tr>
+        <tr>
+          <td>filter</td>
+          <td><input data-in="A" data-out="10" type="checkbox"></td>
+          <td><input data-in="B" data-out="10" type="checkbox"></td>
+          <td><input data-in="C" data-out="10" type="checkbox"></td>
+          <td><input data-in="D" data-out="10" type="checkbox"></td>
+          <td><input data-in="E" data-out="10" type="checkbox"></td>
+          <td><input data-in="F" data-out="10" type="checkbox"></td>
+          <td><input data-in="G" data-out="10" type="checkbox"></td>
+          <td><input data-in="H" data-out="10" type="checkbox"></td>
+          <td><input data-in="I" data-out="10" type="checkbox"></td>
+          <td><input data-in="J" data-out="10" type="checkbox"></td>
+          <td><input data-in="K" data-out="10" type="checkbox"></td>
         </tr>
         <tr>
           <td>env</td>
@@ -126,6 +154,7 @@
           <td><input data-in="E" data-out="12" type="checkbox"></td>
           <td><input data-in="F" data-out="12" type="checkbox"></td>
           <td><input data-in="G" data-out="12" type="checkbox"></td>
+          <td><input data-in="H" data-out="12" type="checkbox"></td>
           <td><input data-in="I" data-out="12" type="checkbox"></td>
           <td><input data-in="J" data-out="12" type="checkbox"></td>
           <td><input data-in="K" data-out="12" type="checkbox"></td>
@@ -139,6 +168,7 @@
           <td><input data-in="E" data-out="13" type="checkbox"></td>
           <td><input data-in="F" data-out="13" type="checkbox"></td>
           <td><input data-in="G" data-out="13" type="checkbox"></td>
+          <td><input data-in="H" data-out="13" type="checkbox"></td>
           <td><input data-in="I" data-out="13" type="checkbox"></td>
           <td><input data-in="J" data-out="13" type="checkbox"></td>
           <td><input data-in="K" data-out="13" type="checkbox"></td>
@@ -152,6 +182,7 @@
           <td><input data-in="E" data-out="14" type="checkbox"></td>
           <td><input data-in="F" data-out="14" type="checkbox"></td>
           <td><input data-in="G" data-out="14" type="checkbox"></td>
+          <td><input data-in="H" data-out="14" type="checkbox"></td>
           <td><input data-in="I" data-out="14" type="checkbox"></td>
           <td><input data-in="J" data-out="14" type="checkbox"></td>
           <td><input data-in="K" data-out="14" type="checkbox"></td>
