@@ -70,3 +70,7 @@
 #patches th:nth-child(1), #patches tr:last-child td {
   border: 0;
 }
+
+.dial {
+  float: left;
+}

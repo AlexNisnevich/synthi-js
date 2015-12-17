@@ -3,6 +3,10 @@
   <!-- This includes Flocking and all its dependencies, including jQuery 2.1.3 and Infusion -->
   <script src="lib/flocking/dist/flocking-all.js"></script>
   <script src="lib/masonry.pkgd.min.js"></script>
+  
+  <script src="lib/knobKnob/transform.js"></script>
+  <script src="lib/knobKnob/knobKnob.jquery.js"></script>
+  <link href="lib/knobKnob/knobKnob.css" rel="stylesheet">
   <script src="lib/jQuery-Knob/dist/jquery.knob.min.js"></script>
 
   <link rel="stylesheet" href="css/style.css"></link>
@@ -27,8 +31,8 @@
 
     <div class="panel width4" id="oscillator1">
       OSCILLATOR 1<br>
-      <input style="float: left;" type="text" value="440" class="dialOsc1Freq" data-min="1" data-max="10000" data-width="100" data-height="100">
-      <input type="text" value="5" class="dialOsc1Shape" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#0c0">
+      <div class="dial" id="osc1Freq"></div>
+      <div class="dial" id="osc1Shape"></div>
       <input type="text" value="1" class="dialOsc1SinLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
       <input type="text" value="0" class="dialOsc1RampLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
     </div>

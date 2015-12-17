@@ -1,16 +1,30 @@
 $(function () {
   // Oscillator 1
 
-  $(".dialOsc1Freq").knob({
-    'change': function (v) { 
+  $("#osc1Freq").knobKnob({
+    min: 40,
+    max: 10000,
+    diameter: '90px',
+    label: 'Frequency',
+    value: 0,
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
       Vco1sin.set("freq.value", v);
       Vco1ramp.set("freq.value", v);
     }
   });
 
-  $(".dialOsc1Shape").knob({
-    'change': function (v) { 
-      Vco1sin.set("table", tables.sin(v)); 
+  $("#osc1Shape").knobKnob({
+    min: 0,
+    max: 10,
+    diameter: '70px',
+    label: 'Shape',
+    value: 0,
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
+      Vco1sin.set("table", tables.sin(v));
     }
   });
 
