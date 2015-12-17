@@ -1,0 +1,72 @@
+.grid {
+  width: 1300px;
+  margin: 0 auto;
+  visibility: hidden;
+}
+
+.panel {
+  float: left;
+  width: 108px;
+  height: 125px;
+  min-height: 125px;
+  padding: 10px;
+  border: 1px solid #333;
+  background-color: #f8f8f8;
+  text-align: center;
+}
+
+.width2 {
+  width: 238px;
+}
+
+.width3 {
+  width: 368px;
+}
+
+.width4 {
+  width: 498px;
+}
+
+.width6 {
+  width: 758px;
+}
+
+.height2 {
+  height: 272px;
+}
+
+.height4 {
+  height: 566px;
+}
+
+#gfx {
+  margin: 0 auto;
+  border: 1px solid #999;
+  border-radius: 15px;
+  background: white;
+}
+
+#patchboard h1 {
+  margin-top: 2em;
+  text-align: center;
+}
+
+#patches {
+  margin: 20px auto;
+}
+
+#patches th {
+  font-weight: normal;
+  letter-spacing: 3px;
+  max-width: 20px;
+  border: 1px solid black;
+}
+
+#patches td:nth-child(1) {
+  max-width: 90px;
+  border: 1px solid black;
+}
+
+#patches th:nth-child(1), #patches tr:last-child td {
+  border: 0;
+}

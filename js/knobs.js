@@ -163,4 +163,11 @@ $(function () {
       Reverb.set("mul", v / 10);
     }
   });
+
+  // Set up masonry grid layout
+
+  $('.grid').masonry({
+    columnWidth: '.width1',
+    itemSelector: '.panel'
+  }).css("visibility", "visible");
 });
