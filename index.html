@@ -7,6 +7,7 @@
   <script src="lib/knobKnob/transform.js"></script>
   <script src="lib/knobKnob/knobKnob.jquery.js"></script>
   <link href="lib/knobKnob/knobKnob.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
 
   <script>
     function Float32Concat(first, second) {
@@ -126,7 +127,7 @@
         min: 40,
         max: 10000,
         diameter: '200px',
-        label: 'Frequency',
+        label: 'frequency',
         value: 0,
         startOffset: 30,
         endOffset: 30,
@@ -136,37 +137,43 @@
         }
       });
 
-    //  $(".dialOsc1Freq").knob({
-    //    'change': function (v) { 
-    //      pin1sin.set("pin1sin.freq", v); 
-    //      pin1ramp.set("pin1ramp.freq", v); 
-    //    }
-    //  });
-
       $(".dialOsc1Shape").knobKnob({
         min: 0,
         max: 10,
         diameter: '100px',
-        label: 'Shape',
+        label: 'shape',
         value: 0,
         startOffset: 30,
         endOffset: 30,
         turn: function (v) { 
-          console.log(v);
           pin1sin.set("pin1sin.table", tables.sin(v)); 
         }
       });
 
-    // $(".dialOsc1Shape").knob({
-    //   'change': function (v) { pin1sin.set("pin1sin.table", tables.sin(v)); }
-    // });
-
-      $(".dialOsc1SinLevel").knob({
-        'change': function (v) { pin1sin.set("pin1sin.mul", v / 10); }
+      $(".dialOsc1SinLevel").knobKnob({
+        min: 0,
+        max: 10,
+        diameter: '100px',
+        label: 'sine level',
+        value: 0,
+        startOffset: 30,
+        endOffset: 30,
+        turn: function (v) { 
+          pin1sin.set("pin1sin.mul", v / 10);
+        }
       });
 
-      $(".dialOsc1RampLevel").knob({
-        'change': function (v) { pin1ramp.set("pin1ramp.mul", v / 10); }
+      $(".dialOsc1RampLevel").knobKnob({
+        min: 0,
+        max: 10,
+        diameter: '100px',
+        label: 'ramp level',
+        value: 0,
+        startOffset: 30,
+        endOffset: 30,
+        turn: function (v) { 
+          pin1ramp.set("pin1ramp.mul", v / 10);
+        }
       });
 
       $(".dialOsc2Freq").knob({
@@ -194,13 +201,11 @@
   </script>
 </head>
 <body>
-  <div id="oscillator1">
-    <div class="dialOsc1Freq">
-    <!-- <input type="text" value="440" class="dialOsc1Freq" data-min="40" data-max="10000" data-cursor=true> -->
-    <div class="dialOsc1Shape">
-    <!-- <input type="text" value="5" class="dialOsc1Shape" data-min="0" data-max="10"> -->
-    <input type="text" value="1" class="dialOsc1SinLevel" data-min="0" data-max="10">
-    <input type="text" value="1" class="dialOsc1RampLevel" data-min="0" data-max="10">
+  <div id="oscillator1" class="clearfix">
+    <div class="dialOsc1Freq"></div>
+    <div class="dialOsc1Shape"></div>
+    <div class="dialOsc1SinLevel"></div>
+    <div class="dialOsc1RampLevel"></div>
   </div>
   <div id="oscillator1">
     <input type="text" value="440" class="dialOsc2Freq" data-min="40" data-max="10000">
@@ -208,5 +213,6 @@
     <input type="text" value="1" class="dialOsc2SquareLevel" data-min="0" data-max="10">
     <input type="text" value="1" class="dialOsc2TriangleLevel" data-min="0" data-max="10">
   </div>
+  <div class="logo">SYNTHI JS</div>
 </body>
 </html>
