@@ -1,3 +1,12 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:300);
+@import url(https://fonts.googleapis.com/css?family=Orbitron:900);
+
+body {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+}
+
 .grid {
   width: 1300px;
   margin: 0 auto;
@@ -6,12 +15,20 @@
 
 .panel {
   float: left;
+  position: relative;
   width: 108px;
   height: 125px;
   min-height: 125px;
   padding: 10px;
   border: 1px solid #333;
   background-color: #f8f8f8;
+  text-align: center;
+}
+
+.panelName {
+  position: absolute;
+  top: 0px;
+  width: 100%;
   text-align: center;
 }
 
@@ -63,7 +80,7 @@
 }
 
 #patches td:nth-child(1) {
-  max-width: 90px;
+  max-width: 120px;
   border: 1px solid black;
 }
 
@@ -73,4 +90,23 @@
 
 .dial {
   float: left;
+  height: 125px;
+  width: 100px;
+  position: relative;
+}
+
+.knob-container {
+  position: absolute;
+  top: 30px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  margin: auto;
+}
+
+.logo {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: 48px;
+  letter-spacing: 8px;
 }
