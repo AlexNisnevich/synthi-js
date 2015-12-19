@@ -20,9 +20,3 @@ function connectPin(pin) {
     }
   }
 }
-
-$(function () {
-  $("#patches input").change(function () {
-    connectPin($(this));
-  });
-});

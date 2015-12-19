@@ -19,13 +19,13 @@
     </div>
     <div class="panel width3" id="filterOscillator">
       <div class="panelName">FILTER / OSCILLATOR</div>
-      <input type="text" value="10" class="dialFilterFrequency" data-min="0" data-max="10" data-width="100" data-height="100">
-      <input type="text" value="0" class="dialFilterResponse" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CC0">
-      <input type="text" value="5" class="dialFilterLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
+      <div class="dial" id="filterFrequency"></div>
+      <div class="dial" id="filterResponse"></div>
+      <div class="dial" id="filterLevel"></div>
     </div>
     <div class="panel width1" id="ringModulator">
-      RING MOD<br>
-      <input type="text" value="5" class="dialRingModLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
+      <div class="panelName">RING MOD</div>
+      <div class="dial" id="ringModLevel"></div>
     </div>
     <div class="panel width2"></div>
 
@@ -33,23 +33,23 @@
       <div class="panelName">OSCILLATOR 1</div>
       <div class="dial" id="osc1Freq"></div>
       <div class="dial" id="osc1Shape"></div>
-      <input type="text" value="1" class="dialOsc1SinLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
-      <input type="text" value="0" class="dialOsc1RampLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
+      <div class="dial" id="osc1SinLevel"></div>
+      <div class="dial" id="osc1RampLevel"></div>
     </div>
     <div class="panel width6" id="envelopeShaper">
-      ENVELOPE SHAPER<br>
-      <input type="text" value="0.02" class="dialEnvAttack" data-min="0.01" data-max="1" data-step="0.01" data-width="100" data-height="100" data-fgColor="#c00">
-      <input type="text" value="1" class="dialEnvOn" data-min="0" data-max="2.5" data-step="0.01" data-width="100" data-height="100" data-fgColor="#c00">
-      <input type="text" value="1" class="dialEnvDecay" data-min="0.01" data-max="15" data-step="0.01" data-width="100" data-height="100" data-fgColor="#c00">
-      <input type="text" value="1" class="dialEnvOff" data-min="0.01" data-max="10" data-step="0.01" data-width="100" data-height="100" data-fgColor="#c00">
+      <div class="panelName">ENVELOPE SHAPER</div>
+      <div class="dial" id="envAttack"></div>
+      <div class="dial" id="envOn"></div>
+      <div class="dial" id="envDecay"></div>
+      <div class="dial" id="envOff"></div>
     </div>
 
     <div class="panel width4" id="oscillator2">
-      OSCILLATOR 2<br>
-      <input type="text" value="440" class="dialOsc2Freq" data-min="1" data-max="10000" data-width="100" data-height="100">
-      <input type="text" value="5" class="dialOsc2Shape" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#0c0">
-      <input type="text" value="1" class="dialOsc2SquareLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
-      <input type="text" value="0" class="dialOsc2TriangleLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
+      <div class="panelName">OSCILLATOR 2</div>
+      <div class="dial" id="osc2Freq"></div>
+      <div class="dial" id="osc2Shape"></div>
+      <div class="dial" id="osc2SquareLevel"></div>
+      <div class="dial" id="osc2TriangleLevel"></div>
     </div>
     <div class="panel width4 height4" id="patchboard">
       <table id="patches">
@@ -206,24 +206,24 @@
       <div class="logo">SYNTHI-JS</div>
     </div>
     <div class="panel width2" id="reverb">
-      REVERBERATION<br>
-      <input type="text" value="0" class="dialReverbMix" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#0c0">
-      <input type="text" value="5" class="dialReverbLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
+      <div class="panelName">REVERBERATION</div>
+      <div class="dial" id="reverbMix"></div>
+      <div class="dial" id="reverbLevel"></div>
     </div>
 
     <div class="panel width4" id="oscillator3">
-      OSCILLATOR 3<br>
-      <input type="text" value="1" class="dialOsc3Freq" data-min="0.05" data-max="500" data-step="0.05" data-width="100" data-height="100">
-      <input type="text" value="5" class="dialOsc3Shape" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#0c0">
-      <input type="text" value="1" class="dialOsc3SquareLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
-      <input type="text" value="0" class="dialOsc3TriangleLevel" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
+      <div class="panelName">OSCILLATOR 3</div>
+      <div class="dial" id="osc3Freq"></div>
+      <div class="dial" id="osc3Shape"></div>
+      <div class="dial" id="osc3SquareLevel"></div>
+      <div class="dial" id="osc3TriangleLevel"></div>
     </div>
     <div class="panel width2"></div>
 
     <div class="panel width2" id="noiseGenerator">
-      NOISE GENERATOR<br>
-      <input type="text" value="1" class="dialNoiseLevel" data-min="0" data-max="10" data-width="100" data-height="100">
-      <input type="text" value="5" class="dialNoiseShape" data-min="0" data-max="10" data-width="100" data-height="100" data-fgColor="#CCC">
+      <div class="panelName">NOISE GENERATOR</div>
+      <div class="dial" id="noiseLevel"></div>
+      <div class="dial" id="noiseShape"></div>
     </div>
     <div class="panel width2"></div>
     <div class="panel width2 height2"></div>

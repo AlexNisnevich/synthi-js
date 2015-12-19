@@ -1,13 +1,19 @@
 $(function () {
+  // Patchboard
+
+  $("#patches input").change(function () {
+    connectPin($(this));
+  });
+
   // Oscillator 1
 
   $("#osc1Freq").knobKnob({
     min: 40,
     max: 10000,
-    diameter: '90px',
+    value: 16,
+    diameter: 100,
     label: 'Frequency',
-    color: '#008',
-    value: 0,
+    color: 'green',
     startOffset: 30,
     endOffset: 30,
     turn: function (v) { 
@@ -19,10 +25,10 @@ $(function () {
   $("#osc1Shape").knobKnob({
     min: 0,
     max: 10,
-    diameter: '70px',
+    value: 150,
+    diameter: 70,
     label: 'Shape',
-    color: "#0c0",
-    value: 0,
+    color: "blue",
     startOffset: 30,
     endOffset: 30,
     turn: function (v) { 
@@ -30,160 +36,320 @@ $(function () {
     }
   });
 
-  $(".dialOsc1SinLevel").knob({
-    'change': function (v) { 
+  $("#osc1SinLevel").knobKnob({
+    min: 0,
+    max: 10,
+    diameter: 70,
+    label: 'Sin Level',
+    value: 30,
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
       Vco1sin.set("mul", v * 3 / 10);  // up to 3V p-p output
     }
   });
 
-  $(".dialOsc1RampLevel").knob({
-    'change': function (v) { 
+  $("#osc1RampLevel").knobKnob({
+    min: 0,
+    max: 10,
+    diameter: 70,
+    label: 'Ramp Level',
+    value: 0,
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
       Vco1ramp.set("mul", v * 4 / 10);  // up to 4V p-p output
     }
   });
 
   // Oscillator 2
 
-  $(".dialOsc2Freq").knob({
-    'change': function (v) { 
-      Vco2square.set("freq.value", v); 
-      Vco2triangle.set("freq.value", v); 
+  $("#osc2Freq").knobKnob({
+    min: 40,
+    max: 10000,
+    value: 16,
+    diameter: 100,
+    label: 'Frequency',
+    color: "green",
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
+      Vco2square.set("freq.value", v);
+      Vco2triangle.set("freq.value", v);
     }
   });
 
-  $(".dialOsc2Shape").knob({
-    'change': function (v) { 
+  $("#osc2Shape").knobKnob({
+    min: 0,
+    max: 10,
+    value: 150,
+    diameter: 70,
+    label: 'Shape',
+    color: "blue",
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
       Vco2square.set("table", tables.square(v));
       Vco2triangle.set("table", tables.triangle(v));
     }
   });
 
-  $(".dialOsc2SquareLevel").knob({
-    'change': function (v) { 
+  $("#osc2SquareLevel").knobKnob({
+    min: 0,
+    max: 10,
+    diameter: 70,
+    label: 'Squ Level',
+    value: 30,
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
       Vco2square.set("mul", v * 4 / 10);  // up to 4V p-p output
     }
   });
 
-  $(".dialOsc2TriangleLevel").knob({
-    'change': function (v) { 
+  $("#osc2TriangleLevel").knobKnob({
+    min: 0,
+    max: 10,
+    diameter: 70,
+    label: 'Tri Level',
+    value: 0,
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
       Vco2triangle.set("mul", v * 6 / 10);  // up to 6V p-p output
     }
   });
 
   // Oscillator 3
 
-  $(".dialOsc3Freq").knob({
-    'change': function (v) { 
-      Vco3square.set("freq.value", v); 
-      Vco3triangle.set("freq.value", v); 
+  $("#osc3Freq").knobKnob({
+    min: 0.5,
+    max: 500,
+    value: 0,
+    diameter: 100,
+    label: 'Frequency',
+    color: "green",
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
+      Vco3square.set("freq.value", v);
+      Vco3triangle.set("freq.value", v);
     }
   });
 
-  $(".dialOsc3Shape").knob({
-    'change': function (v) { 
+  $("#osc3Shape").knobKnob({
+    min: 0,
+    max: 10,
+    value: 150,
+    diameter: 70,
+    label: 'Shape',
+    color: "blue",
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
       Vco3square.set("table", tables.square(v));
       Vco3triangle.set("table", tables.triangle(v));
     }
   });
 
-  $(".dialOsc3SquareLevel").knob({
-    'change': function (v) { 
+  $("#osc3SquareLevel").knobKnob({
+    min: 0,
+    max: 10,
+    diameter: 70,
+    label: 'Squ Level',
+    value: 30,
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
       Vco3square.set("mul", v * 4 / 10);  // up to 4V p-p output
     }
   });
 
-  $(".dialOsc3TriangleLevel").knob({
-    'change': function (v) { 
+  $("#osc3TriangleLevel").knobKnob({
+    min: 0,
+    max: 10,
+    diameter: 70,
+    label: 'Tri Level',
+    value: 0,
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
       Vco3triangle.set("mul", v * 6 / 10);  // up to 6V p-p output
     }
   });
 
   // Noise Generator
 
-  $(".dialNoiseLevel").knob({
-    'change': function (v) { 
+  $("#noiseLevel").knobKnob({
+    min: 0,
+    max: 10,
+    value: 30,
+    diameter: 70,
+    label: 'Level',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
       NoiseGenerator.set("source.mul", v * 3 / 10);  // up to 3V p-p output
     }
   });
 
-  $(".dialNoiseShape").knob({
-    'change': function (v) { 
+  $("#noiseShape").knobKnob({
+    min: 0,
+    max: 10,
+    value: 150,
+    diameter: 70,
+    label: 'Shape',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
       NoiseGenerator.set("freq", 440 * Math.pow(2, v - 5));  // modulate filter frequency to simulate colored noise
     }
   });
 
   // Filter / Oscillator
 
-  $(".dialFilterFrequency").knob({
-    'change': function (v) { 
+  $("#filterFrequency").knobKnob({
+    min: 0,
+    max: 10,
+    value: 150,
+    diameter: 70,
+    label: 'Frequency',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
       FilterOscillator.set("cutoff", 440 * Math.pow(2, v - 5) + 80);
     }
   });
 
-  $(".dialFilterResponse").knob({
-    'change': function (v) { 
+  $("#filterResponse").knobKnob({
+    min: 0,
+    max: 10,
+    value: 150,
+    diameter: 70,
+    label: 'Level',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
       FilterOscillator.set("resonance", v * 4 / 10);  // 0-4 scale (4 = self-oscillation)
     }
   });
 
-  $(".dialFilterLevel").knob({
-    'change': function (v) { 
+  $("#filterLevel").knobKnob({
+    min: 0,
+    max: 10,
+    value: 150,
+    diameter: 70,
+    label: 'Response',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
       FilterOscillator.set("mul", v / 10);
     }
   });
 
   // Envelope Shaper
 
-  $(".dialEnvAttack").knob({
-    'change': function (v) { 
+  $("#envAttack").knobKnob({
+    min: 0.01,
+    max: 1,
+    value: 30,
+    diameter: 70,
+    label: 'Attack',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
       EnvelopeShaper.set("attack", v);
     }
   });
 
-  $(".dialEnvOn").knob({
-    'change': function (v) { 
+  $("#envOn").knobKnob({
+    min: 0,
+    max: 2.5,
+    value: 90,
+    diameter: 70,
+    label: 'On',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
       EnvelopeShaper.set("on", v);
     }
   });
 
-  $(".dialEnvDecay").knob({
-    'change': function (v) { 
+  $("#envDecay").knobKnob({
+    min: 0.01,
+    max: 15,
+    value: 30,
+    diameter: 70,
+    label: 'Decay',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
       EnvelopeShaper.set("release", v);
     }
   });
 
-  $(".dialEnvOff").knob({
-    'change': function (v) { 
+  $("#envOff").knobKnob({
+    min: 0.01,
+    max: 10,
+    value: 30,
+    diameter: 70,
+    label: 'Off',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
       EnvelopeShaper.set("off", v);
     }
   });
 
   // Ring Modulator
 
-  $(".dialRingModLevel").knob({
-    'change': function (v) {
+  $("#ringModLevel").knobKnob({
+    min: 0,
+    max: 10,
+    value: 150,
+    diameter: 70,
+    label: 'Level',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
       RingModulator.set("source.mul", v / 10);
     }
   });
 
   // Reverb
 
-  $(".dialReverbMix").knob({
-    'change': function (v) {
+  $("#reverbMix").knobKnob({
+    min: 0,
+    max: 10,
+    value: 90,
+    diameter: 70,
+    label: 'Mix',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
       Reverb.set("mix", v / 10);
     }
   });
 
-  $(".dialReverbLevel").knob({
-    'change': function (v) {
+  $("#reverbLevel").knobKnob({
+    min: 0,
+    max: 10,
+    value: 150,
+    diameter: 70,
+    label: 'Level',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
       Reverb.set("mul", v / 10);
     }
   });
 
-  // Set up masonry grid layout
+  // Set up masonry grid layout and fade in
 
   $('.grid').masonry({
     columnWidth: '.width1',
     itemSelector: '.panel'
-  }).css("visibility", "visible");
+  }).css("visibility", "visible")
+    .hide()
+    .fadeIn();
 });

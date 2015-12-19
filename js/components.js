@@ -190,7 +190,7 @@ var Reverb = new Component(["G", "M"], 14, {
       id: "input-G",
       ugen: "flock.ugen.in"
     },
-    mix: 0,
+    mix: 0.5,
     room: 0.84,
     damp: 0.2,
     mul: 0.5

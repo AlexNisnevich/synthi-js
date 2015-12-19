@@ -39,11 +39,15 @@ var tables = {
   square: function (shape) {
     // pulse width modulation (5 = normal square wave)
 
+    if (Math.round(shape) == 5) {
+      return flock.fillTable(64, flock.tableGenerators.square);
+    }
+
     var posLength = Math.floor(64 * shape / 10);
     var negLength = 64 - posLength;
 
-    var posValues = flock.fillTable(posLength * 2, flock.tableGenerators.saw).filter(function (x) {return x > 0});
-    var negValues = flock.fillTable(negLength * 2, flock.tableGenerators.saw).filter(function (x) {return x < 0});
+    var posValues = flock.fillTable(posLength * 2, flock.tableGenerators.square).filter(function (x) {return x > 0});
+    var negValues = flock.fillTable(negLength * 2, flock.tableGenerators.square).filter(function (x) {return x < 0});
 
     return Float32Concat(posValues, negValues);
   },
