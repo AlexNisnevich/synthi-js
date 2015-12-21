@@ -114,8 +114,14 @@ body {
 }
 
 .logo {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-top: 5px solid black;
+  width: 100%;
+  padding-top: 8px;
   font-family: 'Orbitron', sans-serif;
   font-weight: 900;
-  font-size: 48px;
+  font-size: 30px;
   letter-spacing: 8px;
 }
