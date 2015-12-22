@@ -5,7 +5,7 @@ var environment = flock.init({
 environment.start();
 
 var buses = {
-  0: 19,  // (unused bus)
+  0: 29,  // (unused bus)
   3: 3,
   4: 5,
   5: 7,
@@ -13,7 +13,9 @@ var buses = {
   10: 13,
   12: 15,
   13: 17,
-  14: 19
+  14: 19,
+  15: 21,
+  16: 23
 }
 
 var components = [];

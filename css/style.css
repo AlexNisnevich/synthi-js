@@ -125,3 +125,10 @@ body {
   font-size: 30px;
   letter-spacing: 8px;
 }
+
+#joystick {
+  margin: 130px auto;
+  width: 140px;
+  height: 140px;
+  background-color: #333;
+}

@@ -347,7 +347,38 @@ $(function () {
     startOffset: 30,
     endOffset: 30,
     turn: function (v) { 
-      Reverb.set("mul", v / 10);
+      JoystickX.set("source.mul", v / 5);  // up to 2V p-p
+      JoystickX.set("source.add", - v / 10); 
+    }
+  });
+
+  $("#joystickXRange").knobKnob({
+    min: 0,
+    max: 10,
+    value: 150,
+    diameter: 70,
+    label: 'x',
+    color: "green",
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) { 
+      JoystickX.set("source.mul", v / 5);  // up to 2V p-p
+      JoystickX.set("source.add", - v / 10); 
+    }
+  });
+
+  $("#joystickYRange").knobKnob({
+    min: 0,
+    max: 10,
+    value: 150,
+    diameter: 70,
+    label: 'y',
+    color: "green",
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+      JoystickY.set("source.mul", v / 5);  // up to 2V p-p
+      JoystickY.set("source.add", - v / 10); 
     }
   });
 
