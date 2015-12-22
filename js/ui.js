@@ -263,6 +263,7 @@ $(function () {
     endOffset: 30,
     turn: function (v) { 
       EnvelopeShaper.set("attack", v);
+      EnvelopeTrapezoid.set("attack", v);
     }
   });
 
@@ -277,6 +278,7 @@ $(function () {
     endOffset: 30,
     turn: function (v) { 
       EnvelopeShaper.set("on", v);
+      EnvelopeTrapezoid.set("on", v);
     }
   });
 
@@ -291,6 +293,7 @@ $(function () {
     endOffset: 30,
     turn: function (v) { 
       EnvelopeShaper.set("release", v);
+      EnvelopeTrapezoid.set("release", v);
     }
   });
 
@@ -305,6 +308,7 @@ $(function () {
     endOffset: 30,
     turn: function (v) { 
       EnvelopeShaper.set("off", v);
+      EnvelopeTrapezoid.set("off", v);
     }
   });
 
@@ -377,8 +381,8 @@ $(function () {
     startOffset: 30,
     endOffset: 30,
     turn: function (v) {
-      JoystickY.set("source.mul", v / 5);  // up to 2V p-p
-      JoystickY.set("source.add", - v / 10); 
+      JoystickY.set("source.mul", - v / 5);  // up to 2V p-p
+      JoystickY.set("source.add", v / 10); 
     }
   });
 

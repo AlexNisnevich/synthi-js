@@ -174,6 +174,39 @@ var FilterOscillator = new Component(["H", "N"], 10, {
   mul: 0.5
 });
 
+var EnvelopeTrapezoid = new Component([], 11, {
+  ugen: "flock.ugen.math",
+  inputs: {
+    source: {
+      id: "env",
+      ugen: "flock.ugen.asr",
+      start: 0.0,
+      attack: 0.01,
+      sustain: 1.0,
+      on: 1.0,
+      release: 1.0,
+      off: 1.0,
+      gate: {
+        ugen: "flock.ugen.lfPulse",
+        rate: "control",
+        freq: (1 / 3.01) * 2,
+        width: 0.5
+      },
+      mul: 7
+    },
+    add: -4
+  }
+});
+EnvelopeTrapezoid.set = function (property, value) {
+  this.synth.set("env."+property, value);
+
+  var totalTime = this.synth.get("env.attack") + this.synth.get("env.on") + this.synth.get("env.release") + this.synth.get("env.off");
+  var attackTime = this.synth.get("env.attack") + this.synth.get("env.on") + 0.002;
+
+  this.synth.set("env.gate.freq", 1 / totalTime);
+  this.synth.set("env.gate.width", attackTime / totalTime);
+};
+
 var EnvelopeShaper = new Component(["D"], 12, {
   id: "input-D",
   ugen: "flock.ugen.in",
@@ -259,8 +292,8 @@ var JoystickY = new Component([], 16, {
   inputs: {
     source: {
       ugen: "flock.ugen.mouse.cursor",
-      add: -0.5,
-      mul: 1,
+      add: 0.5,
+      mul: -1,
       options: {
         axis: "y",
         target: "#joystick"
