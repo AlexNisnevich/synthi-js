@@ -208,23 +208,29 @@ EnvelopeTrapezoid.set = function (property, value) {
 };
 
 var EnvelopeShaper = new Component(["D"], 12, {
-  id: "input-D",
-  ugen: "flock.ugen.in",
-  mul: {
-    id: "env",
-    ugen: "flock.ugen.asr",
-    start: 0.0,
-    attack: 0.01,
-    sustain: 1.0,
-    on: 1.0,
-    release: 1.0,
-    off: 1.0,
-    gate: {
-      ugen: "flock.ugen.lfPulse",
-      rate: "control",
-      freq: (1 / 3.01) * 2,
-      width: 0.5
-    }
+  ugen: "flock.ugen.math", 
+  inputs: {
+    source: {
+      id: "input-D",
+      ugen: "flock.ugen.in",
+      mul: {
+        id: "env",
+        ugen: "flock.ugen.asr",
+        start: 0.0,
+        attack: 0.01,
+        sustain: 1.0,
+        on: 1.0,
+        release: 1.0,
+        off: 1.0,
+        gate: {
+          ugen: "flock.ugen.lfPulse",
+          rate: "control",
+          freq: (1 / 3.01) * 2,
+          width: 0.5
+        }
+      }
+    },
+    mul: 0.5
   }
 });
 EnvelopeShaper.set = function (property, value) {

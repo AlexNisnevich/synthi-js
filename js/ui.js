@@ -312,6 +312,34 @@ $(function () {
     }
   });
 
+  $("#envTrapezoidLevel").knobKnob({
+    min: 0,
+    max: 10,
+    value: 150,
+    diameter: 70,
+    label: 'trapezoid lvl',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+      // max: -3V to +4V
+      EnvelopeTrapezoid.synth.set("main.source.mul", v * 7/10);
+      EnvelopeTrapezoid.synth.set("main.add", - v * 4/10);
+    }
+  });
+
+  $("#envSignalLevel").knobKnob({
+    min: 0,
+    max: 10,
+    value: 150,
+    diameter: 70,
+    label: 'signal lvl',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+      EnvelopeShaper.synth.set("main.mul", v/10);
+    }
+  });
+
   // Ring Modulator
 
   $("#ringModLevel").knobKnob({
