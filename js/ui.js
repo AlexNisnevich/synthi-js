@@ -410,7 +410,7 @@ $(function () {
     endOffset: 30,
     turn: function (v) {
       JoystickY.set("source.mul", - v / 5);  // up to 2V p-p
-      JoystickY.set("source.add", v / 10); 
+      JoystickY.set("source.add", - v / 2);
     }
   });
 
