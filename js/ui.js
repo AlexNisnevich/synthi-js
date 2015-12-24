@@ -294,8 +294,8 @@ $(function () {
     startOffset: 30,
     endOffset: 30,
     turn: function (v) { 
-      EnvelopeShaper.set("release", v);
-      EnvelopeTrapezoid.set("release", v);
+      EnvelopeShaper.set("release.value", v);
+      EnvelopeTrapezoid.set("release.value", v);
     }
   });
 

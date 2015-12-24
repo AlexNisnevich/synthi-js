@@ -174,7 +174,7 @@ var FilterOscillator = new Component(["H", "N"], 10, {
   mul: 0.5
 });
 
-var EnvelopeTrapezoid = new Component([], 11, {
+var EnvelopeTrapezoid = new Component(["L"], 11, {
   ugen: "flock.ugen.math",
   inputs: {
     source: {
@@ -184,7 +184,21 @@ var EnvelopeTrapezoid = new Component([], 11, {
       attack: 0.01,
       sustain: 1.0,
       on: 1.0,
-      release: 1.0,
+      release: {
+        ugen: "flock.ugen.value",
+        value: 1.0,
+        mul: {
+          ugen: "flock.ugen.math",
+          inputs: {
+            source: 2,
+            pow: {
+              id: "input-L",
+              ugen: "flock.ugen.in",
+              add: 1
+            }
+          }
+        }
+      },
       off: 1.0,
       gate: {
         ugen: "flock.ugen.lfPulse",
@@ -200,14 +214,14 @@ var EnvelopeTrapezoid = new Component([], 11, {
 EnvelopeTrapezoid.set = function (property, value) {
   this.synth.set("env."+property, value);
 
-  var totalTime = this.synth.get("env.attack") + this.synth.get("env.on") + this.synth.get("env.release") + this.synth.get("env.off");
-  var attackTime = this.synth.get("env.attack") + this.synth.get("env.on") + 0.002;
+  var totalTime = this.synth.get("env.attack") + this.synth.get("env.on") + this.synth.get("env.release.value") + this.synth.get("env.off");
+  var attackTime = this.synth.get("env.attack") + this.synth.get("env.on");
 
   this.synth.set("env.gate.freq", 1 / totalTime);
   this.synth.set("env.gate.width", attackTime / totalTime);
 };
 
-var EnvelopeShaper = new Component(["D"], 12, {
+var EnvelopeShaper = new Component(["D", "L"], 12, {
   ugen: "flock.ugen.math", 
   inputs: {
     source: {
@@ -220,7 +234,21 @@ var EnvelopeShaper = new Component(["D"], 12, {
         attack: 0.01,
         sustain: 1.0,
         on: 1.0,
-        release: 1.0,
+        release: {
+          ugen: "flock.ugen.value",
+          value: 1.0,
+          mul: {
+            ugen: "flock.ugen.math",
+            inputs: {
+              source: 2,
+              pow: {
+                id: "input-L",
+                ugen: "flock.ugen.in",
+                add: 1
+              }
+            }
+          }
+        },
         off: 1.0,
         gate: {
           ugen: "flock.ugen.lfPulse",
@@ -236,7 +264,7 @@ var EnvelopeShaper = new Component(["D"], 12, {
 EnvelopeShaper.set = function (property, value) {
   this.synth.set("env."+property, value);
 
-  var totalTime = this.synth.get("env.attack") + this.synth.get("env.on") + this.synth.get("env.release") + this.synth.get("env.off");
+  var totalTime = this.synth.get("env.attack") + this.synth.get("env.on") + this.synth.get("env.release.value") + this.synth.get("env.off");
   var attackTime = this.synth.get("env.attack") + this.synth.get("env.on")
 
   this.synth.set("env.gate.freq", 1 / totalTime);
