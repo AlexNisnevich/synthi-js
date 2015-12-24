@@ -8,17 +8,18 @@ $(function () {
   // Oscillator 1
 
   $("#osc1Freq").knobKnob({
-    min: 40,
-    max: 10000,
-    value: 16,
+    min: 0,
+    max: 8,
+    value: 150,
     diameter: 100,
     label: 'frequency',
     color: 'green',
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
-      Vco1sin.set("freq.value", v);
-      Vco1ramp.set("freq.value", v);
+    turn: function (v) {
+      var freq = 440 * Math.pow(2, v - 4)
+      Vco1sin.set("freq.value", freq);
+      Vco1ramp.set("freq.value", freq);
     }
   });
 
@@ -65,17 +66,18 @@ $(function () {
   // Oscillator 2
 
   $("#osc2Freq").knobKnob({
-    min: 40,
-    max: 10000,
-    value: 16,
+    min: 0,
+    max: 8,
+    value: 150,
     diameter: 100,
     label: 'frequency',
-    color: "green",
+    color: 'green',
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
-      Vco2square.set("freq.value", v);
-      Vco2triangle.set("freq.value", v);
+    turn: function (v) {
+      var freq = 440 * Math.pow(2, v - 4)
+      Vco2square.set("freq.value", freq);
+      Vco2triangle.set("freq.value", freq);
     }
   });
 
@@ -121,19 +123,19 @@ $(function () {
   });
 
   // Oscillator 3
-
   $("#osc3Freq").knobKnob({
-    min: 0.5,
-    max: 500,
-    value: 0,
+    min: 0,
+    max: 10,
+    value: 150,
     diameter: 100,
     label: 'frequency',
-    color: "green",
+    color: 'green',
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
-      Vco3square.set("freq.value", v);
-      Vco3triangle.set("freq.value", v);
+    turn: function (v) {
+      var freq = 15 * Math.pow(2, v - 4)
+      Vco3square.set("freq.value", freq);
+      Vco3triangle.set("freq.value", freq);
     }
   });
 
