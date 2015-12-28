@@ -72,8 +72,8 @@
 				mousedown = true;
 
 				marker.css({
-					top: event.offsetY - markerRadius,
-					left: event.offsetX - markerRadius,
+					top: event.clientY - el.offset().top - markerRadius,
+					left: event.clientX - el.offset().left - markerRadius,
 				});
 			});
 
@@ -81,8 +81,6 @@
 				if (mousedown) {	
 					var topOffset = event.clientY - el.offset().top;
 					var leftOffset = event.clientX - el.offset().left;
-
-					console.log(topOffset.toString() + ", " + leftOffset.toString())
 
 					if (event.clientY - el.offset().top < 0) {
 						topOffset = 0;
