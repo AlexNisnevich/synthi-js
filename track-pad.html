@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Trackpad Test</title>
+
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+</head>
+<body>
+<style type="text/css">
+	
+.trackpad-base {
+	position: relative;
+	background-color: #444;
+	border-radius: 5px;
+	box-shadow: inset 0 0 10px #222;
+	overflow: hidden;
+}
+
+.trackpad-marker {
+	position: absolute;
+	border-radius: 50%;
+}
+
+.trackpad-marker:after {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-image: radial-gradient(circle closest-side at center,
+		rgba(68, 68, 68, 0) 0,
+		rgba(68, 68, 68, 0) 50%, 
+		rgba(68, 68, 68, 1) 100%
+	);
+}
+
+</style>
+<script type="text/javascript">
+(function($){
+	$.fn.trackPad = function(props) {
+		var options = $.extend({
+			width: "300px",
+			height: "200px",
+			markerDiameter: "50px",
+			markerColor: "#DDD"
+		}, props || {});
+
+		return this.each(function() {
+			var el = $(this);
+
+			el.addClass("trackpad-base").append("<div class='trackpad-marker'></div>").css({
+				width: options.width,
+				height: options.height
+			});
+
+			var marker = $(".trackpad-marker", el);
+			var markerRadius = parseInt(options.markerDiameter) / 2;
+			
+			marker.css({
+				width: options.markerDiameter,
+				height: options.markerDiameter,
+				background: options.markerColor,
+				top: parseInt(options.height) / 2 - markerRadius,
+				left: parseInt(options.width) / 2 - markerRadius
+			});
+
+			var mousedown = false;
+
+			el.on("mousedown", function(event) {
+				mousedown = true;
+
+				marker.css({
+					top: event.offsetY - markerRadius,
+					left: event.offsetX - markerRadius,
+				});
+			});
+
+			el.on("mousemove", function(event) {
+				if (mousedown) {	
+					var topOffset = event.clientY - el.offset().top;
+					var leftOffset = event.clientX - el.offset().left;
+
+					console.log(topOffset.toString() + ", " + leftOffset.toString())
+
+					if (event.clientY - el.offset().top < 0) {
+						topOffset = 0;
+					} 
+
+					if (event.clientY - el.offset().top > parseInt(options.height)) {
+						topOffset = parseInt(options.height);
+					}
+
+					if (event.clientX - el.offset().left < 0) {
+						leftOffset = 0;
+					}
+
+					if (event.clientX - el.offset().left > parseInt(options.width)) {
+						leftOffset = parseInt(options.width);
+					}
+
+					marker.css({
+						top: topOffset - markerRadius,
+						left: leftOffset - markerRadius,
+					});
+				}
+			});
+
+			$(document).on("mouseup", function(event) {
+				mousedown = false;
+
+				marker.css({
+					top: parseInt(options.height) / 2 - markerRadius,
+					left: parseInt(options.width) / 2 - markerRadius
+				});
+			});
+		});
+	}
+})(jQuery);
+
+$(document).ready(function() {
+	$("#test").trackPad({
+		width: "300px",
+		height: "200px",
+		markerDiameter: "50px",
+		markerColor: "#DDD"
+	})
+});
+</script>
+	<div id="test">
+
+	</div>
+</body>
+</html>
