@@ -416,6 +416,13 @@ $(function () {
     }
   });
 
+  $("#joystick2").trackPad({
+    width: "140px",
+    height: "140px",
+    markerDiameter: "20px",
+    markerColor: "#DDD"
+  });
+
   // Set up masonry grid layout and fade in
 
   $('.grid').masonry({

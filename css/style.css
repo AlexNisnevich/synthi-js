@@ -132,3 +132,30 @@ body {
   height: 140px;
   background-color: #333;
 }
+
+.trackpad-base {
+  position: relative;
+  background-color: #444;
+  border-radius: 5px;
+  box-shadow: inset 0 0 10px #222;
+  overflow: hidden;
+}
+
+.trackpad-marker {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.trackpad-marker:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle closest-side at center,
+    rgba(68, 68, 68, 0) 0,
+    rgba(68, 68, 68, 0) 50%, 
+    #333 100%
+  );
+}
