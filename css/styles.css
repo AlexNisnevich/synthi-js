@@ -1,0 +1,35 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:300);
+@import url(https://fonts.googleapis.com/css?family=Orbitron:900);
+
+body {
+	font-family: 'Raleway', sans-serif;
+	font-weight: 300;
+	letter-spacing: 1.5px;
+}
+
+.logo {
+	font-family: 'Orbitron', sans-serif;
+	font-weight: 900;
+	font-size: 48px;
+	letter-spacing: 8px;
+}
+
+.dialOsc1Freq, .dialOsc1Shape, .dialOsc1SinLevel, .dialOsc1RampLevel {
+	float: left;
+	height: 250px;
+	width: 200px;
+	position: relative;
+}
+
+.knob-container {
+	position: absolute;
+	top 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	margin: auto;
+}
+
+.clearfix {
+	overflow: auto;
+}
