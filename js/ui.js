@@ -10,7 +10,7 @@ $(function () {
   $("#osc1Freq").knobKnob({
     min: 0,
     max: 8,
-    value: 150,
+    value: 180,
     diameter: 100,
     label: 'frequency',
     color: 'green',
@@ -20,13 +20,14 @@ $(function () {
       var freq = 440 * Math.pow(2, v - 4)
       Vco1sin.set("freq.value", freq);
       Vco1ramp.set("freq.value", freq);
+      $("#osc1FreqDisplay").text(Math.round(freq));
     }
   });
 
   $("#osc1Shape").knobKnob({
     min: 0,
     max: 10,
-    value: 150,
+    value: 180,
     diameter: 70,
     label: 'shape',
     color: "blue",
@@ -42,7 +43,7 @@ $(function () {
     max: 10,
     diameter: 70,
     label: 'sin level',
-    value: 30,
+    value: 60,
     startOffset: 30,
     endOffset: 30,
     turn: function (v) {
@@ -68,7 +69,7 @@ $(function () {
   $("#osc2Freq").knobKnob({
     min: 0,
     max: 8,
-    value: 150,
+    value: 180,
     diameter: 100,
     label: 'frequency',
     color: 'green',
@@ -78,13 +79,14 @@ $(function () {
       var freq = 440 * Math.pow(2, v - 4)
       Vco2square.set("freq.value", freq);
       Vco2triangle.set("freq.value", freq);
+      $("#osc2FreqDisplay").text(Math.round(freq));
     }
   });
 
   $("#osc2Shape").knobKnob({
     min: 0,
     max: 10,
-    value: 150,
+    value: 180,
     diameter: 70,
     label: 'shape',
     color: "blue",
@@ -101,7 +103,7 @@ $(function () {
     max: 10,
     diameter: 70,
     label: 'squ level',
-    value: 30,
+    value: 60,
     startOffset: 30,
     endOffset: 30,
     turn: function (v) {
@@ -125,24 +127,33 @@ $(function () {
   // Oscillator 3
   $("#osc3Freq").knobKnob({
     min: 0,
-    max: 10,
-    value: 150,
+    max: 14,
+    value: 180,
     diameter: 100,
     label: 'frequency',
     color: 'green',
     startOffset: 30,
     endOffset: 30,
     turn: function (v) {
-      var freq = 15 * Math.pow(2, v - 4)
+      var unroundedFreq = 4 * Math.pow(2, (v - 7))
+      if (unroundedFreq < 1) {
+        freq = Math.round(unroundedFreq * 40) / 40;
+      } else if (unroundedFreq < 10) {
+        freq = Math.round(unroundedFreq * 4) / 4;
+      } else {
+        freq = unroundedFreq;
+      }
+
       Vco3square.set("freq.value", freq);
       Vco3triangle.set("freq.value", freq);
+      $("#osc3FreqDisplay").text(freq > 10 ? Math.round(freq) : freq);
     }
   });
 
   $("#osc3Shape").knobKnob({
     min: 0,
     max: 10,
-    value: 150,
+    value: 180,
     diameter: 70,
     label: 'shape',
     color: "blue",
@@ -159,7 +170,7 @@ $(function () {
     max: 10,
     diameter: 70,
     label: 'squ level',
-    value: 30,
+    value: 60,
     startOffset: 30,
     endOffset: 30,
     turn: function (v) {
@@ -185,7 +196,7 @@ $(function () {
   $("#noiseLevel").knobKnob({
     min: 0,
     max: 10,
-    value: 30,
+    value: 60,
     diameter: 70,
     label: 'level',
     color: 'blue',
@@ -199,7 +210,7 @@ $(function () {
   $("#noiseShape").knobKnob({
     min: 0,
     max: 10,
-    value: 150,
+    value: 180,
     diameter: 70,
     label: 'shape',
     startOffset: 30,
@@ -214,7 +225,7 @@ $(function () {
   $("#filterFrequency").knobKnob({
     min: 0,
     max: 10,
-    value: 150,
+    value: 180,
     diameter: 70,
     label: 'frequency',
     color: 'blue',
@@ -228,7 +239,7 @@ $(function () {
   $("#filterResponse").knobKnob({
     min: 0,
     max: 10,
-    value: 150,
+    value: 180,
     diameter: 70,
     label: 'response',
     color: 'yellow',
@@ -242,7 +253,7 @@ $(function () {
   $("#filterLevel").knobKnob({
     min: 0,
     max: 10,
-    value: 150,
+    value: 180,
     diameter: 70,
     label: 'level',
     startOffset: 30,
@@ -257,7 +268,7 @@ $(function () {
   $("#envAttack").knobKnob({
     min: 0.01,
     max: 1,
-    value: 30,
+    value: 60,
     diameter: 70,
     label: 'attack',
     color: "red",
@@ -287,7 +298,7 @@ $(function () {
   $("#envDecay").knobKnob({
     min: 0.01,
     max: 15,
-    value: 30,
+    value: 60,
     diameter: 70,
     label: 'decay',
     color: "red",
@@ -302,7 +313,7 @@ $(function () {
   $("#envOff").knobKnob({
     min: 0.01,
     max: 10,
-    value: 30,
+    value: 60,
     diameter: 70,
     label: 'off',
     color: "red",
@@ -317,7 +328,7 @@ $(function () {
   $("#envTrapezoidLevel").knobKnob({
     min: 0,
     max: 10,
-    value: 150,
+    value: 180,
     diameter: 70,
     label: 'trapezoid lvl',
     startOffset: 30,
@@ -332,7 +343,7 @@ $(function () {
   $("#envSignalLevel").knobKnob({
     min: 0,
     max: 10,
-    value: 150,
+    value: 180,
     diameter: 70,
     label: 'signal lvl',
     startOffset: 30,
@@ -347,7 +358,7 @@ $(function () {
   $("#ringModLevel").knobKnob({
     min: 0,
     max: 10,
-    value: 150,
+    value: 180,
     diameter: 70,
     label: 'level',
     startOffset: 30,
@@ -375,7 +386,7 @@ $(function () {
   $("#reverbLevel").knobKnob({
     min: 0,
     max: 10,
-    value: 150,
+    value: 180,
     diameter: 70,
     label: 'level',
     startOffset: 30,
@@ -389,7 +400,7 @@ $(function () {
   $("#joystickXRange").knobKnob({
     min: 0,
     max: 10,
-    value: 150,
+    value: 180,
     diameter: 70,
     label: 'x',
     color: "green",
@@ -404,7 +415,7 @@ $(function () {
   $("#joystickYRange").knobKnob({
     min: 0,
     max: 10,
-    value: 150,
+    value: 180,
     diameter: 70,
     label: 'y',
     color: "green",
@@ -419,7 +430,7 @@ $(function () {
   $("#ch1level").knobKnob({
     min: 0,
     max: 10,
-    value: 150,
+    value: 180,
     diameter: 70,
     label: 'level',
     startOffset: 30,
@@ -463,7 +474,7 @@ $(function () {
   $("#ch2level").knobKnob({
     min: 0,
     max: 10,
-    value: 150,
+    value: 180,
     diameter: 70,
     label: 'level',
     startOffset: 30,
