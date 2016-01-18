@@ -1,11 +1,11 @@
 var environment = flock.init({
-  numBuses: 32
+  numBuses: 48
 });
 
 environment.start();
 
 var buses = {
-  0: 29,  // (unused bus)
+  0: 39,  // (unused bus)
   3: 3,
   4: 5,
   5: 7,
@@ -29,6 +29,7 @@ function Component(inputPins, outputPin, synthDef) {
     if (synthDef.id === undefined) { synthDef.id = "main"; }
 
     var enclosingDef = {
+      id: "output",
       ugen: "flock.ugen.out",
       sources: synthDef
     };

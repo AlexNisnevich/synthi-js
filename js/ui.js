@@ -416,6 +416,66 @@ $(function () {
     }
   });
 
+  $("#ch1level").knobKnob({
+    min: 0,
+    max: 10,
+    value: 150,
+    diameter: 70,
+    label: 'level',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+      Output.set("left1.mul", v / 5);
+      Output.set("right1.mul", v / 5);
+    }
+  });
+
+  $("#ch1pan").knobKnob({
+    min: 0,
+    max: 10,
+    value: 0,
+    diameter: 70,
+    label: 'pan',
+    color: "green",
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+      Output.set("left1.source.mul", 1 - v / 10);
+      Output.set("right1.source.mul", v / 10);
+    }
+  });
+
+  $("#ch2pan").knobKnob({
+    min: 0,
+    max: 10,
+    value: 300,
+    diameter: 70,
+    label: 'pan',
+    color: "green",
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+      Output.set("left2.source.mul", 1 - v / 10);
+      Output.set("right2.source.mul", v / 10);
+    }
+  });
+
+  $("#ch2level").knobKnob({
+    min: 0,
+    max: 10,
+    value: 150,
+    diameter: 70,
+    label: 'level',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+      Output.set("left2.mul", v / 5);
+      Output.set("right2.mul", v / 5);
+    }
+  });
+
+  // unfortunately, the trackpad JS causes too much buzz to use
+  // TODO: figure out why!
   /*$("#joystick").trackPad({
     width: "140px",
     height: "140px",
