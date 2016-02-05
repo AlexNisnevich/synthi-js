@@ -3,11 +3,11 @@
   <!-- This includes Flocking and all its dependencies, including jQuery 2.1.3 and Infusion -->
   <script src="lib/flocking/dist/flocking-all.js"></script>
   <script src="lib/masonry.pkgd.min.js"></script>
+  <script src="lib/segment-display.js"></script>
   
   <script src="lib/knobKnob/transform.js"></script>
   <script src="lib/knobKnob/knobKnob.jquery.js"></script>
   <link href="lib/knobKnob/knobKnob.css" rel="stylesheet">
-  <script src="lib/jQuery-Knob/dist/jquery.knob.min.js"></script>
 
   <link rel="stylesheet" href="css/style.css"></link>
 </head>
@@ -27,7 +27,22 @@
       <div class="panelName">RING MOD</div>
       <div class="dial" id="ringModLevel"></div>
     </div>
-    <div class="panel width2"></div>
+    <div class="panel width2 enhancement">
+      <div class="panelName">MEMORY BANKS</div>
+      <div id="bankDisplayContainer">
+        <canvas id="bankDisplay" width="183" height="70"></canvas>
+      </div>
+      <div id="bankSelectButtons">
+        <button id="bankUp">&uarr;</button>
+        <button id="bankDown">&darr;</button>
+      </div>
+      <div id="bankOperationButtons">
+        <button id="bankStore">Store</button>
+        <button id="bankLoad">Load</button>
+        <button id="bankClear">Clear</button>
+        <button id="bankImportExport">Imp/Export</button>
+      </div>
+    </div>
 
     <div class="panel width4" id="oscillator1">
       <div class="panelName">OSCILLATOR 1</div>
@@ -302,6 +317,16 @@
       <div class="dial" id="ch1pan"></div>
       <div class="dial" id="ch2pan"></div>
       <div class="dial" id="ch2level"></div>
+    </div>
+  </div>
+
+  <div id="memoryDialog" class="modalDialog">
+    <div class="panel">
+      <div class="panelName">MEMORY IMPORT / EXPORT</div>
+      <textarea>
+      </textarea>
+      <button id="memoryImport">Import Into Memory</button>
+      <button id="memoryDialogClose">Close</button>
     </div>
   </div>
 

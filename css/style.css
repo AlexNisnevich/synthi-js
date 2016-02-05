@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:300);
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
 @import url(https://fonts.googleapis.com/css?family=Orbitron:900);
+@import url(https://fonts.googleapis.com/css?family=VT323);
 
 body {
   font-family: 'Raleway', sans-serif;
@@ -24,6 +25,10 @@ body {
   border: 1px solid #333;
   background-color: #f8f8f8;
   text-align: center;
+}
+
+.panel.enhancement {
+  background-color: #e8e8e8;
 }
 
 .panelName {
@@ -169,4 +174,104 @@ body {
     rgba(68, 68, 68, 0) 50%, 
     #333 100%
   );
+}
+
+#bankDisplayContainer {
+  float: left;
+  background-color: #333; 
+  padding: 10px; 
+  margin-top: 15px;
+  border-radius: 10px;
+}
+
+#bankSelectButtons {
+  margin-top: 13px;
+}
+
+#bankSelectButtons button {
+  height: 42px;
+  margin: 2px;
+  margin-left: 5px;
+  padding: 3px 4px;
+  font-size: 1.2em;
+  color: #e95d0f;
+}
+
+#bankSelectButtons button:first {
+  margin-top: 0px;
+}
+
+#bankOperationButtons button {
+  margin-top: 3px;
+  margin-right: 5px;
+}
+
+#memoryDialog .panel {
+  width: 400px;
+  height: auto;
+  position: relative;
+  float: none;
+  margin: 10% auto;
+  border-width: 3px;
+  border-color: #000;
+  pointer-events: auto;
+}
+
+#memoryDialog textarea {
+  margin-top: 15px;
+  width: 100%;
+  height: 180px;
+  font-family: 'VT323';
+}
+
+#memoryDialog button {
+  float: none;
+  margin-top: 5px;
+}
+
+button#bankImportExport {
+  color: yellow;
+}
+
+button#memoryDialogClose {
+  background: red;
+}
+
+/* adapted from https://codepen.io/james2doyle/pen/AKblD */
+button {
+  cursor: pointer;
+  float: left;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.7), 0 0 0 hsla(208.12, 44.44%, 85.88%, 0);
+  color: #fff;
+  font-weight: bold;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 6px 10px -1px rgba(0,0,0,0.6);
+
+  background: -moz-linear-gradient(top, #37373d 0%, #222228 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#37373d), color-stop(100%,#222228)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #37373d 0%,#222228 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #37373d 0%,#222228 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #37373d 0%,#222228 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #37373d 0%,#222228 100%); /* W3C */
+
+  user-select: none;
+  border-radius: 5px;
+}
+button:focus {
+  outline: none;
+}
+
+/* taken from http://www.webdesignerdepot.com/2012/10/creating-a-modal-window-with-html5-and-css3/ */
+.modalDialog {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 99999;
+  -webkit-transition: opacity 400ms ease-in;
+  -moz-transition: opacity 400ms ease-in;
+  transition: opacity 400ms ease-in;
+  pointer-events: none;
 }

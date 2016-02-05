@@ -21,6 +21,9 @@ var buses = {
 
 var components = [];
 
+var currentBank = 0;
+
+
 function Component(inputPins, outputPin, synthDef) {
   this.init = function () {
     this.inputPins = inputPins;
@@ -88,3 +91,71 @@ function connectPin(pin) {
     }
   }
 }
+
+function disconnectAllPins() {
+  $("#patches input").each(function (i, pin) {
+    if ($(pin).is(':checked')) {
+      $(pin).prop('checked', false);
+      connectPin($(pin));
+    }
+  });
+}
+
+function saveState() {
+  var dialValues = {};
+  $(".dial").each(function (i, x) { 
+    dialValues[$(x).attr("id")] = parseInt($(".knob", x).attr("data-value")); 
+  });
+
+  var pinValues = {};
+  $("#patches input").each(function (i,x) {
+    pinValues[$(x).attr("data-in") + "-" + $(x).attr("data-out")] = $(x).is(':checked')
+  });
+
+  return LZString.compressToBase64(JSON.stringify({
+    dials: dialValues,
+    pins: pinValues
+  }));
+}
+
+function loadState(state) {
+  console.log(state);
+  var parsed = JSON.parse(LZString.decompressFromBase64(state));
+  console.log(parsed);
+
+  // Dials
+  var dials = parsed.dials;
+  for (dialName in dials) {
+    var dialValue = dials[dialName];
+    ($(".dial#" + dialName + " .knob").data("set"))(dialValue);
+  }
+
+  // Pins
+  var pins = parsed.pins;
+  disconnectAllPins(); // reset state of patchboard first!
+  for (pinName in pins) {
+    var pinIn = pinName.split("-")[0];
+    var pinOut = pinName.split("-")[1];
+    var checked = pins[pinName];
+
+    if (checked) {
+      var pin = $("#patches input[data-in="+pinIn+"][data-out="+pinOut+"]");
+      console.log(pin);
+      pin.prop('checked', true);
+      connectPin(pin);
+    }
+  }
+}
+
+function storeToBank() {
+  localStorage["bank" + currentBank] = saveState();
+}
+
+function loadFromBank() {
+  loadState(localStorage["bank" + currentBank]);
+}
+
+function clearBank() {
+  localStorage.removeItem("bank" + currentBank);
+}
+
