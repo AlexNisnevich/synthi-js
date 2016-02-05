@@ -109,7 +109,9 @@ function saveState() {
 
   var pinValues = {};
   $("#patches input").each(function (i,x) {
-    pinValues[$(x).attr("data-in") + "-" + $(x).attr("data-out")] = $(x).is(':checked')
+    if ($(x).is(':checked')) {
+      pinValues[$(x).attr("data-in") + "-" + $(x).attr("data-out")] = true
+    }
   });
 
   return LZString.compressToBase64(JSON.stringify({
@@ -140,7 +142,6 @@ function loadState(state) {
 
     if (checked) {
       var pin = $("#patches input[data-in="+pinIn+"][data-out="+pinOut+"]");
-      console.log(pin);
       pin.prop('checked', true);
       connectPin(pin);
     }
