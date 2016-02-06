@@ -489,6 +489,34 @@ $(function () {
     }
   });
 
+  // Input Level
+
+  $("#ch1inputLevel").knobKnob({
+    min: 0,
+    max: 10,
+    value: 180,
+    diameter: 70,
+    label: 'channel 1',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+      InputCh1.set("mul", v / 5);
+    }
+  });
+
+  $("#ch2inputLevel").knobKnob({
+    min: 0,
+    max: 10,
+    value: 180,
+    diameter: 70,
+    label: 'channel 2',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+      InputCh2.set("mul", v / 5);
+    }
+  });
+
   // unfortunately, the trackpad JS causes too much buzz to use
   // TODO: figure out why!
   /*$("#joystick").trackPad({
@@ -579,7 +607,7 @@ $(function () {
         .addClass("disabled")
         .removeClass("detecting");
     }
-  }, 2000);
+  }, 5000);
 
   $("#inputUrl1").on('keyup change', function() {
     InputCh1.set("buffer", {url: $(this).val()});
