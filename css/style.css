@@ -75,7 +75,18 @@ body {
 }
 
 #patches {
-  margin: 20px auto;
+  margin: 0px auto;
+  border-collapse: collapse;
+}
+
+#patches input {
+  appearance: radio;
+  -webkit-appearance: radio;
+  -moz-appearance: radio;
+  -ms-appearance: radio;
+
+  transform: scale(0.8);
+  -webkit-transform: scale(0.8);
 }
 
 #patches th {
@@ -83,14 +94,67 @@ body {
   letter-spacing: 3px;
   max-width: 20px;
   border: 1px solid black;
+  position: relative;
+  vertical-align: top;
 }
+
+#patches td {
+  background: black;
+  border-color: black;
+}
+
+/*TODO: use something like this on all sides to make a slightly rounded patchboard
+#patches tr:nth-child(2) td:nth-child(2) {
+  border-top-left-radius: 10px;
+}
+*/
 
 #patches td:nth-child(1) {
   max-width: 120px;
   border: 1px solid black;
+  background: inherit;
 }
 
-#patches th:nth-child(1), #patches tr:last-child td {
+#patches td:nth-child(2) {
+  background: inherit;
+  padding: 0;
+}
+
+#patches td:nth-child(2) .tri {
+  height: 22px;
+  width: 18px;
+  font-size: 26px;
+  position: relative;
+  top: -3px;
+  left: -2px;
+}
+
+#patches td:last-child {
+  border-left: 2px solid black;
+  padding-left: 5px;
+  background: inherit;
+}
+
+#patches th .tri {
+  display: block;
+  font-size: 28px;
+  position: absolute;
+  left: -3px;
+  bottom: 0px;
+  height: 24px;
+}
+
+#patches th:nth-child(1), #patches th:nth-child(2) {
+  border: 0;
+}
+
+#patches tr:last-child td {
+  border-top: 2px solid black;
+  background: inherit;
+  text-align: center;
+}
+
+#patches tr:last-child td:first-child, #patches tr:last-child td:nth-child(2), #patches tr:last-child td:last-child {
   border: 0;
 }
 
@@ -203,7 +267,7 @@ body {
 
 #bankOperationButtons button {
   margin-top: 3px;
-  margin-right: 5px;
+  margin-right: 3px;
 }
 
 #memoryDialog .panel {
@@ -235,6 +299,50 @@ button#bankImportExport {
 
 button#memoryDialogClose {
   background: red;
+}
+
+#inputSources {
+  display: none;
+  margin-top: 15px;
+  font-size: 0.75em;
+}
+
+.inputSource {
+  float: left;
+  width: 110px;
+  height: 108px;
+  margin-right: 7px;
+  border: 1px solid #333;
+  border-radius: 10px;
+}
+
+.inputSource .inputSourceHeading {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.inputSource input {
+  width: 65px;
+}
+
+.inputSource input.short {
+  width: 45px;
+}
+
+#corsStatus {
+  margin-top: 40px;
+  font-size: 0.6em;
+}
+
+#corsStatus.disabled, #corsStatus.disabled a {
+  color: red;
+}
+
+#corsStatus.disabled a:hover {
+  color: white;
+  background-color: red;
+  text-decoration: none;
 }
 
 /* adapted from https://codepen.io/james2doyle/pen/AKblD */

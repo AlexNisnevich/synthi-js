@@ -13,7 +13,26 @@
 </head>
 <body>
   <div class="grid">
-    <div class="panel width2"></div>
+    <div class="panel width2 enhancement">
+      <div class="panelName">INPUT SOURCES</div>
+      <div id="inputSources">
+        <div class="inputSource" id="inputCh1">
+          <div class="inputSourceHeading">Ch 1</div>
+          URL: <input id="inputUrl1" type="text"></input><br />
+          Speed: <input id="speed1" type="number" value="1" class="short" step="0.1"></input><br />
+          Start: <input id="start1" type="number" value="0" class="short"></input> %<br />
+          End: <input id="end1" type="number" value="100" class="short"></input> %
+        </div>
+        <div class="inputSource" id="inputCh2">
+          <div class="inputSourceHeading">Ch 2</div>
+          URL: <input id="inputUrl2" type="text"></input><br />
+          Speed: <input id="speed2" type="number" value="1" class="short" step="0.1"></input><br />
+          Start: <input id="start2" type="number" value="0" class="short"></input> %<br />
+          End: <input id="end2" type="number" value="100" class="short"></input> %
+        </div>
+      </div>
+      <div id="corsStatus" class="detecting">Detecting CORS support ...</div>
+    </div>
     <div class="panel width2" id="scope">
       <canvas id="gfx" height="125" width="230"></canvas>
     </div>
@@ -74,21 +93,23 @@
       <table id="patches">
         <tr>
           <th></th>
-          <th>o u t p u t &nbsp; ch 1</th>
-          <th>s c o p e</th>
-          <th>o u t p u t &nbsp; ch 2</th>
-          <th>e n v e l o p e</th>
-          <th>r i n g &nbsp; m o d &nbsp; A</th>
-          <th>r i n g &nbsp; m o d &nbsp; B</th>
-          <th>r e v e r b</th>
-          <th>f i l t e r</th>
-          <th>o s c &nbsp; f r e q &nbsp; 1</th>
-          <th>o s c &nbsp; f r e q &nbsp; 2</th>
-          <th>o s c &nbsp; f r e q &nbsp; 3</th>
-          <th>d e l a y</th>
+          <th></th>
+          <th>o u t p u t &nbsp; ch 1 &nbsp; <span class="tri">&#9650;</span></th>
+          <th>s c o p e &nbsp; <span class="tri">&#9650;</span></th>
+          <th>o u t p u t &nbsp; ch 2 &nbsp; <span class="tri">&#9650;</span></th>
+          <th>e n v e l o p e &nbsp; <span class="tri">&#9650;</span></th>
+          <th>r i n g &nbsp; m o d &nbsp; A &nbsp; <span class="tri">&#9650;</span></th>
+          <th>r i n g &nbsp; m o d &nbsp; B &nbsp; <span class="tri">&#9650;</span></th>
+          <th>r e v e r b &nbsp; <span class="tri">&#9650;</span></th>
+          <th>f i l t e r &nbsp; <span class="tri">&#9650;</span></th>
+          <th>o s c &nbsp; f r e q &nbsp; 1 &nbsp; <span class="tri">&#9650;</span></th>
+          <th>o s c &nbsp; f r e q &nbsp; 2 &nbsp; <span class="tri">&#9650;</span></th>
+          <th>o s c &nbsp; f r e q &nbsp; 3 &nbsp; <span class="tri">&#9650;</span></th>
+          <th>d e c a y &nbsp; <span class="tri">&#9650;</span></th>
         </tr>
         <tr>
           <td>oscillator 1</td>
+          <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="3" type="checkbox"></td>
           <td><input data-in="B" data-out="3" type="checkbox"></td>
           <td><input data-in="C" data-out="3" type="checkbox"></td>
@@ -105,6 +126,7 @@
         </tr>
         <tr>
           <td>oscillator 2</td>
+          <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="4" type="checkbox"></td>
           <td><input data-in="B" data-out="4" type="checkbox"></td>
           <td><input data-in="C" data-out="4" type="checkbox"></td>
@@ -121,6 +143,7 @@
         </tr>
         <tr>
           <td>oscillator 3</td>
+          <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="5" type="checkbox"></td>
           <td><input data-in="B" data-out="5" type="checkbox"></td>
           <td><input data-in="C" data-out="5" type="checkbox"></td>
@@ -137,6 +160,7 @@
         </tr>
         <tr>
           <td>noise</td>
+          <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="7" type="checkbox"></td>
           <td><input data-in="B" data-out="7" type="checkbox"></td>
           <td><input data-in="C" data-out="7" type="checkbox"></td>
@@ -152,7 +176,42 @@
           <td>7</td>
         </tr>
         <tr>
+          <td>input ch 1</td>
+          <td><div class="tri">&#9658;</div></td>
+          <td><input data-in="A" data-out="8" type="checkbox"></td>
+          <td><input data-in="B" data-out="8" type="checkbox"></td>
+          <td><input data-in="C" data-out="8" type="checkbox"></td>
+          <td><input data-in="D" data-out="8" type="checkbox"></td>
+          <td><input data-in="E" data-out="8" type="checkbox"></td>
+          <td><input data-in="F" data-out="8" type="checkbox"></td>
+          <td><input data-in="G" data-out="8" type="checkbox"></td>
+          <td><input data-in="H" data-out="8" type="checkbox"></td>
+          <td><input data-in="I" data-out="8" type="checkbox"></td>
+          <td><input data-in="J" data-out="8" type="checkbox"></td>
+          <td><input data-in="K" data-out="8" type="checkbox"></td>
+          <td><input data-in="L" data-out="8" type="checkbox"></td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <td>input ch 2</td>
+          <td><div class="tri">&#9658;</div></td>
+          <td><input data-in="A" data-out="9" type="checkbox"></td>
+          <td><input data-in="B" data-out="9" type="checkbox"></td>
+          <td><input data-in="C" data-out="9" type="checkbox"></td>
+          <td><input data-in="D" data-out="9" type="checkbox"></td>
+          <td><input data-in="E" data-out="9" type="checkbox"></td>
+          <td><input data-in="F" data-out="9" type="checkbox"></td>
+          <td><input data-in="G" data-out="9" type="checkbox"></td>
+          <td><input data-in="H" data-out="9" type="checkbox"></td>
+          <td><input data-in="I" data-out="9" type="checkbox"></td>
+          <td><input data-in="J" data-out="9" type="checkbox"></td>
+          <td><input data-in="K" data-out="9" type="checkbox"></td>
+          <td><input data-in="L" data-out="9" type="checkbox"></td>
+          <td>9</td>
+        </tr>
+        <tr>
           <td>filter</td>
+          <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="10" type="checkbox"></td>
           <td><input data-in="B" data-out="10" type="checkbox"></td>
           <td><input data-in="C" data-out="10" type="checkbox"></td>
@@ -169,6 +228,7 @@
         </tr>
         <tr>
           <td>trapezoid</td>
+          <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="11" type="checkbox"></td>
           <td><input data-in="B" data-out="11" type="checkbox"></td>
           <td><input data-in="C" data-out="11" type="checkbox"></td>
@@ -185,6 +245,7 @@
         </tr>
         <tr>
           <td>env</td>
+          <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="12" type="checkbox"></td>
           <td><input data-in="B" data-out="12" type="checkbox"></td>
           <td><input data-in="C" data-out="12" type="checkbox"></td>
@@ -201,6 +262,7 @@
         </tr>
         <tr>
           <td>ring mod</td>
+          <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="13" type="checkbox"></td>
           <td><input data-in="B" data-out="13" type="checkbox"></td>
           <td><input data-in="C" data-out="13" type="checkbox"></td>
@@ -217,6 +279,7 @@
         </tr>
         <tr>
           <td>reverb</td>
+          <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="14" type="checkbox"></td>
           <td><input data-in="B" data-out="14" type="checkbox"></td>
           <td><input data-in="C" data-out="14" type="checkbox"></td>
@@ -233,6 +296,7 @@
         </tr>
         <tr>
           <td>joystick x</td>
+          <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="15" type="checkbox"></td>
           <td><input data-in="B" data-out="15" type="checkbox"></td>
           <td><input data-in="C" data-out="15" type="checkbox"></td>
@@ -249,6 +313,7 @@
         </tr>
         <tr>
           <td>joystick y</td>
+          <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="16" type="checkbox"></td>
           <td><input data-in="B" data-out="16" type="checkbox"></td>
           <td><input data-in="C" data-out="16" type="checkbox"></td>
@@ -264,6 +329,7 @@
           <td>16</td>
         </tr>
         <tr>
+          <td></td>
           <td></td>
           <td>A</td>
           <td>B</td>
