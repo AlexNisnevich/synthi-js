@@ -347,6 +347,22 @@ button#memoryDialogClose {
   text-decoration: none;
 }
 
+#envLight {
+  position: absolute;
+  left: 111px;
+  top: 6px;
+  width: 30px;
+  background-color: #eee;
+  height: 30px;
+  border-radius: 15px;
+  box-shadow: inset 0 0 10px #222;
+}
+
+#envLight.on {
+  background-color: rgba(255, 0, 0, 0.58);
+  box-shadow: inset 0 0 10px #222, inset 0 0 5px #fff;
+}
+
 /* adapted from https://codepen.io/james2doyle/pen/AKblD */
 button {
   cursor: pointer;

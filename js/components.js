@@ -342,7 +342,55 @@ EnvelopeShaper.set = function (property, value) {
 
   this.synth.set("env.gate.freq", 1 / totalTime);
   this.synth.set("env.gate.width", attackTime / totalTime);
+
+  EnvelopeLightOn.synth.set("trigger.freq", 1 / totalTime);
+  EnvelopeLightOn.synth.set("trigger.width", attackTime / totalTime);
+
+  EnvelopeLightOff.synth.set("trigger.freq", 1 / totalTime);
+  EnvelopeLightOff.synth.set("trigger.width", attackTime / totalTime);
 };
+
+var EnvelopeLightOn = new Component([], 0, {
+  ugen: "flock.ugen.triggerCallback",
+  trigger: {
+    id: "trigger",
+    ugen: "flock.ugen.lfPulse",
+    rate: "control",
+    freq: (1 / 3.01) * 2,
+    width: 0.5
+  },
+  options: {
+    callback: {
+      func: function () {
+        $('#envLight').addClass('on');
+      }
+    }
+  }
+});
+
+var EnvelopeLightOff = new Component([], 0, {
+  ugen: "flock.ugen.triggerCallback",
+  trigger: {
+    ugen: "flock.ugen.math",
+    inputs: {
+      source: {
+        id: "trigger",
+        ugen: "flock.ugen.lfPulse",
+        rate: "control",
+        freq: (1 / 3.01) * 2,
+        width: 0.5
+      },
+      mul: -1
+    }
+  },
+  options: {
+    callback: {
+      func: function () {
+        $('#envLight').removeClass('on');
+      }
+    }
+  }
+});
 
 var RingModulator = new Component(["E", "F"], 13, {
   ugen: "flock.ugen.math",
