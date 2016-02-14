@@ -385,6 +385,14 @@ button {
 button:focus {
   outline: none;
 }
+button:hover {
+  background: -moz-linear-gradient(top, #68686d 0%, #222228 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#68686d), color-stop(100%,#222228)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #68686d 0%,#222228 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #68686d 0%,#222228 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #68686d 0%,#222228 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #68686d 0%,#222228 100%); /* W3C */
+}
 
 /* taken from http://www.webdesignerdepot.com/2012/10/creating-a-modal-window-with-html5-and-css3/ */
 .modalDialog {
