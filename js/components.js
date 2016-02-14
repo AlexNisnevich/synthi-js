@@ -265,9 +265,8 @@ var EnvelopeTrapezoid = new Component(["L"], 11, {
           inputs: {
             source: 2,
             pow: {
-              id: "input-L",
-              ugen: "flock.ugen.in",
-              add: 1
+              id: "input-L1",
+              ugen: "flock.ugen.in"
             }
           }
         }
@@ -276,23 +275,92 @@ var EnvelopeTrapezoid = new Component(["L"], 11, {
       gate: {
         ugen: "flock.ugen.lfPulse",
         rate: "control",
-        freq: (1 / 3.01) * 2,
-        width: 0.5
+        freq: {
+          ugen: "flock.ugen.math",
+          inputs: {
+            source: 1,
+            div: {
+              id: "totalTime1",
+              ugen: "flock.ugen.math",
+              inputs: {
+                source: (0.01 + 1.0 + 1.0),
+                add: {
+                  id: "decayTime1",
+                  ugen: "flock.ugen.value",
+                  value: 1.0,
+                  mul: {
+                    ugen: "flock.ugen.math",
+                    inputs: {
+                      source: 2,
+                      pow: {
+                        id: "input-L2",
+                        ugen: "flock.ugen.in"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        width: {
+          id: "attackTime",
+          ugen: "flock.ugen.math",
+          inputs: {
+            source: (0.01 + 1.0),
+            div: {
+              id: "totalTime2",
+              ugen: "flock.ugen.math",
+              inputs: {
+                source: (0.01 + 1.0 + 1.0),
+                add: {
+                  id: "decayTime2",
+                  ugen: "flock.ugen.value",
+                  value: 1.0,
+                  mul: {
+                    ugen: "flock.ugen.math",
+                    inputs: {
+                      source: 2,
+                      pow: {
+                        id: "input-L3",
+                        ugen: "flock.ugen.in"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
       },
       mul: 7
     },
     add: -4
   }
 });
+EnvelopeTrapezoid.connect = function (inputPin, connectedPins) {
+  this.connectedPins = connectedPins;
+  var inputBuses = connectedPins.map(function (p) {return buses[p];});
+
+  this.synth.set("input-L1.bus", inputBuses);
+  this.synth.set("input-L2.bus", inputBuses);
+  this.synth.set("input-L3.bus", inputBuses);
+
+  this.moveToFront();
+};
 EnvelopeTrapezoid.set = function (property, value) {
   this.synth.set("env."+property, value);
 
-  var totalTime = this.synth.get("env.attack") + this.synth.get("env.on") + this.synth.get("env.release.value") + this.synth.get("env.off");
   var attackTime = this.synth.get("env.attack") + this.synth.get("env.on");
+  var decayTime = this.synth.get("env.release.value");
+  var totalTime = this.synth.get("env.attack") + this.synth.get("env.on") + this.synth.get("env.off");
 
-  this.synth.set("env.gate.freq", 1 / totalTime);
-  this.synth.set("env.gate.width", attackTime / totalTime);
-};
+  this.synth.set("totalTime1.source", totalTime);
+  this.synth.set("totalTime2.source", totalTime);
+  this.synth.set("attackTime.source", attackTime);
+  this.synth.set("totalTime1.add.value", decayTime);
+  this.synth.set("totalTime2.add.value", decayTime);
+}
 
 var EnvelopeShaper = new Component(["D", "L"], 12, {
   ugen: "flock.ugen.math", 
@@ -315,9 +383,8 @@ var EnvelopeShaper = new Component(["D", "L"], 12, {
             inputs: {
               source: 2,
               pow: {
-                id: "input-L",
-                ugen: "flock.ugen.in",
-                add: 1
+                id: "input-L1",
+                ugen: "flock.ugen.in"
               }
             }
           }
@@ -326,38 +393,170 @@ var EnvelopeShaper = new Component(["D", "L"], 12, {
         gate: {
           ugen: "flock.ugen.lfPulse",
           rate: "control",
-          freq: (1 / 3.01) * 2,
-          width: 0.5
+          freq: {
+            ugen: "flock.ugen.math",
+            inputs: {
+              source: 1,
+              div: {
+                id: "totalTime1",
+                ugen: "flock.ugen.math",
+                inputs: {
+                  source: (0.01 + 1.0 + 1.0),
+                  add: {
+                    id: "decayTime1",
+                    ugen: "flock.ugen.value",
+                    value: 1.0,
+                    mul: {
+                      ugen: "flock.ugen.math",
+                      inputs: {
+                        source: 2,
+                        pow: {
+                          id: "input-L2",
+                          ugen: "flock.ugen.in"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          width: {
+            id: "attackTime",
+            ugen: "flock.ugen.math",
+            inputs: {
+              source: (0.01 + 1.0),
+              div: {
+                id: "totalTime2",
+                ugen: "flock.ugen.math",
+                inputs: {
+                  source: (0.01 + 1.0 + 1.0),
+                  add: {
+                    id: "decayTime2",
+                    ugen: "flock.ugen.value",
+                    value: 1.0,
+                    mul: {
+                      ugen: "flock.ugen.math",
+                      inputs: {
+                        source: 2,
+                        pow: {
+                          id: "input-L3",
+                          ugen: "flock.ugen.in"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
     mul: 0.5
   }
 });
+EnvelopeShaper.connect = function (inputPin, connectedPins) {
+  this.connectedPins = connectedPins;
+  var inputBuses = connectedPins.map(function (p) {return buses[p];});
+
+  if (inputPin == "L") {
+    this.synth.set("input-L1.bus", inputBuses);
+    this.synth.set("input-L2.bus", inputBuses);
+    this.synth.set("input-L3.bus", inputBuses);
+  } else {
+    this.synth.set("input-"+inputPin+".bus", inputBuses);
+  }
+
+  this.moveToFront();
+};
 EnvelopeShaper.set = function (property, value) {
   this.synth.set("env."+property, value);
 
-  var totalTime = this.synth.get("env.attack") + this.synth.get("env.on") + this.synth.get("env.release.value") + this.synth.get("env.off");
-  var attackTime = this.synth.get("env.attack") + this.synth.get("env.on")
+  var attackTime = this.synth.get("env.attack") + this.synth.get("env.on");
+  var decayTime = this.synth.get("env.release.value");
+  var totalTime = this.synth.get("env.attack") + this.synth.get("env.on") + this.synth.get("env.off");
 
-  this.synth.set("env.gate.freq", 1 / totalTime);
-  this.synth.set("env.gate.width", attackTime / totalTime);
+  this.synth.set("totalTime1.source", totalTime);
+  this.synth.set("totalTime2.source", totalTime);
+  this.synth.set("attackTime.source", attackTime);
+  this.synth.set("totalTime1.add.value", decayTime);
+  this.synth.set("totalTime2.add.value", decayTime);
 
-  EnvelopeLightOn.synth.set("trigger.freq", 1 / totalTime);
-  EnvelopeLightOn.synth.set("trigger.width", attackTime / totalTime);
+  EnvelopeLightOn.synth.set("totalTime1.source", totalTime);
+  EnvelopeLightOn.synth.set("totalTime2.source", totalTime);
+  EnvelopeLightOn.synth.set("attackTime.source", attackTime);
+  EnvelopeLightOn.synth.set("totalTime1.add.value", decayTime);
+  EnvelopeLightOn.synth.set("totalTime2.add.value", decayTime);
 
-  EnvelopeLightOff.synth.set("trigger.freq", 1 / totalTime);
-  EnvelopeLightOff.synth.set("trigger.width", attackTime / totalTime);
+  EnvelopeLightOff.synth.set("totalTime1.source", totalTime);
+  EnvelopeLightOff.synth.set("totalTime2.source", totalTime);
+  EnvelopeLightOff.synth.set("attackTime.source", attackTime);
+  EnvelopeLightOff.synth.set("totalTime1.add.value", decayTime);
+  EnvelopeLightOff.synth.set("totalTime2.add.value", decayTime);
 };
 
-var EnvelopeLightOn = new Component([], 0, {
+var EnvelopeLightOn = new Component(["L"], 0, {
   ugen: "flock.ugen.triggerCallback",
   trigger: {
     id: "trigger",
     ugen: "flock.ugen.lfPulse",
     rate: "control",
-    freq: (1 / 3.01) * 2,
-    width: 0.5
+    freq: {
+      ugen: "flock.ugen.math",
+      inputs: {
+        source: 1,
+        div: {
+          id: "totalTime1",
+          ugen: "flock.ugen.math",
+          inputs: {
+            source: (0.01 + 1.0 + 1.0),
+            add: {
+              ugen: "flock.ugen.value",
+              value: 1.0,
+              mul: {
+                ugen: "flock.ugen.math",
+                inputs: {
+                  source: 2,
+                  pow: {
+                    id: "input-L1",
+                    ugen: "flock.ugen.in"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    width: {
+      id: "attackTime",
+      ugen: "flock.ugen.math",
+      inputs: {
+        source: (0.01 + 1.0),
+        div: {
+          id: "totalTime2",
+          ugen: "flock.ugen.math",
+          inputs: {
+            source: (0.01 + 1.0 + 1.0),
+            add: {
+              ugen: "flock.ugen.value",
+              value: 1.0,
+              mul: {
+                ugen: "flock.ugen.math",
+                inputs: {
+                  source: 2,
+                  pow: {
+                    id: "input-L2",
+                    ugen: "flock.ugen.in"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   },
   options: {
     callback: {
@@ -367,8 +566,16 @@ var EnvelopeLightOn = new Component([], 0, {
     }
   }
 });
+EnvelopeLightOn.connect = function (inputPin, connectedPins) {
+  this.connectedPins = connectedPins;
+  var inputBuses = connectedPins.map(function (p) {return buses[p];});
+  
+  this.synth.set("input-"+inputPin+"1.bus", inputBuses);
+  this.synth.set("input-"+inputPin+"2.bus", inputBuses);
+  this.moveToFront();
+};
 
-var EnvelopeLightOff = new Component([], 0, {
+var EnvelopeLightOff = new Component(["L"], 0, {
   ugen: "flock.ugen.triggerCallback",
   trigger: {
     ugen: "flock.ugen.math",
@@ -377,8 +584,63 @@ var EnvelopeLightOff = new Component([], 0, {
         id: "trigger",
         ugen: "flock.ugen.lfPulse",
         rate: "control",
-        freq: (1 / 3.01) * 2,
-        width: 0.5
+        freq: {
+          ugen: "flock.ugen.math",
+          inputs: {
+            source: 1,
+            div: {
+              id: "totalTime1",
+              ugen: "flock.ugen.math",
+              inputs: {
+                source: (0.01 + 1.0 + 1.0),
+                add: {
+                  id: "decayTime1",
+                  ugen: "flock.ugen.value",
+                  value: 1.0,
+                  mul: {
+                    ugen: "flock.ugen.math",
+                    inputs: {
+                      source: 2,
+                      pow: {
+                        id: "input-L1",
+                        ugen: "flock.ugen.in"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        width: {
+          id: "attackTime",
+          ugen: "flock.ugen.math",
+          inputs: {
+            source: (0.01 + 1.0),
+            div: {
+              id: "totalTime2",
+              ugen: "flock.ugen.math",
+              inputs: {
+                source: (0.01 + 1.0 + 1.0),
+                add: {
+                  id: "decayTime2",
+                  ugen: "flock.ugen.value",
+                  value: 1.0,
+                  mul: {
+                    ugen: "flock.ugen.math",
+                    inputs: {
+                      source: 2,
+                      pow: {
+                        id: "input-L2",
+                        ugen: "flock.ugen.in"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       mul: -1
     }
@@ -391,6 +653,14 @@ var EnvelopeLightOff = new Component([], 0, {
     }
   }
 });
+EnvelopeLightOff.connect = function (inputPin, connectedPins) {
+  this.connectedPins = connectedPins;
+  var inputBuses = connectedPins.map(function (p) {return buses[p];});
+  
+  this.synth.set("input-"+inputPin+"1.bus", inputBuses);
+  this.synth.set("input-"+inputPin+"2.bus", inputBuses);
+  this.moveToFront();
+};
 
 var RingModulator = new Component(["E", "F"], 13, {
   ugen: "flock.ugen.math",
