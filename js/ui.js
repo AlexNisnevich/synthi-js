@@ -220,6 +220,38 @@ $(function () {
     }
   });
 
+  // Output Filter
+
+  $("#ch1outputFilter").knobKnob({
+    min: 0,
+    max: 10,
+    value: 180,
+    diameter: 70,
+    label: 'ch1',
+    color: 'yellow',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+      Output.set("left.freq", 440 * Math.pow(2, (v - 5) * 2/5 ));
+      Output.set("left.q", 4 - Math.abs((v - 5) * 3/5));  // q=4 (wide band) at center, q=1 (narrower band) at extrema
+    }
+  });
+
+  $("#ch2outputFilter").knobKnob({
+    min: 0,
+    max: 10,
+    value: 180,
+    diameter: 70,
+    label: 'ch2',
+    color: 'yellow',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+      Output.set("right.freq", 440 * Math.pow(2, (v - 5) * 2/5 ));
+      Output.set("right.q", 4 - Math.abs((v - 5) * 3/5));  // q=4 (wide band) at center, q=1 (narrower band) at extrema
+    }
+  });
+
   // Filter / Oscillator
 
   $("#filterFrequency").knobKnob({

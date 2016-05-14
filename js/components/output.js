@@ -1,49 +1,61 @@
 var Output = new Component(["A", "C"], null, [{
-  ugen: "flock.ugen.math",
-  inputs: {
-    source: {
-      id: "left1",
-      ugen: "flock.ugen.math",
+  id: "left",
+  ugen: "flock.ugen.filter.biquad.bp",
+  freq: 440,
+  q: 4,
+  source: {
+    ugen: "flock.ugen.math",
+    inputs: {
       source: {
-        id: "input-A1",
-        ugen: "flock.ugen.in",
+        id: "left1",
+        ugen: "flock.ugen.math",
+        source: {
+          id: "input-A1",
+          ugen: "flock.ugen.in",
+          mul: 1
+        },
         mul: 1
       },
-      mul: 1
-    },
-    add: {
-      id: "left2",
-      ugen: "flock.ugen.math",
-      source: {
-        id: "input-C1",
-        ugen: "flock.ugen.in",
-        mul: 0
-      },
-      mul: 1
+      add: {
+        id: "left2",
+        ugen: "flock.ugen.math",
+        source: {
+          id: "input-C1",
+          ugen: "flock.ugen.in",
+          mul: 0
+        },
+        mul: 1
+      }
     }
   }
 },{
-  ugen: "flock.ugen.math",
-  inputs: {
-    source: {
-      id: "right1",
-      ugen: "flock.ugen.math",
+  id: "right",
+  ugen: "flock.ugen.filter.biquad.bp",
+  freq: 440,
+  q: 4,
+  source: {
+    ugen: "flock.ugen.math",
+    inputs: {
       source: {
-        id: "input-A2",
-        ugen: "flock.ugen.in",
-        mul: 0
-      },
-      mul: 1
-    },
-    add: {
-      id: "right2",
-      ugen: "flock.ugen.math",
-      source: {
-        id: "input-C2",
-        ugen: "flock.ugen.in",
+        id: "right1",
+        ugen: "flock.ugen.math",
+        source: {
+          id: "input-A2",
+          ugen: "flock.ugen.in",
+          mul: 0
+        },
         mul: 1
       },
-      mul: 1
+      add: {
+        id: "right2",
+        ugen: "flock.ugen.math",
+        source: {
+          id: "input-C2",
+          ugen: "flock.ugen.in",
+          mul: 1
+        },
+        mul: 1
+      }
     }
   }
 }]);
