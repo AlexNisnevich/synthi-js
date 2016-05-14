@@ -207,7 +207,9 @@ body {
 }
 
 #joystick {
-  margin: 130px auto;
+  position: relative;
+  top: 130px;
+  left: 50px;
   width: 140px;
   height: 140px;
   background-color: #333;

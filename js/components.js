@@ -717,7 +717,7 @@ var JoystickY = new Component([], 16, {
   inputs: {
     source: {
       ugen: "flock.ugen.mouse.cursor",
-      add: -2.5,
+      add: 0.5,
       mul: -1,
       options: {
         axis: "y",
