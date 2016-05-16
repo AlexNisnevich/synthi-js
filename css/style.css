@@ -214,6 +214,8 @@ body {
   background-color: #333;
   background-image: repeating-linear-gradient(0deg,transparent,transparent 34px,#CCC 34px,#CCC 35px),repeating-linear-gradient(-90deg,transparent,transparent 34px,#CCC 34px,#CCC 35px);
   background-size: 35px 35px;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
 }
 
 .trackpad-base {

@@ -1,4 +1,4 @@
-var Output = new Component(["A", "C"], null, [{
+var Output = new Component(["A", "C", "O", "P"], null, [{
   id: "left",
   ugen: "flock.ugen.filter.biquad.bp",
   freq: 440,
@@ -9,22 +9,40 @@ var Output = new Component(["A", "C"], null, [{
       source: {
         id: "left1",
         ugen: "flock.ugen.math",
-        source: {
-          id: "input-A1",
-          ugen: "flock.ugen.in",
-          mul: 1
-        },
-        mul: 1
+        inputs: {
+          source: {
+            id: "input-A1",
+            ugen: "flock.ugen.in"
+          },
+          mul: {
+            ugen: "flock.ugen.value",
+            value: 1,
+            add: {
+              id: "input-O1",
+              ugen: "flock.ugen.in",
+              mul: 1/6
+            }
+          }
+        }
       },
       add: {
         id: "left2",
         ugen: "flock.ugen.math",
-        source: {
-          id: "input-C1",
-          ugen: "flock.ugen.in",
-          mul: 0
-        },
-        mul: 1
+        inputs: {
+          source: {
+            id: "input-C1",
+            ugen: "flock.ugen.in"
+          },
+          mul: {
+            ugen: "flock.ugen.value",
+            value: 1,
+            add: {
+              id: "input-O2",
+              ugen: "flock.ugen.in",
+              mul: 1/6
+            }
+          }
+        }
       }
     }
   }
@@ -39,22 +57,40 @@ var Output = new Component(["A", "C"], null, [{
       source: {
         id: "right1",
         ugen: "flock.ugen.math",
-        source: {
-          id: "input-A2",
-          ugen: "flock.ugen.in",
-          mul: 0
-        },
-        mul: 1
+        inputs: {
+          source: {
+            id: "input-A2",
+            ugen: "flock.ugen.in"
+          },
+          mul: {
+            ugen: "flock.ugen.value",
+            value: 1,
+            add: {
+              id: "input-P1",
+              ugen: "flock.ugen.in",
+              mul: 1/6
+            }
+          }
+        }
       },
       add: {
         id: "right2",
         ugen: "flock.ugen.math",
-        source: {
-          id: "input-C2",
-          ugen: "flock.ugen.in",
-          mul: 1
-        },
-        mul: 1
+        inputs: {
+          source: {
+            id: "input-C2",
+            ugen: "flock.ugen.in"
+          },
+          mul: {
+            ugen: "flock.ugen.value",
+            value: 1,
+            add: {
+              id: "input-P2",
+              ugen: "flock.ugen.in",
+              mul: 1/6
+            }
+          }
+        }
       }
     }
   }

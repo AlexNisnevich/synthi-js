@@ -472,8 +472,8 @@ $(function () {
     startOffset: 30,
     endOffset: 30,
     turn: function (v) {
-      Output.set("left1.mul", v / 5);
-      Output.set("right1.mul", v / 5);
+      Output.set("left1.mul.value", v / 5);
+      Output.set("right1.mul.value", v / 5);
     }
   });
 
@@ -516,8 +516,8 @@ $(function () {
     startOffset: 30,
     endOffset: 30,
     turn: function (v) {
-      Output.set("left2.mul", v / 5);
-      Output.set("right2.mul", v / 5);
+      Output.set("left2.mul.value", v / 5);
+      Output.set("right2.mul.value", v / 5);
     }
   });
 
