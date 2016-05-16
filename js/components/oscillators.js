@@ -107,7 +107,7 @@ var Vco3square = new Component(["K"], 5, {
   mul: 0.4
 });
 
-var Vco3triangle = new Component(["K"], 5, {
+var Vco3triangle = new Component(["K"], 6, {
   ugen: "flock.ugen.triOsc",
   freq: {
     ugen: "flock.ugen.value",
