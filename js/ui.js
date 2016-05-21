@@ -681,8 +681,8 @@ $(function () {
   // Set up window resize handler
   var margin = 2 * (8 + 10);
   $(window).resize(function () {
-    var zoomLevel = Math.min(window.innerWidth / ($('.grid').width() + margin), 
-                             window.innerHeight / ($('.grid').height() + margin), 1);
+    var zoomLevel = Math.min(window.innerWidth / ($('.grid').width() + 36), 
+                             window.innerHeight / ($('.grid').height() + 46), 1);
     $('.grid').scale(zoomLevel);
   }).resize();
 });
