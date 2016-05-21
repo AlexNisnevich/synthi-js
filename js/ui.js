@@ -411,7 +411,7 @@ $(function () {
     startOffset: 30,
     endOffset: 30,
     turn: function (v) { 
-      Reverb.set("mix", v / 10);
+      Reverb.set("mix.value", v / 10);
     }
   });
 
@@ -424,8 +424,8 @@ $(function () {
     startOffset: 30,
     endOffset: 30,
     turn: function (v) { 
-      JoystickX.set("source.mul", v / 5);  // up to 2V p-p
-      JoystickX.set("source.add", - v / 10); 
+      Reverb.set("source.mul", v / 5);  // up to 2V p-p
+      Reverb.set("source.add", - v / 10);
     }
   });
 
