@@ -269,7 +269,7 @@
           <td>9</td>
         </tr>
         <tr>
-          <td>filter</td>
+          <td><i>filter</i></td>
           <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="10" type="checkbox"></td>
           <td><input data-in="B" data-out="10" type="checkbox"></td>
@@ -311,7 +311,7 @@
           <td>11</td>
         </tr>
         <tr>
-          <td>env</td>
+          <td><i>env</i></td>
           <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="12" type="checkbox"></td>
           <td><input data-in="B" data-out="12" type="checkbox"></td>
@@ -332,7 +332,7 @@
           <td>12</td>
         </tr>
         <tr>
-          <td>ring mod</td>
+          <td><i>ring mod</i></td>
           <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="13" type="checkbox"></td>
           <td><input data-in="B" data-out="13" type="checkbox"></td>
@@ -353,7 +353,7 @@
           <td>13</td>
         </tr>
         <tr>
-          <td>reverb</td>
+          <td><i>reverb</i></td>
           <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="14" type="checkbox"></td>
           <td><input data-in="B" data-out="14" type="checkbox"></td>
@@ -506,7 +506,7 @@
             <li value="what-was-the-synthi-a">What was the Synthi A?</li>
             <li value="usage">Usage</li>
             <li value="components">Components</li>
-            <li value="troubleshooting">Troubleshooting</li>
+            <li value="synthi-manual">Synthi A Manual (1971)</li>
             <li value="development">Development</li>
             <li value="contact-me">Contact Me</li>
           </ul>
@@ -548,19 +548,91 @@
             <img src="images/everynun.jpg" />
           </div>
           <div id="usage" class="page">
-            Usage
+            <p>SYNTHI-JS can look daunting at first, but creating patches with it is actually quite straightforward.</p>
+            <p><i>This section of the manual covers general operation of SYNTHI-JS - see the next section
+            for information and specifications of each individual synth component (oscillators, filters, etc).</i></p>
+
+            <h3>The Patchboard</h3>
+            <img src="images/patchboard.png" />
+            <p>The patchboard connects the <i>outputs</i> of components to the <i>inputs</i> of other components.</p>
+            <p>For example, the simplest patch
+            you can make is by just placing a pin on <b>A3</b>, which connects the output of Oscillator 1
+            to the input of Output Ch1, by default producing a 440 Hz sine wave sound.</p>
+            <p>It helps to separate the components into <i>sources</i> and <i>treatments</i>:</p>
+            <ul>
+              <li><i>Sources</i> always produce a sound, and don't take any input. These include the oscillators,
+                the noise generator, the input channels (assuming an input source is selected), and also the
+                trapezoid output of the envelope shaper.</li>
+              <li><i>Treatments</i> take a signal as an input, alter it in some way, and return a new
+                signal. These include the filter, the envelope output of the envelope shaper, the reverb
+                module, and the ring modulator (which is unique in that it requires two inputs, not one). Treatments
+                are <i>italicized</i> on the left side of the patchboard.</li>
+              <li>The Output Amplifier is neither of these - it's the only component that has only an input
+                pin and no output pin. Its output is your speakers!</li>
+            </ul>
+            <p>Many components can additionally take a <i>control voltage</i> (CV) input to modify their
+            functionality. For example, each of the oscillators has a frequency control pin - a signal can
+            be sent there to modulate the frequency of the given oscillator.</p>
+
+            <h3>The Scope</h3>
+            <img src="images/scope.png" />
+            <p>The scope <b>(input B)</b> can be used to observe any given output signal. The scope displays
+            the amplitude of the given signal over time, with the top of the scope representing a control voltage
+            of +6V and the bottom of the scope representing a control voltage of -6V. The frequency of a signal
+            can be observed by watching its movement.</p>
+
+            <h3>The Joystick</h3>
+            <img src="images/joystick.png" />
+            <p>The joystick produces two
+            user-controlled signals while the mouse is pressed down on it - one corresponding to the mouse's
+            X-position from the center of the pad and one corresponding to the mouse's Y-position from the center
+            of the pad. By default the signal produced ranges from -1V to +1V, but the Range knobs can be used
+            to make the signal range up to -2V to +2V.</p>
+            
+            <h3>The Memory Banks</h3>
+            <img src="images/memory.png" />
+            <p>The memory banks can be used to store up to 100 patches. Clicking the <b>Store</b> button at a given memory
+            location will store the current configuration of SYNTHI-JS (knobs and patchboard pins) into memory.
+            Memory banks that have a patch stored under them are indicated by the letter <b>Y</b>.</p>
+            <p>The <b>Imp/Export</b> button opens the <b>Memory Import / Export</b> dialog, which can be used to
+            share the current patch or to load a patch that has been shared with you by someone else.</p>
+
+            <h3>The Input Source Selector</h3>
+            <img src="images/input-sources.png" />
+            <p>The input source selector can be used to load external audio tracks by their URLs. Each track
+            loaded this way will play in a loop on the given input channel <b>(pins 8 and 9)</b>. You can adjust
+            the playback speed and the start and end points of the track to loop between.</p>
+            <p><i>Because the input source selector makes cross-origin requests, it will only work if
+            CORS (cross-origin resource sharing) is enabled on your browser. You can use an extension such as 
+            <a href="https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en">this one</a>
+            to enable CORS on your browser.</i></p>
           </div>
           <div id="components" class="page">
-            Components
+            <h3>Oscillator 1</h3>
+            <h3>Oscillator 2</h3>
+            <h3>Oscillator 3</h3>
+            <h3>Noise Generator</h3>
+            <h3>Ring Modulator</h3>
+            <h3>Filter/Oscillator</h3>
+            <h3>Envelope Shaper</h3>
+            <h3>Reverberation</h3>
+            <h3>Input Amplifiers</h3>
+            <h3>Output Amplifiers</h3>
           </div>
-          <div id="troubleshooting" class="page">
-            Troubleshooting
+          <div id="synthi-manual" class="page">
+            <iframe src="http://docs.google.com/gview?url=http://www.thesynthi.de/data/Synthiusermanual.pdf&amp;embedded=true"  frameborder="0"></iframe>
           </div>
           <div id="development" class="page">
-            Development
+            <h3>GitHub Repository</h3>
+            <h3>Missing Features</h3>
+            <h3>Known Issues</h3>
+            <h3>Version History</h3>
           </div>
           <div id="contact-me" class="page">
-            Contact Me
+            <p>Got any questions or comments about SYNTHI-JS? Feel free to email me
+            at <b>alex [dot] nisnevich [at] gmail [dot] com</b>.</p>
+            <p>If you notice any bugs or missing features, the best place to report them
+            is the <a href="https://github.com/AlexNisnevich/synthi-js">SYNTHI-JS GitHub page</a>.
           </div>
         </div>
       </div>

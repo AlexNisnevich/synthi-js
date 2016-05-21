@@ -447,10 +447,12 @@ button#memoryDialogClose {
   padding-left: 1em;
   border-bottom: 1px solid #CCC;
   cursor: pointer;
+  color: #CCC;
 }
 
 #helpDialog #sidebar li.active {
-  background: teal;
+  background: #30C7C7;
+  color: #333;
 }
 
 #helpDialog #content {
@@ -467,14 +469,29 @@ button#memoryDialogClose {
   display: none;
 }
 
-#helpDialog #content p {
+#helpDialog #content p, #helpDialog #content h3 {
   margin: 0;
+  margin-bottom: 1em;
 }
 
 #helpDialog #content img {
   max-width: 468px;
-  margin: 5px auto;
+  margin: 5px auto 1em;
   display: block;
+}
+
+#helpDialog #content #usage img {
+  max-width: 300px;
+}
+
+#helpDialog #content iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#helpDialog #content li {
+  margin-bottom: 0.5em;
 }
 
 /* adapted from https://codepen.io/james2doyle/pen/AKblD */
