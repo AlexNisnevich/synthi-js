@@ -628,7 +628,7 @@ $(function () {
     $("#inputSources").fadeIn();
     $("#corsStatus").hide();
   };
-  xhr.open('GET', 'http://google.com/');
+  xhr.open('GET', ((window.location.protocol === 'https:') ? 'https:' : 'http:') + '//google.com/');
   xhr.send();
   
   setTimeout(function () {
@@ -669,6 +669,24 @@ $(function () {
     InputCh2.set("end", parseFloat($(this).val()) / 100);
   });
 
+  // Help dialog
+
+  $("#helpButton").click(function () {
+    $("#helpDialog").show();
+  });
+
+  $("#helpDialogClose").click(function () {
+    $("#helpDialog").hide();
+  });
+
+  $("#helpDialog #sidebar li").click(function () {
+    $("#helpDialog #sidebar li").removeClass('active');
+    $(this).addClass('active');
+    $("#helpDialog #content .page").hide();
+    $("#helpDialog #content .page#" + $(this).attr('value')).show();
+  });
+  $("#helpDialog #sidebar li:first").click();
+
   // Set up masonry grid layout and fade in
 
   $('.grid').masonry({
@@ -679,6 +697,7 @@ $(function () {
     .fadeIn();
 
   // Set up window resize handler
+
   var margin = 2 * (8 + 5);
   $(window).resize(function () {
     var zoomLevel = Math.min(window.innerWidth / ($('.grid').width() + margin), 

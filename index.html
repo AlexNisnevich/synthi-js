@@ -10,6 +10,8 @@
   <link href="lib/knobKnob/knobKnob.css" rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css"></link>
+
+  <base target="_blank">
 </head>
 <body>
   <div class="grid">
@@ -91,6 +93,7 @@
       <div class="dial" id="osc2TriangleLevel"></div>
     </div>
     <div class="panel width4 height4" id="patchboard">
+      <button id="helpButton" title="Help" alt="Help">?</button>
       <table id="patches">
         <tr>
           <th></th>
@@ -489,6 +492,78 @@
       </textarea>
       <button id="memoryImport">Import Into Memory</button>
       <button id="memoryDialogClose">Close</button>
+    </div>
+  </div>
+
+  <div id="helpDialog" class="modalDialog">
+    <div class="panel">
+      <div class="panelName">SYNTHI-JS MANUAL</div>
+      <button id="helpDialogClose">X</button>
+      <div id="helpArea">
+        <div id="sidebar">
+          <ul>
+            <li value="what-is-synthi-js">What is SYNTHI-JS?</li>
+            <li value="what-was-the-synthi-a">What was the Synthi A?</li>
+            <li value="usage">Usage</li>
+            <li value="components">Components</li>
+            <li value="troubleshooting">Troubleshooting</li>
+            <li value="development">Development</li>
+            <li value="contact-me">Contact Me</li>
+          </ul>
+        </div>
+        <div id="content">
+          <div id="what-is-synthi-js" class="page">
+            <p>SYNTHI-JS is a JavaScript emulation of the legendary EMS Synthi A analog synthesizer.</p>
+            <img src="images/synthi-js.png" />
+            <p>SYNTHI-JS is a modular synthesizer that is made up of 11 components: oscillators,
+            filters and so on. The patchboard at the center is used to connect component <i>outputs</i>
+            (listed on the left of the patchboard) to component <i>inputs</i> (listed on the top).</p>
+            <p>To hear the output of any component, connect it to one of the Output Ch pins (<b>A</b> and <b>C</b>). 
+            You can also visualize the output of any component by connecting it to the Scope pin (<b>B</b>).</p>
+            <p>SYNTHI-JS adds a couple features that were not in the original Synthi A: a Memory Bank
+            that can store up to 100 different patches/configurations and export them as text files, and
+            an Input Sources panel that lets you use audio from anywhere on the Internet as an input.</p>
+            <p>SYNTHI-JS was built over a period of many months in 2015 and 2016 by 
+            <a href="http://alex.nisnevich.com">Alex Nisnevich</a>,
+            using the <a href="http://flockingjs.org/">Flocking</a> library.</p>
+          </div>
+          <div id="what-was-the-synthi-a" class="page">
+            <img src="images/SYNTHI_A.jpg" />
+            <p>The <a href="https://en.wikipedia.org/wiki/EMS_Synthi_A">Synthi A</a> was a portable analog synthesizer made by 
+            <a href="https://en.wikipedia.org/wiki/Electronic_Music_Studios">EMS (Electronic Music Studios, London)</a>.
+            in 1971. The Synthi A, along with the <a href="https://en.wikipedia.org/wiki/EMS_VCS_3">VCS 3</a>
+            that it was based on, used a highly
+            idiosyncratic design: unlike other analog synthesizers that relied on patch cables to
+            connect components, it used pins in a patchboard matrix.</p>
+            <p>As a result, modifying sounds on a Synthi A is a much simpler and more organic
+            procedure than on conventional analog synthesizers. This feature, along with its portability
+            and capacity for unusual noises, made it popular among both progressive rock bands and
+            soundtrack composers.</p>
+            <p>Among the most notable uses of the Synthi A are the synthesizer loop in Pink Floyd's
+            <a href="https://www.youtube.com/watch?v=6oVFKYQR7sY">"On the Run"</a>. 
+            The <a href="https://en.wikipedia.org/wiki/EMS_Synthi_100">Synthi 100</a>, 
+            a large-scale studio version of the VCS/Synthi A, was
+            used heavily by the BBC to create sound effects for <i>The Hitchhikers' Guide to the Galaxy</i>,
+            <i>Doctor Who</i>, and other radio and TV programs.</p>
+            <img src="images/everynun.jpg" />
+          </div>
+          <div id="usage" class="page">
+            Usage
+          </div>
+          <div id="components" class="page">
+            Components
+          </div>
+          <div id="troubleshooting" class="page">
+            Troubleshooting
+          </div>
+          <div id="development" class="page">
+            Development
+          </div>
+          <div id="contact-me" class="page">
+            Contact Me
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
