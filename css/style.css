@@ -173,6 +173,14 @@ body {
   position: relative;
 }
 
+.width2 .dial {
+  width: 118px;
+}
+
+.width3 .dial {
+  width: 122px;
+}
+
 .width4 .dial {
   width: 124px;
 }
@@ -201,7 +209,7 @@ body {
 
 .freq {
   position: absolute;
-  left: 43px;
+  left: 48px;
   top: 72px;
   z-index: 999;
   width: 50px;

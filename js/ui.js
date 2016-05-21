@@ -679,7 +679,7 @@ $(function () {
     .fadeIn();
 
   // Set up window resize handler
-  var margin = 2 * (8 + 10);
+  var margin = 2 * (8 + 5);
   $(window).resize(function () {
     var zoomLevel = Math.min(window.innerWidth / ($('.grid').width() + margin), 
                              window.innerHeight / ($('.grid').height() + margin), 1);
