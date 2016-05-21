@@ -264,7 +264,7 @@ $(function () {
     startOffset: 30,
     endOffset: 30,
     turn: function (v) { 
-      FilterOscillator.set("cutoff", 440 * Math.pow(2, v - 5) + 80);
+      FilterOscillator.set("cutoff.value", 440 * Math.pow(2, v - 5) + 80);
     }
   });
 
