@@ -4,15 +4,23 @@
 @import url(https://fonts.googleapis.com/css?family=VT323);
 
 body {
+  background: url(../images/bg.png); /* http://subtlepatterns.com/dark-sharp-edges/ */
   font-family: 'Raleway', sans-serif;
   font-weight: 300;
   letter-spacing: 1.5px;
+  margin-top: 21px;
+}
+
+.scaleContainer {
+  margin: 8px auto;
 }
 
 .grid {
   width: 1300px;
   margin: 0 auto;
   visibility: hidden;
+  border: 10px solid black;
+  border-radius: 10px;
 }
 
 .panel {
@@ -36,6 +44,7 @@ body {
   top: 0px;
   width: 100%;
   text-align: center;
+  text-shadow: 1px 1px 1px #CCC;
 }
 
 .width2 {
@@ -162,6 +171,14 @@ body {
   height: 125px;
   width: 115px;
   position: relative;
+}
+
+.width4 .dial {
+  width: 124px;
+}
+
+.width6 .dial {
+  width: 126px;
 }
 
 .knob-container {
@@ -352,7 +369,7 @@ button#memoryDialogClose {
 
 #envLight {
   position: absolute;
-  left: 111px;
+  left: 120px;
   top: 6px;
   width: 30px;
   background-color: #eee;
