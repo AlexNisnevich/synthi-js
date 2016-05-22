@@ -461,8 +461,8 @@
 
     <div class="panel width2" id="noiseGenerator">
       <div class="panelName">NOISE GENERATOR</div>
-      <div class="dial" id="noiseLevel"></div>
       <div class="dial" id="noiseShape"></div>
+      <div class="dial" id="noiseLevel"></div>
     </div>
     <div class="panel width2">
       <div class="panelName">OUTPUT FILTER</div>
@@ -593,7 +593,7 @@
             <img src="images/memory.png" />
             <p>The memory banks can be used to store up to 100 patches. Clicking the <b>Store</b> button at a given memory
             location will store the current configuration of SYNTHI-JS (knobs and patchboard pins) into memory.
-            Memory banks that have a patch stored under them are indicated by the letter <b>Y</b>.</p>
+            Memory banks that have a patch stored under them are indicated by the letter g<b>Y</b>.</p>
             <p>The <b>Imp/Export</b> button opens the <b>Memory Import / Export</b> dialog, which can be used to
             share the current patch or to load a patch that has been shared with you by someone else.</p>
 
@@ -609,24 +609,150 @@
           </div>
           <div id="components" class="page">
             <h3>Oscillator 1</h3>
+            <p>A sine and ramp (sawtooth) wave oscillator, with a frequency control going from 28 Hz to 7040 Hz. 
+            Outputs both waveforms on <b>row 3</b>, and takes a frequency control input at <b>column I</b>.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Frequency:</b> Controls the frequency of both the sine and ramp waves.</li>
+              <li><b>Shape:</b> Controls the sine wave only. At the middle position, a pure sine wave is produced.</li>
+              <li><b>Sin Level:</b> The signal level of the sine wave in the mix (up to +/- 3V).</li>
+              <li><b>Ramp Level:</b> The signal level of the ramp wave in the mix (up to +/- 4V).</li>
+            </ul>
+
             <h3>Oscillator 2</h3>
+            <p>A square and triangle wave oscillator, with a frequency control going from 28 Hz to 7040 Hz. 
+            Outputs both waveforms on <b>row 4</b>, and takes a frequency control input at <b>column J</b>.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Frequency:</b> Controls the frequency of both the square and triangle waves.</li>
+              <li><b>Shape:</b> Affects both waves, as shown below:
+                <img src="images/squ-tri-shape.png" />
+              </li>
+              <li><b>Squ Level:</b> The signal level of the square wave in the mix (up to +/- 4V).</li>
+              <li><b>Tri Level:</b> The signal level of the triangle wave in the mix (up to +/- 6V).</li>
+            </ul>
+            
             <h3>Oscillator 3</h3>
+            <p>A square and triangle wave oscillator, with a frequency control going from 0.025 (1/40) Hz to 512 Hz.
+            Because it outputs such low frequency, it is primarily useful as a control input.
+            Outputs the square and triangle waves on <b>rows 5 and 6</b>, respectively, and 
+            takes a frequency control input at <b>column K</b>.</p>
+            <p><b>Controls:</b> <i>(same as for Oscillator 2, above)</i></p>
+            
             <h3>Noise Generator</h3>
+            <p>Produces white or grey noise on <b>row 7</b>.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Colour:</b> Controls which frequencies are emphasized. At the middle position, produces
+                pure white noise. To the left, produces "darker" noise. To the right, produces "lighter" noise.</li>
+              <li><b>Level:</b> The output signal level (up to +/- 3V).</li>
+            </ul>
+            
             <h3>Ring Modulator</h3>
+            <p>Takes two inputs at <b>columns E and F</b> and <i>multiplies</i> them together, outputting the
+            result in <b>row 13</b>.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Level:</b> The level of the signal produced.</li>
+            </ul>
+            
             <h3>Filter/Oscillator</h3>
+            <p><i>(Note: I haven't yet been able to get the Filter/Oscillator in SYNTHI-JS to work exactly the way that it
+            should.)</i></p>
+            <p>Removes selected frequencies from its input signal. Depending on the position of the <b>Response</b>
+            control, it can function as a low-pass or band-pass filter or as a very pure sine-wave oscillator.
+            Takes an input signal at <b>column H</b> and outputs a signal on <b>row 10</b>. The filter frequency
+            can be modulated by a control signal at <b>column N</b>.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Frequency:</b> Controls the cutoff frequency of the filter.</li>
+              <li><b>Response:</b> Selects the mode of the filter and its response level. If turned far to the left,
+                the filter functions as a low-pass filter; if turned near the center, the filter functions as a
+                band-pass filter; if turned far to the right, the filter should function as an oscillator.</li>
+              <li><b>Level:</b> The level of the signal produced.</li>
+            </ul>
+            
             <h3>Envelope Shaper</h3>
+            <p>A repeating 4-stage envelope (attack/on/decay/off) that controls the shape of a signal:</p>
+            <img src="images/trapezoid.png" />
+            <p>Takes an input signal at <b>column D</b> and optionally a control signal at <b>column L</b> to modify
+            the Decay time. Outputs the envelope-shaped signal on <b>row 12</b> and the trapezoid wave itself (for use
+            as a control signal) on <b>row 11</b>.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Attack:</b> The amount of time for the "attack" step during which a sound "grows" (up to 1 sec).</li>
+              <li><b>On:</b> The amount of time for the "on" step during which a sound stays at its maximum volume (up to 2.5 sec).</li>
+              <li><b>Decay:</b>  The amount of time for the "decay" step during which a sound fades away (up to 15 sec).</li>
+              <li><b>Off:</b>  The amount of time for the "attack" step during which there is no sound (up to 1 sec).</li>
+              <li><b>Trapezoid Lvl:</b> The level of the trapezoid wave outputted on row 11 (at maximum, -3V to +4V).</li>
+              <li><b>Signal Lvl:</b> The level of the output signal outputted on row 12.</li>
+            </ul>
+            
             <h3>Reverberation</h3>
+            <p>Simulates a spring-driven reverberation unit to make a signal sound as though it's coming through
+            a large room.
+            Takes an input signal at <b>column G</b> and outputs a signal on <b>row 14</b>. The mix amount
+            can be modulated by a control signal at <b>column M</b>.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Mix:</b> The proportion of direct to reverberated output. Turn rightward to add
+                more reverberation.</li>
+              <li><b>Level:</b> The level of the signal produced.</li>
+            </ul>
+            
             <h3>Input Amplifiers</h3>
+            <p>Loops the audio tracks specified in the Input Sources panel, if any, and outputs them
+            in <b>rows 8 and 9</b> for input channels 1 and 2 respectively.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Channel 1:</b> The level of the input channel 1 signal produced.</li>
+              <li><b>Channel 2:</b> The level of the input channel 2 signal produced.</li>
+            </ul>
+            
             <h3>Output Amplifiers</h3>
+            <p>Takes inputs from <b>columns 1 and 3</b> for output channels 1 and 2, respectively, and plays
+            them through your speakers.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Filter:</b> These controls adjust bass or treble attenuation for each output channel. Setting them
+                to the middle position results in a "flat" response.</li>
+              <li><b>Level:</b> The controls adjust the volume of each output channel.</li>
+              <li><b>Pan:</b> These controls adjust the stereo pan of each output channel. By default, channel 1 pans fully to
+                the left and channel 2 pans fully to the right.</li>
+            </ul>
           </div>
           <div id="synthi-manual" class="page">
             <iframe src="http://docs.google.com/gview?url=http://www.thesynthi.de/data/Synthiusermanual.pdf&amp;embedded=true"  frameborder="0"></iframe>
           </div>
           <div id="development" class="page">
             <h3>GitHub Repository</h3>
+            <p>SYNTHI-JS development happens on <a href="https://github.com/AlexNisnevich/synthi-js">its GitHub repository</a>. 
+            If you want to file a bug report, help work on some features, or just take a peek at the source code,
+            that's the place to go.</p>
+
             <h3>Missing Features</h3>
-            <h3>Known Issues</h3>
+            <p>My goal is to make as faithful a reproduction of the Synthi A as possible, but there
+            have been features of it that I have been unable to reproduce, whether because of
+            conceptual difficulties or just lack of time. Here are the ones that I know of at the moment:</p>
+            <ul>
+              <li>The ability to have circular chains of component dependencies <i>(for example,
+              A depends on B and B depends on A)</i>. As far as I can tell, this is not possible in
+              <a href="http://flockingjs.org/">Flocking</a>, but I'm open to suggestions.</li>
+              <li>The Output Ch1 and Output Ch2 output rows <b>(pins 1 and 2)</b> for the same reason
+              as above - it doesn't make sense to support these pins without the ability for feedback.</li>
+              <li>The <b>manual trigger</b> button for the envelope generator. Also, the envelope should
+                stop self-triggering when the Off time is high, but currently does not do that.</li>
+              <li>The EMS DK keyboard.</li>
+              <li>The EMS KS sequencer.</li>
+              <li>In general, many of the components of SYNTHI-JS don't follow the specs as well
+              as they could. As I don't personally have a Synthi A to test, I've been doing the best
+              I could from videos and spec sheets. All feedback is much appreciated.</li>
+            </ul>
+            
             <h3>Version History</h3>
+            <ul>
+              <li><b>Version 1.0</b> <i>(2016-05-21)</i>: Initial release.</li>
+            </ul>
           </div>
           <div id="contact-me" class="page">
             <p>Got any questions or comments about SYNTHI-JS? Feel free to email me

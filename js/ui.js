@@ -199,7 +199,6 @@ $(function () {
     value: 60,
     diameter: 70,
     label: 'level',
-    color: 'blue',
     startOffset: 30,
     endOffset: 30,
     turn: function (v) { 
@@ -212,7 +211,8 @@ $(function () {
     max: 10,
     value: 180,
     diameter: 70,
-    label: 'shape',
+    label: 'colour',
+    color: 'blue',
     startOffset: 30,
     endOffset: 30,
     turn: function (v) { 

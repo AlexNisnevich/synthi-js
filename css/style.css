@@ -494,6 +494,10 @@ button#memoryDialogClose {
   margin-bottom: 0.5em;
 }
 
+#helpDialog #content .no-margin {
+  margin: 0;
+}
+
 /* adapted from https://codepen.io/james2doyle/pen/AKblD */
 button {
   cursor: pointer;
