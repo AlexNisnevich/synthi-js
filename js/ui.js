@@ -684,8 +684,16 @@ $(function () {
     $(this).addClass('active');
     $("#helpDialog #content .page").hide();
     $("#helpDialog #content .page#" + $(this).attr('value')).show();
+    $('#helpDialog #content').scrollTop = 0;
   });
   $("#helpDialog #sidebar li:first").click();
+
+  // Close dialogs when clicking outside them
+  $('.modalDialog').click(function (e) {
+    if ($(e.target).closest('.panel').length === 0) {
+      $('.modalDialog').hide();
+    }
+  });
 
   // Set up masonry grid layout and fade in
 
