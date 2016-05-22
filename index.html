@@ -10,6 +10,8 @@
   <link href="lib/knobKnob/knobKnob.css" rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css"></link>
+
+  <base target="_blank">
 </head>
 <body>
   <div class="grid">
@@ -91,6 +93,7 @@
       <div class="dial" id="osc2TriangleLevel"></div>
     </div>
     <div class="panel width4 height4" id="patchboard">
+      <button id="helpButton" title="Help" alt="Help">?</button>
       <table id="patches">
         <tr>
           <th></th>
@@ -266,7 +269,7 @@
           <td>9</td>
         </tr>
         <tr>
-          <td>filter</td>
+          <td><i>filter</i></td>
           <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="10" type="checkbox"></td>
           <td><input data-in="B" data-out="10" type="checkbox"></td>
@@ -308,7 +311,7 @@
           <td>11</td>
         </tr>
         <tr>
-          <td>env</td>
+          <td><i>env</i></td>
           <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="12" type="checkbox"></td>
           <td><input data-in="B" data-out="12" type="checkbox"></td>
@@ -329,7 +332,7 @@
           <td>12</td>
         </tr>
         <tr>
-          <td>ring mod</td>
+          <td><i>ring mod</i></td>
           <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="13" type="checkbox"></td>
           <td><input data-in="B" data-out="13" type="checkbox"></td>
@@ -350,7 +353,7 @@
           <td>13</td>
         </tr>
         <tr>
-          <td>reverb</td>
+          <td><i>reverb</i></td>
           <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="14" type="checkbox"></td>
           <td><input data-in="B" data-out="14" type="checkbox"></td>
@@ -458,8 +461,8 @@
 
     <div class="panel width2" id="noiseGenerator">
       <div class="panelName">NOISE GENERATOR</div>
-      <div class="dial" id="noiseLevel"></div>
       <div class="dial" id="noiseShape"></div>
+      <div class="dial" id="noiseLevel"></div>
     </div>
     <div class="panel width2">
       <div class="panelName">OUTPUT FILTER</div>
@@ -489,6 +492,276 @@
       </textarea>
       <button id="memoryImport">Import Into Memory</button>
       <button id="memoryDialogClose">Close</button>
+    </div>
+  </div>
+
+  <div id="helpDialog" class="modalDialog">
+    <div class="panel">
+      <div class="panelName">SYNTHI-JS MANUAL</div>
+      <button id="helpDialogClose">X</button>
+      <div id="helpArea">
+        <div id="sidebar">
+          <ul>
+            <li value="what-is-synthi-js">What is SYNTHI-JS?</li>
+            <li value="what-was-the-synthi-a">What was the Synthi A?</li>
+            <li value="usage">Usage</li>
+            <li value="components">Components</li>
+            <li value="synthi-manual">Synthi A Manual (1971)</li>
+            <li value="development">Development</li>
+            <li value="contact-me">Contact Me</li>
+          </ul>
+        </div>
+        <div id="content">
+          <div id="what-is-synthi-js" class="page">
+            <p>SYNTHI-JS is a JavaScript emulation of the legendary EMS Synthi A analog synthesizer.</p>
+            <img src="images/synthi-js.png" />
+            <p>SYNTHI-JS is a modular synthesizer that is made up of 11 components: oscillators,
+            filters and so on. The patchboard at the center is used to connect component <i>outputs</i>
+            (listed on the left of the patchboard) to component <i>inputs</i> (listed on the top).</p>
+            <p>To hear the output of any component, connect it to one of the Output Ch pins (<b>A</b> and <b>C</b>). 
+            You can also visualize the output of any component by connecting it to the Scope pin (<b>B</b>).</p>
+            <p>SYNTHI-JS adds a couple features that were not in the original Synthi A: a Memory Bank
+            that can store up to 100 different patches/configurations and export them as text files, and
+            an Input Sources panel that lets you use audio from anywhere on the Internet as an input.</p>
+            <p>SYNTHI-JS was built over a period of many months in 2015 and 2016 by 
+            <a href="http://alex.nisnevich.com">Alex Nisnevich</a>,
+            using the <a href="http://flockingjs.org/">Flocking</a> library.</p>
+          </div>
+          <div id="what-was-the-synthi-a" class="page">
+            <img src="images/SYNTHI_A.jpg" />
+            <p>The <a href="https://en.wikipedia.org/wiki/EMS_Synthi_A">Synthi A</a> was a portable analog synthesizer made by 
+            <a href="https://en.wikipedia.org/wiki/Electronic_Music_Studios">EMS (Electronic Music Studios, London)</a>.
+            in 1971. The Synthi A, along with the <a href="https://en.wikipedia.org/wiki/EMS_VCS_3">VCS 3</a>
+            that it was based on, used a highly
+            idiosyncratic design: unlike other analog synthesizers that relied on patch cables to
+            connect components, it used pins in a patchboard matrix.</p>
+            <p>As a result, modifying sounds on a Synthi A is a much simpler and more organic
+            procedure than on conventional analog synthesizers. This feature, along with its portability
+            and capacity for unusual noises, made it popular among both progressive rock bands and
+            soundtrack composers.</p>
+            <p>Among the most notable uses of the Synthi A are the synthesizer loop in Pink Floyd's
+            <a href="https://www.youtube.com/watch?v=6oVFKYQR7sY">"On the Run"</a>. 
+            The <a href="https://en.wikipedia.org/wiki/EMS_Synthi_100">Synthi 100</a>, 
+            a large-scale studio version of the VCS/Synthi A, was
+            used heavily by the BBC to create sound effects for <i>The Hitchhikers' Guide to the Galaxy</i>,
+            <i>Doctor Who</i>, and other radio and TV programs.</p>
+            <img src="images/everynun.jpg" />
+          </div>
+          <div id="usage" class="page">
+            <p>SYNTHI-JS can look daunting at first, but creating patches with it is actually quite straightforward.</p>
+            <p><i>This section of the manual covers general operation of SYNTHI-JS - see the next section
+            for information and specifications of each individual synth component (oscillators, filters, etc).</i></p>
+
+            <h3>The Patchboard</h3>
+            <img src="images/patchboard.png" />
+            <p>The patchboard connects the <i>outputs</i> of components to the <i>inputs</i> of other components.</p>
+            <p>For example, the simplest patch
+            you can make is by just placing a pin on <b>A3</b>, which connects the output of Oscillator 1
+            to the input of Output Ch1, by default producing a 440 Hz sine wave sound.</p>
+            <p>It helps to separate the components into <i>sources</i> and <i>treatments</i>:</p>
+            <ul>
+              <li><i>Sources</i> always produce a sound, and don't take any input. These include the oscillators,
+                the noise generator, the input channels (assuming an input source is selected), and also the
+                trapezoid output of the envelope shaper.</li>
+              <li><i>Treatments</i> take a signal as an input, alter it in some way, and return a new
+                signal. These include the filter, the envelope output of the envelope shaper, the reverb
+                module, and the ring modulator (which is unique in that it requires two inputs, not one). Treatments
+                are <i>italicized</i> on the left side of the patchboard.</li>
+              <li>The Output Amplifier is neither of these - it's the only component that has only an input
+                pin and no output pin. Its output is your speakers!</li>
+            </ul>
+            <p>Many components can additionally take a <i>control voltage</i> (CV) input to modify their
+            functionality. For example, each of the oscillators has a frequency control pin - a signal can
+            be sent there to modulate the frequency of the given oscillator.</p>
+
+            <h3>The Scope</h3>
+            <img src="images/scope.png" />
+            <p>The scope <b>(input B)</b> can be used to observe any given output signal. The scope displays
+            the amplitude of the given signal over time, with the top of the scope representing a control voltage
+            of +6V and the bottom of the scope representing a control voltage of -6V. The frequency of a signal
+            can be observed by watching its movement.</p>
+
+            <h3>The Joystick</h3>
+            <img src="images/joystick.png" />
+            <p>The joystick produces two
+            user-controlled signals while the mouse is pressed down on it - one corresponding to the mouse's
+            X-position from the center of the pad and one corresponding to the mouse's Y-position from the center
+            of the pad. By default the signal produced ranges from -1V to +1V, but the Range knobs can be used
+            to make the signal range up to -2V to +2V.</p>
+            
+            <h3>The Memory Banks</h3>
+            <img src="images/memory.png" />
+            <p>The memory banks can be used to store up to 100 patches. Clicking the <b>Store</b> button at a given memory
+            location will store the current configuration of SYNTHI-JS (knobs and patchboard pins) into memory.
+            Memory banks that have a patch stored under them are indicated by the letter g<b>Y</b>.</p>
+            <p>The <b>Imp/Export</b> button opens the <b>Memory Import / Export</b> dialog, which can be used to
+            share the current patch or to load a patch that has been shared with you by someone else.</p>
+
+            <h3>The Input Source Selector</h3>
+            <img src="images/input-sources.png" />
+            <p>The input source selector can be used to load external audio tracks by their URLs. Each track
+            loaded this way will play in a loop on the given input channel <b>(pins 8 and 9)</b>. You can adjust
+            the playback speed and the start and end points of the track to loop between.</p>
+            <p><i>Because the input source selector makes cross-origin requests, it will only work if
+            CORS (cross-origin resource sharing) is enabled on your browser. You can use an extension such as 
+            <a href="https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en">this one</a>
+            to enable CORS on your browser.</i></p>
+          </div>
+          <div id="components" class="page">
+            <h3>Oscillator 1</h3>
+            <p>A sine and ramp (sawtooth) wave oscillator, with a frequency control going from 28 Hz to 7040 Hz. 
+            Outputs both waveforms on <b>row 3</b>, and takes a frequency control input at <b>column I</b>.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Frequency:</b> Controls the frequency of both the sine and ramp waves.</li>
+              <li><b>Shape:</b> Controls the sine wave only. At the middle position, a pure sine wave is produced.</li>
+              <li><b>Sin Level:</b> The signal level of the sine wave in the mix (up to +/- 3V).</li>
+              <li><b>Ramp Level:</b> The signal level of the ramp wave in the mix (up to +/- 4V).</li>
+            </ul>
+
+            <h3>Oscillator 2</h3>
+            <p>A square and triangle wave oscillator, with a frequency control going from 28 Hz to 7040 Hz. 
+            Outputs both waveforms on <b>row 4</b>, and takes a frequency control input at <b>column J</b>.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Frequency:</b> Controls the frequency of both the square and triangle waves.</li>
+              <li><b>Shape:</b> Affects both waves, as shown below:
+                <img src="images/squ-tri-shape.png" />
+              </li>
+              <li><b>Squ Level:</b> The signal level of the square wave in the mix (up to +/- 4V).</li>
+              <li><b>Tri Level:</b> The signal level of the triangle wave in the mix (up to +/- 6V).</li>
+            </ul>
+            
+            <h3>Oscillator 3</h3>
+            <p>A square and triangle wave oscillator, with a frequency control going from 0.025 (1/40) Hz to 512 Hz.
+            Because it outputs such low frequency, it is primarily useful as a control input.
+            Outputs the square and triangle waves on <b>rows 5 and 6</b>, respectively, and 
+            takes a frequency control input at <b>column K</b>.</p>
+            <p><b>Controls:</b> <i>(same as for Oscillator 2, above)</i></p>
+            
+            <h3>Noise Generator</h3>
+            <p>Produces white or grey noise on <b>row 7</b>.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Colour:</b> Controls which frequencies are emphasized. At the middle position, produces
+                pure white noise. To the left, produces "darker" noise. To the right, produces "lighter" noise.</li>
+              <li><b>Level:</b> The output signal level (up to +/- 3V).</li>
+            </ul>
+            
+            <h3>Ring Modulator</h3>
+            <p>Takes two inputs at <b>columns E and F</b> and <i>multiplies</i> them together, outputting the
+            result in <b>row 13</b>.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Level:</b> The level of the signal produced.</li>
+            </ul>
+            
+            <h3>Filter/Oscillator</h3>
+            <p><i>(Note: I haven't yet been able to get the Filter/Oscillator in SYNTHI-JS to work exactly the way that it
+            should.)</i></p>
+            <p>Removes selected frequencies from its input signal. Depending on the position of the <b>Response</b>
+            control, it can function as a low-pass or band-pass filter or as a very pure sine-wave oscillator.
+            Takes an input signal at <b>column H</b> and outputs a signal on <b>row 10</b>. The filter frequency
+            can be modulated by a control signal at <b>column N</b>.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Frequency:</b> Controls the cutoff frequency of the filter.</li>
+              <li><b>Response:</b> Selects the mode of the filter and its response level. If turned far to the left,
+                the filter functions as a low-pass filter; if turned near the center, the filter functions as a
+                band-pass filter; if turned far to the right, the filter should function as an oscillator.</li>
+              <li><b>Level:</b> The level of the signal produced.</li>
+            </ul>
+            
+            <h3>Envelope Shaper</h3>
+            <p>A repeating 4-stage envelope (attack/on/decay/off) that controls the shape of a signal:</p>
+            <img src="images/trapezoid.png" />
+            <p>Takes an input signal at <b>column D</b> and optionally a control signal at <b>column L</b> to modify
+            the Decay time. Outputs the envelope-shaped signal on <b>row 12</b> and the trapezoid wave itself (for use
+            as a control signal) on <b>row 11</b>.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Attack:</b> The amount of time for the "attack" step during which a sound "grows" (up to 1 sec).</li>
+              <li><b>On:</b> The amount of time for the "on" step during which a sound stays at its maximum volume (up to 2.5 sec).</li>
+              <li><b>Decay:</b>  The amount of time for the "decay" step during which a sound fades away (up to 15 sec).</li>
+              <li><b>Off:</b>  The amount of time for the "attack" step during which there is no sound (up to 1 sec).</li>
+              <li><b>Trapezoid Lvl:</b> The level of the trapezoid wave outputted on row 11 (at maximum, -3V to +4V).</li>
+              <li><b>Signal Lvl:</b> The level of the output signal outputted on row 12.</li>
+            </ul>
+            
+            <h3>Reverberation</h3>
+            <p>Simulates a spring-driven reverberation unit to make a signal sound as though it's coming through
+            a large room.
+            Takes an input signal at <b>column G</b> and outputs a signal on <b>row 14</b>. The mix amount
+            can be modulated by a control signal at <b>column M</b>.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Mix:</b> The proportion of direct to reverberated output. Turn rightward to add
+                more reverberation.</li>
+              <li><b>Level:</b> The level of the signal produced.</li>
+            </ul>
+            
+            <h3>Input Amplifiers</h3>
+            <p>Loops the audio tracks specified in the Input Sources panel, if any, and outputs them
+            in <b>rows 8 and 9</b> for input channels 1 and 2 respectively.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Channel 1:</b> The level of the input channel 1 signal produced.</li>
+              <li><b>Channel 2:</b> The level of the input channel 2 signal produced.</li>
+            </ul>
+            
+            <h3>Output Amplifiers</h3>
+            <p>Takes inputs from <b>columns 1 and 3</b> for output channels 1 and 2, respectively, and plays
+            them through your speakers.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Filter:</b> These controls adjust bass or treble attenuation for each output channel. Setting them
+                to the middle position results in a "flat" response.</li>
+              <li><b>Level:</b> The controls adjust the volume of each output channel.</li>
+              <li><b>Pan:</b> These controls adjust the stereo pan of each output channel. By default, channel 1 pans fully to
+                the left and channel 2 pans fully to the right.</li>
+            </ul>
+          </div>
+          <div id="synthi-manual" class="page">
+            <iframe src="http://docs.google.com/gview?url=http://www.thesynthi.de/data/Synthiusermanual.pdf&amp;embedded=true"  frameborder="0"></iframe>
+          </div>
+          <div id="development" class="page">
+            <h3>GitHub Repository</h3>
+            <p>SYNTHI-JS development happens on <a href="https://github.com/AlexNisnevich/synthi-js">its GitHub repository</a>. 
+            If you want to file a bug report, help work on some features, or just take a peek at the source code,
+            that's the place to go.</p>
+
+            <h3>Missing Features</h3>
+            <p>My goal is to make as faithful a reproduction of the Synthi A as possible, but there
+            have been features of it that I have been unable to reproduce, whether because of
+            conceptual difficulties or just lack of time. Here are the ones that I know of at the moment:</p>
+            <ul>
+              <li>The ability to have circular chains of component dependencies <i>(for example,
+              A depends on B and B depends on A)</i>. As far as I can tell, this is not possible in
+              <a href="http://flockingjs.org/">Flocking</a>, but I'm open to suggestions.</li>
+              <li>The Output Ch1 and Output Ch2 output rows <b>(pins 1 and 2)</b> for the same reason
+              as above - it doesn't make sense to support these pins without the ability for feedback.</li>
+              <li>The <b>manual trigger</b> button for the envelope generator. Also, the envelope should
+                stop self-triggering when the Off time is high, but currently does not do that.</li>
+              <li>The EMS DK keyboard.</li>
+              <li>The EMS KS sequencer.</li>
+              <li>In general, many of the components of SYNTHI-JS don't follow the specs as well
+              as they could. As I don't personally have a Synthi A to test, I've been doing the best
+              I could from videos and spec sheets. All feedback is much appreciated.</li>
+            </ul>
+            
+            <h3>Version History</h3>
+            <ul>
+              <li><b>Version 1.0</b> <i>(2016-05-21)</i>: Initial release.</li>
+            </ul>
+          </div>
+          <div id="contact-me" class="page">
+            <p>Got any questions or comments about SYNTHI-JS? Feel free to email me
+            at <b>alex [dot] nisnevich [at] gmail [dot] com</b>.</p>
+            <p>If you notice any bugs or missing features, the best place to report them
+            is the <a href="https://github.com/AlexNisnevich/synthi-js">SYNTHI-JS GitHub page</a>.
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
