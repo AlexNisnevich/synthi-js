@@ -684,7 +684,7 @@ $(function () {
     $(this).addClass('active');
     $("#helpDialog #content .page").hide();
     $("#helpDialog #content .page#" + $(this).attr('value')).show();
-    $('#helpDialog #content').scrollTop = 0;
+    $('#helpDialog #content').scrollTop(0);
   });
   $("#helpDialog #sidebar li:first").click();
 
