@@ -18,19 +18,19 @@ function Float32Interpolate(first, second, delta) {
 
 var tables = {
   // ramp = backwards sawtooth
-  ramp: flock.fillTable(64, flock.tableGenerators.saw).map(function (x) {return -x;}),
+  ramp: $.map(flock.fillTable(64, flock.tableGenerators.saw), function (x) {return -x;}),
   
   sin: function (shape) {
     if (shape >= 5) {
       // 10 = full positive rectification
       var rectification = (shape - 5) / 5;
-      return flock.fillTable(64, flock.tableGenerators.sin).map(function (x) {
+      return $.map(flock.fillTable(64, flock.tableGenerators.sin), function (x) {
         return x * (1 - rectification) + (Math.abs(x)) * rectification;
       });
     } else {
       // 0 = full negative rectification
       var rectification = (5 - shape) / 5;
-      return flock.fillTable(64, flock.tableGenerators.sin).map(function (x) {
+      return $.map(flock.fillTable(64, flock.tableGenerators.sin), function (x) {
         return x * (1 - rectification) + (-Math.abs(x)) * rectification;
       });
     }
@@ -57,11 +57,11 @@ var tables = {
 
     if (shape >= 5) {
       // 10 = only increasing section
-      var increasingTriangle = flock.fillTable(128, flock.tableGenerators.tri).slice(64,128);
+      var increasingTriangle = Array.prototype.slice.call(flock.fillTable(128, flock.tableGenerators.tri), 64, 128);
       return Float32Interpolate(increasingTriangle, baseTriangle, (shape - 5) / 5);
     } else {
       // 0 = only decreasing section
-      var decreasingTriangle = flock.fillTable(128, flock.tableGenerators.tri).slice(0,64);
+      var decreasingTriangle = Array.prototype.slice.call(flock.fillTable(128, flock.tableGenerators.tri), 0, 64);
       return Float32Interpolate(decreasingTriangle, baseTriangle, (5 - shape) / 5);
     }
   }
