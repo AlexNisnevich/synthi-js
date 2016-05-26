@@ -412,6 +412,7 @@ $(function () {
     endOffset: 30,
     turn: function (v) { 
       Reverb.set("mix.value", v / 10);
+      Reverb.set("add", v / 5);  // not sure why this is necessary ..
     }
   });
 
@@ -561,8 +562,9 @@ $(function () {
   // Storage banks
 
   function updateBankDisplay() {
-    var storageIndicator = (localStorage["bank" + currentBank]) ? "Y" : " "
+    var storageIndicator = presetBanks[currentBank] ? "P" : ((localStorage["bank" + currentBank]) ? "Y" : " ")
     display.setValue(storageIndicator + '    ' + ("0" + currentBank).slice(-2));
+    $("#bankStore, #bankClear").prop('disabled', storageIndicator == "P");
   }
 
   var display = new SegmentDisplay("bankDisplay");

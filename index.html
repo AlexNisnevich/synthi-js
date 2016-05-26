@@ -520,6 +520,7 @@
             <li value="usage">Usage</li>
             <li value="components">Components</li>
             <li value="synthi-manual">Synthi A Manual (1971)</li>
+            <li value="presets">Presets</li>
             <li value="development">Development</li>
             <li value="contact-me">Contact Me</li>
           </ul>
@@ -737,6 +738,18 @@
           <div id="synthi-manual" class="page">
             <iframe src="//docs.google.com/gview?url=http://www.thesynthi.de/data/Synthiusermanual.pdf&amp;embedded=true"  frameborder="0"></iframe>
           </div>
+          <div id="presets" class="page">
+            <p>As of version 1.1.0, SYNTHI-JS comes with some preset patches to give you some examples of what you can do!
+            Preset patches occupy memory banks 95-99 and are not modifiable.</p>
+            <p>Here are the current available presets:</p>
+            <table border="1" cellpadding="7" cellspacing="3">
+              <tr><td>95</td><td><b>Crashing waves</b></td></tr>
+              <tr><td>96</td><td><b>Modem connection sound</b> <i>(control with joystick)</i></td></tr>
+              <tr><td>97</td><td><b>Overtone bell</b> <i>(Ex.4 in the SYNTHI manual)</i></td></tr>
+              <tr><td>98</td><td><b>Bowing effect</b> <i>(use the joystick to make sounds; Ex.12 in the SYNTHI manual)</i></td></tr>
+              <tr><td>99</td><td><b>"Bounce"</b> <i>(failed attempt at Ex.6 in SYNTHI manual)</i></td></tr>
+            </table>
+          </div>
           <div id="development" class="page">
             <h3>GitHub Repository</h3>
             <p>SYNTHI-JS development happens on <a href="https://github.com/AlexNisnevich/synthi-js">its GitHub repository</a>. 
@@ -764,6 +777,7 @@
             
             <h3>Version History</h3>
             <ul>
+              <li><b>Version 1.1.0</b> <i>(2016-05-25)</i>: Preset banks 95-99, some adjustments to Reverb module.</li>
               <li><b>Version 1.0.1</b> <i>(2016-05-25)</i>: Fixed bug with component order not being properly set, causing issues for patches using the Ring Modulator.</li>
               <li><b>Version 1.0.0</b> <i>(2016-05-21)</i>: Initial release.</li>
             </ul>
