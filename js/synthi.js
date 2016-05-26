@@ -30,7 +30,7 @@ var currentBank = 0;
 function Component(inputPins, outputPin, synthDef) {
   this.init = function () {
     this.inputPins = inputPins;
-    this.connectedPins = [];
+    this.connectedPins = {};
 
     if (synthDef.id === undefined) { synthDef.id = "main"; }
 
@@ -49,12 +49,20 @@ function Component(inputPins, outputPin, synthDef) {
     components.push(this);
   };
 
+  this.getAllConnectedPins = function () {
+    var allConnectedPins = [];
+    for (inputPin in this.connectedPins) {
+      allConnectedPins = allConnectedPins.concat(this.connectedPins[inputPin]);
+    }
+    return allConnectedPins;
+  }
+
   this.set = function (property, value) {
     this.synth.set("main."+property, value);
   };
 
   this.connect = function (inputPin, connectedPins) {
-    this.connectedPins = connectedPins;
+    this.connectedPins[inputPin] = connectedPins;
     var inputBuses = connectedPins.map(function (p) {return buses[p];});
 
     this.synth.set("input-"+inputPin+".bus", inputBuses);
@@ -62,10 +70,11 @@ function Component(inputPins, outputPin, synthDef) {
   };
 
   this.moveToFront = function () {
+    console.log("Moving [" + this.inputPins + "] to front");
     environment.remove(this.synth);
     environment.tail(this.synth);
 
-    components.filter(function (c) {return c.connectedPins.indexOf(outputPin) > -1})
+    components.filter(function (c) {return c.getAllConnectedPins().indexOf(outputPin) > -1})
       .forEach(function (c) {c.moveToFront();});
   }
 

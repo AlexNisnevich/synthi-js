@@ -96,7 +96,7 @@ var Output = new Component(["A", "C", "O", "P"], null, [{
   }
 }]);
 Output.connect = function (inputPin, connectedPins) {
-  this.connectedPins = connectedPins;
+  this.connectedPins[inputPin] = connectedPins;
   var inputBuses = connectedPins.map(function (p) {return buses[p];});
 
   this.synth.set("input-"+inputPin+"1.bus", inputBuses);

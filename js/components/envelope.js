@@ -90,7 +90,7 @@ var EnvelopeTrapezoid = new Component(["L"], 11, {
   }
 });
 EnvelopeTrapezoid.connect = function (inputPin, connectedPins) {
-  this.connectedPins = connectedPins;
+  this.connectedPins[inputPin] = connectedPins;
   var inputBuses = connectedPins.map(function (p) {return buses[p];});
 
   this.synth.set("input-L1.bus", inputBuses);
@@ -208,7 +208,7 @@ var EnvelopeShaper = new Component(["D", "L"], 12, {
   }
 });
 EnvelopeShaper.connect = function (inputPin, connectedPins) {
-  this.connectedPins = connectedPins;
+  this.connectedPins[inputPin] = connectedPins;
   var inputBuses = connectedPins.map(function (p) {return buses[p];});
 
   if (inputPin == "L") {
@@ -318,7 +318,7 @@ var EnvelopeLightOn = new Component(["L"], 0, {
   }
 });
 EnvelopeLightOn.connect = function (inputPin, connectedPins) {
-  this.connectedPins = connectedPins;
+  this.connectedPins[inputPin] = connectedPins;
   var inputBuses = connectedPins.map(function (p) {return buses[p];});
   
   this.synth.set("input-"+inputPin+"1.bus", inputBuses);
@@ -405,7 +405,7 @@ var EnvelopeLightOff = new Component(["L"], 0, {
   }
 });
 EnvelopeLightOff.connect = function (inputPin, connectedPins) {
-  this.connectedPins = connectedPins;
+  this.connectedPins[inputPin] = connectedPins;
   var inputBuses = connectedPins.map(function (p) {return buses[p];});
   
   this.synth.set("input-"+inputPin+"1.bus", inputBuses);
