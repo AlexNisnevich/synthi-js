@@ -494,6 +494,10 @@ button#memoryDialogClose {
   margin-bottom: 0.5em;
 }
 
+#helpDialog #content table {
+  border-collapse: collapse;
+}
+
 #helpDialog #content .no-margin {
   margin: 0;
 }
@@ -527,6 +531,10 @@ button:hover {
   background: -o-linear-gradient(top, #68686d 0%,#222228 100%); /* Opera 11.10+ */
   background: -ms-linear-gradient(top, #68686d 0%,#222228 100%); /* IE10+ */
   background: linear-gradient(to bottom, #68686d 0%,#222228 100%); /* W3C */
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* taken from http://www.webdesignerdepot.com/2012/10/creating-a-modal-window-with-html5-and-css3/ */

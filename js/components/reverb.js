@@ -14,8 +14,9 @@ var Reverb = new Component(["G", "M"], 14, {
         mul: 1/6
       }
     },
-    room: 0.84,
+    room: 1.0,
     damp: 0.2,
-    mul: 0.5
+    mul: 0.5,
+    add: 1
   }
 });
