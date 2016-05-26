@@ -70,7 +70,6 @@ function Component(inputPins, outputPin, synthDef) {
   };
 
   this.moveToFront = function () {
-    console.log("Moving [" + this.inputPins + "] to front");
     environment.remove(this.synth);
     environment.tail(this.synth);
 
