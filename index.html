@@ -7,7 +7,9 @@
   
   <script src="lib/knobKnob/transform.js"></script>
   <script src="lib/knobKnob/knobKnob.jquery.js"></script>
+
   <link href="lib/knobKnob/knobKnob.css" rel="stylesheet">
+  <link href="lib/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css"></link>
 
@@ -106,7 +108,8 @@
       <div class="dial" id="osc2TriangleLevel"></div>
     </div>
     <div class="panel width4 height4" id="patchboard">
-      <button id="helpButton" title="Help" alt="Help">?</button>
+      <button id="helpButton" title="Help" alt="Help"><i class="fa fa-question fa-lg" aria-hidden="true"></i></button>
+      <button id="settingsButton" title="Settings" alt="Settings"><i class="fa fa-gear fa-lg" aria-hidden="true"></i></button>
       <table id="patches">
         <tr>
           <th></th>
@@ -117,25 +120,73 @@
         <tr>
           <th></th>
           <th></th>
-          <th>o u t p u t &nbsp; ch 1 &nbsp; <span class="tri">&#9650;</span></th>
-          <th>s c o p e &nbsp; <span class="tri">&#9650;</span></th>
-          <th>o u t p u t &nbsp; ch 2 &nbsp; <span class="tri">&#9650;</span></th>
-          <th>e n v e l o p e &nbsp; <span class="tri">&#9650;</span></th>
-          <th>r i n g &nbsp; m o d &nbsp; A &nbsp; <span class="tri">&#9650;</span></th>
-          <th>r i n g &nbsp; m o d &nbsp; B &nbsp; <span class="tri">&#9650;</span></th>
-          <th>r e v e r b &nbsp; <span class="tri">&#9650;</span></th>
-          <th>f i l t e r &nbsp; <span class="tri">&#9650;</span></th>
-          <th>o s c &nbsp; f r e q &nbsp; 1 &nbsp; <span class="tri">&#9650;</span></th>
-          <th>o s c &nbsp; f r e q &nbsp; 2 &nbsp; <span class="tri">&#9650;</span></th>
-          <th>o s c &nbsp; f r e q &nbsp; 3 &nbsp; <span class="tri">&#9650;</span></th>
-          <th>d e c a y &nbsp; <span class="tri">&#9650;</span></th>
-          <th>r e v e r b &nbsp; m i x &nbsp; <span class="tri">&#9650;</span></th>
-          <th>f i l t e r &nbsp; f r q &nbsp; <span class="tri">&#9650;</span></th>
-          <th>o u t ch &nbsp; l v l &nbsp; 1 &nbsp; <span class="tri">&#9650;</span></th>
-          <th>o u t ch &nbsp; l v l &nbsp; 2 &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="vertical" rowspan="2" title="output ch.1">o u t p u t &nbsp; ch 1 &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="vertical" rowspan="2" title="scope">s c o p e &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="vertical" rowspan="2" title="output ch.2">o u t p u t &nbsp; ch 2 &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="vertical" rowspan="2" title="envelope">e n v e l o p e &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="horizontal" colspan="2">ring  mod</th>
+          <th class="vertical" rowspan="2" title="reverb">r e v e r b &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="vertical" rowspan="2" title="filter">f i l t e r &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="horizontal" colspan="3">osc freq</th>
+          <th class="vertical" rowspan="2" title="decay">d e c a y &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="vertical" rowspan="2" title="reverb">r e v e r b &nbsp; m i x &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="vertical" rowspan="2" title="filter freq">f i l t e r &nbsp; f r q &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="horizontal" colspan="2">out- put ch lvl</th>
         </tr>
         <tr>
-          <td>osc 1</td>
+          <th colspan="6"></th>
+          <th>A<span class="tri">&#9650;</span></th>
+          <th>B<span class="tri">&#9650;</span></th>
+          <th>1<span class="tri">&#9650;</span></th>
+          <th>2<span class="tri">&#9650;</span></th>
+          <th>3<span class="tri">&#9650;</span></th>
+          <th>1<span class="tri">&#9650;</span></th>
+          <th>2<span class="tri">&#9650;</span></th>
+        </tr>
+        <tr>
+          <td>osc 1 (sin)</td>
+          <td><div class="tri">&#9658;</div></td>
+          <td><input data-in="A" data-out="1" type="checkbox"></td>
+          <td><input data-in="B" data-out="1" type="checkbox"></td>
+          <td><input data-in="C" data-out="1" type="checkbox"></td>
+          <td><input data-in="D" data-out="1" type="checkbox"></td>
+          <td><input data-in="E" data-out="1" type="checkbox"></td>
+          <td><input data-in="F" data-out="1" type="checkbox"></td>
+          <td><input data-in="G" data-out="1" type="checkbox"></td>
+          <td><input data-in="H" data-out="1" type="checkbox"></td>
+          <td><input data-in="I" data-out="1" type="checkbox"></td>
+          <td><input data-in="J" data-out="1" type="checkbox"></td>
+          <td><input data-in="K" data-out="1" type="checkbox"></td>
+          <td><input data-in="L" data-out="1" type="checkbox"></td>
+          <td><input data-in="M" data-out="1" type="checkbox"></td>
+          <td><input data-in="N" data-out="1" type="checkbox"></td>
+          <td><input data-in="O" data-out="1" type="checkbox"></td>
+          <td><input data-in="P" data-out="1" type="checkbox"></td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>osc 1 (rmp)</td>
+          <td><div class="tri">&#9658;</div></td>
+          <td><input data-in="A" data-out="2" type="checkbox"></td>
+          <td><input data-in="B" data-out="2" type="checkbox"></td>
+          <td><input data-in="C" data-out="2" type="checkbox"></td>
+          <td><input data-in="D" data-out="2" type="checkbox"></td>
+          <td><input data-in="E" data-out="2" type="checkbox"></td>
+          <td><input data-in="F" data-out="2" type="checkbox"></td>
+          <td><input data-in="G" data-out="2" type="checkbox"></td>
+          <td><input data-in="H" data-out="2" type="checkbox"></td>
+          <td><input data-in="I" data-out="2" type="checkbox"></td>
+          <td><input data-in="J" data-out="2" type="checkbox"></td>
+          <td><input data-in="K" data-out="2" type="checkbox"></td>
+          <td><input data-in="L" data-out="2" type="checkbox"></td>
+          <td><input data-in="M" data-out="2" type="checkbox"></td>
+          <td><input data-in="N" data-out="2" type="checkbox"></td>
+          <td><input data-in="O" data-out="2" type="checkbox"></td>
+          <td><input data-in="P" data-out="2" type="checkbox"></td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>osc 2 (sq)</td>
           <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="3" type="checkbox"></td>
           <td><input data-in="B" data-out="3" type="checkbox"></td>
@@ -156,7 +207,7 @@
           <td>3</td>
         </tr>
         <tr>
-          <td>osc 2</td>
+          <td>osc 2 (tri)</td>
           <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="4" type="checkbox"></td>
           <td><input data-in="B" data-out="4" type="checkbox"></td>
@@ -387,7 +438,7 @@
           <td>14</td>
         </tr>
         <tr>
-          <td>joystick x</td>
+          <td>joystick &#x2194;</td>
           <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="15" type="checkbox"></td>
           <td><input data-in="B" data-out="15" type="checkbox"></td>
@@ -408,7 +459,7 @@
           <td>15</td>
         </tr>
         <tr>
-          <td>joystick y</td>
+          <td>joystick &#x2195;</td>
           <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="16" type="checkbox"></td>
           <td><input data-in="B" data-out="16" type="checkbox"></td>
@@ -508,10 +559,19 @@
     </div>
   </div>
 
+  <div id="settingsDialog" class="modalDialog">
+    <div class="panel">
+      <div class="panelName">SETTINGS</div>
+      <button id="settingsDialogClose" class="closeButton">X</button>
+      <div>Knob settings go here.</div>
+      <div class="dial" id="testDial"></div>
+    </div>
+  </div>
+
   <div id="helpDialog" class="modalDialog">
     <div class="panel">
       <div class="panelName">SYNTHI-JS MANUAL</div>
-      <button id="helpDialogClose">X</button>
+      <button id="helpDialogClose" class="closeButton">X</button>
       <div id="helpArea">
         <div id="sidebar">
           <ul>

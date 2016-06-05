@@ -93,17 +93,42 @@ body {
   left: 2px;
 }
 
+#patches td:nth-child(1), #patches th {
+  font-size: 0.9em;
+}
+
+#patches tr:nth-child(1) th {
+  padding: 2px;
+}
+
 #patches tr:nth-child(2) {
-  height: 195px;
+  height: 110px;
 }
 
 #patches th {
   font-weight: normal;
   letter-spacing: 4px;
+  line-height: 1em;
   max-width: 20px;
   border: 1px solid black;
   position: relative;
   vertical-align: top;
+}
+
+#patches th.vertical {
+  padding-top: 2px;
+  padding-bottom: 10px;
+}
+
+#patches th.horizontal {
+  vertical-align: middle;
+  border-bottom: 0;
+}
+
+#patches tr:nth-child(3) th {
+  border-top: 0;
+  padding-left: 7px;
+  padding-right: 3px;
 }
 
 #patches td {
@@ -148,7 +173,7 @@ body {
   font-size: 28px;
   position: absolute;
   left: -3px;
-  bottom: 0px;
+  bottom: -11px;
   height: 24px;
 }
 
@@ -226,7 +251,7 @@ body {
   padding-top: 8px;
   font-family: 'Orbitron', sans-serif;
   font-weight: 900;
-  font-size: 20px;
+  font-size: 26px;
   letter-spacing: 8px;
 }
 
@@ -418,7 +443,7 @@ button#memoryDialogClose {
   margin-top: 10px;
 }
 
-#helpDialog button#helpDialogClose {
+.modalDialog button.closeButton {
   position: absolute;
   top: 5px;
   right: 5px;
@@ -500,6 +525,28 @@ button#memoryDialogClose {
 
 #helpDialog #content .no-margin {
   margin: 0;
+}
+
+#settingsButton {
+  position: absolute;
+  top: 90px;
+  left: 20px;
+  z-index: 9999;
+  height: 55px;
+  width: 55px;
+  padding: 3px 4px;
+  font-size: 2em;
+}
+
+#settingsDialog .panel {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  float: none;
+  margin: 10% auto;
+  border-width: 3px;
+  border-color: #000;
+  pointer-events: auto;
 }
 
 /* adapted from https://codepen.io/james2doyle/pen/AKblD */

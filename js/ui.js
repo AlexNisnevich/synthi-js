@@ -690,6 +690,26 @@ $(function () {
   });
   $("#helpDialog #sidebar li:first").click();
 
+  // Settings dialog
+
+  $("#settingsButton").click(function () {
+    $("#settingsDialog").show();
+  });
+
+  $("#settingsDialogClose").click(function () {
+    $("#settingsDialog").hide();
+  });
+
+  $('#testDial').knobKnob({
+    min: 0,
+    max: 8,
+    value: 180,
+    diameter: 100,
+    label: '',
+    startOffset: 30,
+    endOffset: 30
+  });
+
   // Close dialogs when clicking outside them
   $('.modalDialog').click(function (e) {
     if ($(e.target).closest('.panel').length === 0) {
