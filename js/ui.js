@@ -56,7 +56,7 @@ $(function () {
     max: 10,
     diameter: 70,
     label: 'ramp level',
-    value: 0,
+    value: 60,
     startOffset: 30,
     endOffset: 30,
     turn: function (v) { 
@@ -116,7 +116,7 @@ $(function () {
     max: 10,
     diameter: 70,
     label: 'tri level',
-    value: 0,
+    value: 60,
     startOffset: 30,
     endOffset: 30,
     turn: function (v) { 
@@ -183,7 +183,7 @@ $(function () {
     max: 10,
     diameter: 70,
     label: 'tri level',
-    value: 0,
+    value: 60,
     startOffset: 30,
     endOffset: 30,
     turn: function (v) { 

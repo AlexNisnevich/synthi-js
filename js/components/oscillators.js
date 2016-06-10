@@ -1,4 +1,4 @@
-var Vco1sin = new Component(["I"], 3, {
+var Vco1sin = new Component(["I"], 1, {
   ugen: "flock.ugen.sinOsc",
   freq: {
     ugen: "flock.ugen.value",
@@ -19,7 +19,7 @@ var Vco1sin = new Component(["I"], 3, {
   mul: 0.3
 });
 
-var Vco1ramp = new Component(["I"], 3, {
+var Vco1ramp = new Component(["I"], 2, {
   ugen: "flock.ugen.osc",
   table: tables.ramp,
   freq: {
@@ -44,7 +44,7 @@ var Vco1ramp = new Component(["I"], 3, {
   mul: 0
 });
 
-var Vco2square = new Component(["J"], 4, {
+var Vco2square = new Component(["J"], 3, {
   ugen: "flock.ugen.squareOsc",
   freq: {
     ugen: "flock.ugen.value",
