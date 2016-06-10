@@ -655,7 +655,7 @@
             <img src="images/patchboard.png" />
             <p>The patchboard connects the <i>outputs</i> of components to the <i>inputs</i> of other components.</p>
             <p>For example, the simplest patch
-            you can make is by just placing a pin on <b>A3</b>, which connects the output of Oscillator 1
+            you can make is by just placing a pin on <b>A1</b>, which connects the output of Oscillator 1
             to the input of Output Ch1, by default producing a 440 Hz sine wave sound.</p>
             <p>It helps to separate the components into <i>sources</i> and <i>treatments</i>:</p>
             <ul>
@@ -698,18 +698,15 @@
 
             <h3>The Input Source Selector</h3>
             <img src="images/input-sources.png" />
-            <p>The input source selector can be used to load external audio tracks by their URLs. Each track
+            <p>The input source selector can be used to upload audio tracks for playback. Each track
             loaded this way will play in a loop on the given input channel <b>(pins 8 and 9)</b>. You can adjust
             the playback speed and the start and end points of the track to loop between.</p>
-            <p><i>Because the input source selector makes cross-origin requests, it will only work if
-            CORS (cross-origin resource sharing) is enabled on your browser. You can use an extension such as 
-            <a href="https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en">this one</a>
-            to enable CORS on your browser.</i></p>
           </div>
           <div id="components" class="page">
             <h3>Oscillator 1</h3>
-            <p>A sine and ramp (sawtooth) wave oscillator, with a frequency control going from 28 Hz to 7040 Hz. 
-            Outputs both waveforms on <b>row 3</b>, and takes a frequency control input at <b>column I</b>.</p>
+            <p>A sine and ramp (sawtooth) wave oscillator, with a frequency control going from 28 Hz to 7040 Hz.
+            Outputs the sine and ramp waves on <b>rows 1 and 2</b>, respectively, and 
+            takes a frequency control input at <b>column I</b>.</p>
             <p class="no-margin"><b>Controls:</b></p>
             <ul>
               <li><b>Frequency:</b> Controls the frequency of both the sine and ramp waves.</li>
@@ -719,8 +716,9 @@
             </ul>
 
             <h3>Oscillator 2</h3>
-            <p>A square and triangle wave oscillator, with a frequency control going from 28 Hz to 7040 Hz. 
-            Outputs both waveforms on <b>row 4</b>, and takes a frequency control input at <b>column J</b>.</p>
+            <p>A square and triangle wave oscillator, with a frequency control going from 28 Hz to 7040 Hz.
+            Outputs the square and triangle waves on <b>rows 3 and 4</b>, respectively, and 
+            takes a frequency control input at <b>column J</b>.</p>
             <p class="no-margin"><b>Controls:</b></p>
             <ul>
               <li><b>Frequency:</b> Controls the frequency of both the square and triangle waves.</li>
@@ -862,6 +860,7 @@
             
             <h3>Version History</h3>
             <ul>
+              <li><b>Version 1.2.0</b> <i>(2016-06-10)</i>: Settings panel with knob controls, restyled patchboard, upload support via S3.
               <li><b>Version 1.1.0</b> <i>(2016-05-25)</i>: Preset banks 95-99, knob control improvements, some adjustments to Reverb module.</li>
               <li><b>Version 1.0.1</b> <i>(2016-05-25)</i>: Fixed bug with component order not being properly set, causing issues for patches using the Ring Modulator.</li>
               <li><b>Version 1.0.0</b> <i>(2016-05-21)</i>: Initial release.</li>
