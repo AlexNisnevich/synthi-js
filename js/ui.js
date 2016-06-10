@@ -533,7 +533,7 @@ $(function () {
     startOffset: 30,
     endOffset: 30,
     turn: function (v) {
-      InputCh1.set("mul", v / 5);
+      InputCh1.set("mul", v);
     }
   });
 
@@ -546,7 +546,7 @@ $(function () {
     startOffset: 30,
     endOffset: 30,
     turn: function (v) {
-      InputCh2.set("mul", v / 5);
+      InputCh2.set("mul", v);
     }
   });
 
@@ -622,26 +622,16 @@ $(function () {
 
   // Input Sources
 
-  var corsEnabled;
-
-  var xhr = new XMLHttpRequest();
-  xhr.onload = function() {
-    corsEnabled = true;
-    $("#inputSources").fadeIn();
-    $("#corsStatus").hide();
-  };
-  xhr.open('GET', ((window.location.protocol === 'https:') ? 'https:' : 'http:') + '//google.com/');
-  xhr.send();
-  
-  setTimeout(function () {
-    if (corsEnabled !== true) {
-      corsEnabled = false;
-      $("#corsStatus")
-        .html("CORS is disabled, so SYNTHI-JS cannot access external audio files. You can enable CORS on Google Chrome with <a href='https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en' target='_blank'>this extension</a> (but disable it when you're not using SYNTHI-JS, because it can be a security risk).")
-        .addClass("disabled")
-        .removeClass("detecting");
-    }
-  }, 5000);
+  bindUploadControlToInputChannelViaS3($('#inputFile1'), InputCh1, {
+    start: function () { $('#inputFile1Indicators span').hide(); $('#inputFile1Progress').css('display', 'inline-block'); },
+    success: function () { $('#inputFile1Indicators span').hide(); $('#inputFile1Success').css('display', 'inline-block'); },
+    failure: function () { $('#inputFile1Indicators span').hide(); $('#inputFile1Failure').css('display', 'inline-block'); }
+  });
+  bindUploadControlToInputChannelViaS3($('#inputFile2'), InputCh2, {
+    start: function () { $('#inputFile2Indicators span').hide(); $('#inputFile2Progress').css('display', 'inline-block'); },
+    success: function () { $('#inputFile2Indicators span').hide(); $('#inputFile2Success').css('display', 'inline-block'); },
+    failure: function () { $('#inputFile2Indicators span').hide(); $('#inputFile2Failure').css('display', 'inline-block'); }
+  });
 
   $("#inputUrl1").on('keyup change', function() {
     InputCh1.set("buffer", {url: $(this).val()});

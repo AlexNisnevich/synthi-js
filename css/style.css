@@ -102,7 +102,7 @@ body {
 }
 
 #patches tr:nth-child(2) {
-  height: 110px;
+  height: 105px;
 }
 
 #patches th {
@@ -127,6 +127,7 @@ body {
 
 #patches tr:nth-child(3) th {
   border-top: 0;
+  padding-top: 5px;
   padding-left: 7px;
   padding-right: 3px;
 }
@@ -357,7 +358,6 @@ button#memoryDialogClose {
 }
 
 #inputSources {
-  display: none;
   margin-top: 15px;
   font-size: 0.75em;
 }
@@ -381,8 +381,32 @@ button#memoryDialogClose {
   width: 65px;
 }
 
+.inputSource input[type=file] {
+  float: left;
+  width: 82px;
+  padding-left: 5px;
+}
+
 .inputSource input.short {
   width: 45px;
+}
+
+.inputSource .indicators span {
+  display: none;
+  width: 16px;
+  height: 16px;
+}
+
+.inputSource .indicators span img {
+  padding-top: 3px;
+}
+
+.inputSource .successIndicator {
+  background-color: #0C0;
+}
+
+.inputSource .failureIndicator {
+  background-color: #F00;
 }
 
 #corsStatus {
