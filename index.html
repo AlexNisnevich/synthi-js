@@ -2,12 +2,19 @@
 <head>
   <!-- This includes Flocking and all its dependencies, including jQuery 2.1.3 and Infusion -->
   <script src="lib/flocking/dist/flocking-all.js"></script>
+
+  <script src="lib/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
   <script src="lib/masonry.pkgd.min.js"></script>
   <script src="lib/segment-display.js"></script>
+
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.3.19.min.js"></script>
   
   <script src="lib/knobKnob/transform.js"></script>
   <script src="lib/knobKnob/knobKnob.jquery.js"></script>
+
+  <link href="lib/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet">
   <link href="lib/knobKnob/knobKnob.css" rel="stylesheet">
+  <link href="lib/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css"></link>
 
@@ -33,20 +40,30 @@
       <div id="inputSources">
         <div class="inputSource" id="inputCh1">
           <div class="inputSourceHeading">Ch 1</div>
-          URL: <input id="inputUrl1" type="text"></input><br />
+          <input id="inputFile1" type="file">
+          <span id="inputFile1Indicators" class="indicators">
+            <span id="inputFile1Progress"><img src="images/small-loader.gif" /></span>
+            <span id="inputFile1Success" class="successIndicator"></span>
+            <span id="inputFile1Failure" class="FailureIndicator"></span>
+          </span>
+          <br />
           Speed: <input id="speed1" type="number" value="1" class="short" step="0.1"></input><br />
           Start: <input id="start1" type="number" value="0" class="short"></input> %<br />
           End: <input id="end1" type="number" value="100" class="short"></input> %
         </div>
         <div class="inputSource" id="inputCh2">
           <div class="inputSourceHeading">Ch 2</div>
-          URL: <input id="inputUrl2" type="text"></input><br />
+          <input id="inputFile2" type="file">
+          <span id="inputFile2Indicators" class="indicators">
+            <span id="inputFile2Progress"><img src="images/small-loader.gif" /></span>
+            <span id="inputFile2Success" class="successIndicator"></span>
+            <span id="inputFile2Failure" class="FailureIndicator"></span>
+          </span>
           Speed: <input id="speed2" type="number" value="1" class="short" step="0.1"></input><br />
           Start: <input id="start2" type="number" value="0" class="short"></input> %<br />
           End: <input id="end2" type="number" value="100" class="short"></input> %
         </div>
       </div>
-      <div id="corsStatus" class="detecting">Detecting CORS support ...</div>
     </div>
     <div class="panel width2" id="scope">
       <canvas id="gfx" height="125" width="230"></canvas>
@@ -106,7 +123,8 @@
       <div class="dial" id="osc2TriangleLevel"></div>
     </div>
     <div class="panel width4 height4" id="patchboard">
-      <button id="helpButton" title="Help" alt="Help">?</button>
+      <button id="helpButton" title="Help" alt="Help"><i class="fa fa-question fa-lg" aria-hidden="true"></i></button>
+      <button id="settingsButton" title="Settings" alt="Settings"><i class="fa fa-gear fa-lg" aria-hidden="true"></i></button>
       <table id="patches">
         <tr>
           <th></th>
@@ -117,25 +135,73 @@
         <tr>
           <th></th>
           <th></th>
-          <th>o u t p u t &nbsp; ch 1 &nbsp; <span class="tri">&#9650;</span></th>
-          <th>s c o p e &nbsp; <span class="tri">&#9650;</span></th>
-          <th>o u t p u t &nbsp; ch 2 &nbsp; <span class="tri">&#9650;</span></th>
-          <th>e n v e l o p e &nbsp; <span class="tri">&#9650;</span></th>
-          <th>r i n g &nbsp; m o d &nbsp; A &nbsp; <span class="tri">&#9650;</span></th>
-          <th>r i n g &nbsp; m o d &nbsp; B &nbsp; <span class="tri">&#9650;</span></th>
-          <th>r e v e r b &nbsp; <span class="tri">&#9650;</span></th>
-          <th>f i l t e r &nbsp; <span class="tri">&#9650;</span></th>
-          <th>o s c &nbsp; f r e q &nbsp; 1 &nbsp; <span class="tri">&#9650;</span></th>
-          <th>o s c &nbsp; f r e q &nbsp; 2 &nbsp; <span class="tri">&#9650;</span></th>
-          <th>o s c &nbsp; f r e q &nbsp; 3 &nbsp; <span class="tri">&#9650;</span></th>
-          <th>d e c a y &nbsp; <span class="tri">&#9650;</span></th>
-          <th>r e v e r b &nbsp; m i x &nbsp; <span class="tri">&#9650;</span></th>
-          <th>f i l t e r &nbsp; f r q &nbsp; <span class="tri">&#9650;</span></th>
-          <th>o u t ch &nbsp; l v l &nbsp; 1 &nbsp; <span class="tri">&#9650;</span></th>
-          <th>o u t ch &nbsp; l v l &nbsp; 2 &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="vertical" rowspan="2" title="output ch.1">o u t p u t &nbsp; ch 1 &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="vertical" rowspan="2" title="scope">s c o p e &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="vertical" rowspan="2" title="output ch.2">o u t p u t &nbsp; ch 2 &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="vertical" rowspan="2" title="envelope">e n v e l o p e &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="horizontal" colspan="2">ring  mod</th>
+          <th class="vertical" rowspan="2" title="reverb">r e v e r b &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="vertical" rowspan="2" title="filter">f i l t e r &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="horizontal" colspan="3">osc freq</th>
+          <th class="vertical" rowspan="2" title="decay">d e c a y &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="vertical" rowspan="2" title="reverb">r e v e r b &nbsp; m i x &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="vertical" rowspan="2" title="filter freq">f i l t e r &nbsp; f r q &nbsp; <span class="tri">&#9650;</span></th>
+          <th class="horizontal" colspan="2">out- put ch lvl</th>
         </tr>
         <tr>
-          <td>osc 1</td>
+          <th colspan="6"></th>
+          <th>A<span class="tri">&#9650;</span></th>
+          <th>B<span class="tri">&#9650;</span></th>
+          <th>1<span class="tri">&#9650;</span></th>
+          <th>2<span class="tri">&#9650;</span></th>
+          <th>3<span class="tri">&#9650;</span></th>
+          <th>1<span class="tri">&#9650;</span></th>
+          <th>2<span class="tri">&#9650;</span></th>
+        </tr>
+        <tr>
+          <td>osc 1 (sin)</td>
+          <td><div class="tri">&#9658;</div></td>
+          <td><input data-in="A" data-out="1" type="checkbox"></td>
+          <td><input data-in="B" data-out="1" type="checkbox"></td>
+          <td><input data-in="C" data-out="1" type="checkbox"></td>
+          <td><input data-in="D" data-out="1" type="checkbox"></td>
+          <td><input data-in="E" data-out="1" type="checkbox"></td>
+          <td><input data-in="F" data-out="1" type="checkbox"></td>
+          <td><input data-in="G" data-out="1" type="checkbox"></td>
+          <td><input data-in="H" data-out="1" type="checkbox"></td>
+          <td><input data-in="I" data-out="1" type="checkbox"></td>
+          <td><input data-in="J" data-out="1" type="checkbox"></td>
+          <td><input data-in="K" data-out="1" type="checkbox"></td>
+          <td><input data-in="L" data-out="1" type="checkbox"></td>
+          <td><input data-in="M" data-out="1" type="checkbox"></td>
+          <td><input data-in="N" data-out="1" type="checkbox"></td>
+          <td><input data-in="O" data-out="1" type="checkbox"></td>
+          <td><input data-in="P" data-out="1" type="checkbox"></td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>osc 1 (rmp)</td>
+          <td><div class="tri">&#9658;</div></td>
+          <td><input data-in="A" data-out="2" type="checkbox"></td>
+          <td><input data-in="B" data-out="2" type="checkbox"></td>
+          <td><input data-in="C" data-out="2" type="checkbox"></td>
+          <td><input data-in="D" data-out="2" type="checkbox"></td>
+          <td><input data-in="E" data-out="2" type="checkbox"></td>
+          <td><input data-in="F" data-out="2" type="checkbox"></td>
+          <td><input data-in="G" data-out="2" type="checkbox"></td>
+          <td><input data-in="H" data-out="2" type="checkbox"></td>
+          <td><input data-in="I" data-out="2" type="checkbox"></td>
+          <td><input data-in="J" data-out="2" type="checkbox"></td>
+          <td><input data-in="K" data-out="2" type="checkbox"></td>
+          <td><input data-in="L" data-out="2" type="checkbox"></td>
+          <td><input data-in="M" data-out="2" type="checkbox"></td>
+          <td><input data-in="N" data-out="2" type="checkbox"></td>
+          <td><input data-in="O" data-out="2" type="checkbox"></td>
+          <td><input data-in="P" data-out="2" type="checkbox"></td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>osc 2 (sq)</td>
           <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="3" type="checkbox"></td>
           <td><input data-in="B" data-out="3" type="checkbox"></td>
@@ -156,7 +222,7 @@
           <td>3</td>
         </tr>
         <tr>
-          <td>osc 2</td>
+          <td>osc 2 (tri)</td>
           <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="4" type="checkbox"></td>
           <td><input data-in="B" data-out="4" type="checkbox"></td>
@@ -387,7 +453,7 @@
           <td>14</td>
         </tr>
         <tr>
-          <td>joystick x</td>
+          <td>joystick &#x2194;</td>
           <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="15" type="checkbox"></td>
           <td><input data-in="B" data-out="15" type="checkbox"></td>
@@ -408,7 +474,7 @@
           <td>15</td>
         </tr>
         <tr>
-          <td>joystick y</td>
+          <td>joystick &#x2195;</td>
           <td><div class="tri">&#9658;</div></td>
           <td><input data-in="A" data-out="16" type="checkbox"></td>
           <td><input data-in="B" data-out="16" type="checkbox"></td>
@@ -508,10 +574,29 @@
     </div>
   </div>
 
+  <div id="settingsDialog" class="modalDialog">
+    <div class="panel">
+      <div class="panelName">SETTINGS</div>
+      <button id="settingsDialogClose" class="closeButton">X</button>
+      <div class="subPanel">
+        <div class="panelName">Knobs</div>
+        <div class="dial" id="testDial"></div>
+        <div class="setting">
+          Motion: <select id="knobMotion">
+            <option selected value="radial">Radial (skeumorphic)</option>
+            <option value="vertical">Vertical (Ableton-style)</option>
+            <option value="hybrid">Hybrid</option>
+          </select>
+        </div>
+        <div class="setting">Speed: <div id="knobIntensity"></div></div>
+      </div>
+    </div>
+  </div>
+
   <div id="helpDialog" class="modalDialog">
     <div class="panel">
       <div class="panelName">SYNTHI-JS MANUAL</div>
-      <button id="helpDialogClose">X</button>
+      <button id="helpDialogClose" class="closeButton">X</button>
       <div id="helpArea">
         <div id="sidebar">
           <ul>
@@ -570,7 +655,7 @@
             <img src="images/patchboard.png" />
             <p>The patchboard connects the <i>outputs</i> of components to the <i>inputs</i> of other components.</p>
             <p>For example, the simplest patch
-            you can make is by just placing a pin on <b>A3</b>, which connects the output of Oscillator 1
+            you can make is by just placing a pin on <b>A1</b>, which connects the output of Oscillator 1
             to the input of Output Ch1, by default producing a 440 Hz sine wave sound.</p>
             <p>It helps to separate the components into <i>sources</i> and <i>treatments</i>:</p>
             <ul>
@@ -613,18 +698,15 @@
 
             <h3>The Input Source Selector</h3>
             <img src="images/input-sources.png" />
-            <p>The input source selector can be used to load external audio tracks by their URLs. Each track
+            <p>The input source selector can be used to upload audio tracks for playback. Each track
             loaded this way will play in a loop on the given input channel <b>(pins 8 and 9)</b>. You can adjust
             the playback speed and the start and end points of the track to loop between.</p>
-            <p><i>Because the input source selector makes cross-origin requests, it will only work if
-            CORS (cross-origin resource sharing) is enabled on your browser. You can use an extension such as 
-            <a href="https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en">this one</a>
-            to enable CORS on your browser.</i></p>
           </div>
           <div id="components" class="page">
             <h3>Oscillator 1</h3>
-            <p>A sine and ramp (sawtooth) wave oscillator, with a frequency control going from 28 Hz to 7040 Hz. 
-            Outputs both waveforms on <b>row 3</b>, and takes a frequency control input at <b>column I</b>.</p>
+            <p>A sine and ramp (sawtooth) wave oscillator, with a frequency control going from 28 Hz to 7040 Hz.
+            Outputs the sine and ramp waves on <b>rows 1 and 2</b>, respectively, and 
+            takes a frequency control input at <b>column I</b>.</p>
             <p class="no-margin"><b>Controls:</b></p>
             <ul>
               <li><b>Frequency:</b> Controls the frequency of both the sine and ramp waves.</li>
@@ -634,8 +716,9 @@
             </ul>
 
             <h3>Oscillator 2</h3>
-            <p>A square and triangle wave oscillator, with a frequency control going from 28 Hz to 7040 Hz. 
-            Outputs both waveforms on <b>row 4</b>, and takes a frequency control input at <b>column J</b>.</p>
+            <p>A square and triangle wave oscillator, with a frequency control going from 28 Hz to 7040 Hz.
+            Outputs the square and triangle waves on <b>rows 3 and 4</b>, respectively, and 
+            takes a frequency control input at <b>column J</b>.</p>
             <p class="no-margin"><b>Controls:</b></p>
             <ul>
               <li><b>Frequency:</b> Controls the frequency of both the square and triangle waves.</li>
@@ -777,6 +860,7 @@
             
             <h3>Version History</h3>
             <ul>
+              <li><b>Version 1.2.0</b> <i>(2016-06-10)</i>: Settings panel with knob controls, restyled patchboard, upload support via S3.
               <li><b>Version 1.1.0</b> <i>(2016-05-25)</i>: Preset banks 95-99, knob control improvements, some adjustments to Reverb module.</li>
               <li><b>Version 1.0.1</b> <i>(2016-05-25)</i>: Fixed bug with component order not being properly set, causing issues for patches using the Ring Modulator.</li>
               <li><b>Version 1.0.0</b> <i>(2016-05-21)</i>: Initial release.</li>
@@ -805,6 +889,7 @@
   <script src="js/components/ring-modulator.js"></script>
   <script src="js/components/reverb.js"></script>
   <script src="js/components/joystick.js"></script>
+  <script src="js/aws.js"></script>
   <script src="js/ui.js"></script>
 
   <script>
