@@ -2,6 +2,8 @@
 <head>
   <!-- This includes Flocking and all its dependencies, including jQuery 2.1.3 and Infusion -->
   <script src="lib/flocking/dist/flocking-all.js"></script>
+
+  <script src="lib/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
   <script src="lib/masonry.pkgd.min.js"></script>
   <script src="lib/segment-display.js"></script>
 
@@ -10,6 +12,7 @@
   <script src="lib/knobKnob/transform.js"></script>
   <script src="lib/knobKnob/knobKnob.jquery.js"></script>
 
+  <link href="lib/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet">
   <link href="lib/knobKnob/knobKnob.css" rel="stylesheet">
   <link href="lib/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
@@ -575,8 +578,18 @@
     <div class="panel">
       <div class="panelName">SETTINGS</div>
       <button id="settingsDialogClose" class="closeButton">X</button>
-      <div>Knob settings go here.</div>
-      <div class="dial" id="testDial"></div>
+      <div class="subPanel">
+        <div class="panelName">Knobs</div>
+        <div class="dial" id="testDial"></div>
+        <div class="setting">
+          Motion: <select id="knobMotion">
+            <option selected value="radial">Radial (skeumorphic)</option>
+            <option value="vertical">Vertical (Ableton-style)</option>
+            <option value="hybrid">Hybrid</option>
+          </select>
+        </div>
+        <div class="setting">Speed: <div id="knobIntensity"></div></div>
+      </div>
     </div>
   </div>
 

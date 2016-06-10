@@ -692,7 +692,7 @@ $(function () {
 
   $('#testDial').knobKnob({
     min: 0,
-    max: 8,
+    max: 10,
     value: 180,
     diameter: 100,
     label: '',
@@ -700,10 +700,28 @@ $(function () {
     endOffset: 30
   });
 
+  $('#knobMotion').val(localStorage['knobs.motion'])
+    .change(function () {
+      localStorage['knobs.motion'] = $('#knobMotion').val();
+  });
+
+  $('#knobIntensity').slider({
+    min: 0.2,
+    max: 1.8,
+    step: 0.1,
+    value: localStorage['knobs.intensity'],
+    change: function( event, ui ) {
+      localStorage['knobs.intensity'] = ui.value;
+    }
+  });
+
   // Close dialogs when clicking outside them
   $('.modalDialog').click(function (e) {
     if ($(e.target).closest('.panel').length === 0) {
-      $('.modalDialog').hide();
+      // ... except the Settings dialog
+      if (!$('#settingsDialog').is(':visible')) {
+        $('.modalDialog').hide();
+      }
     }
   });
 
