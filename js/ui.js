@@ -734,13 +734,13 @@ $(function () {
 
   // Set up masonry grid layout and fade in
 
-//  $('#loader').hide();
+  $('#loader').hide();
   $('.grid').masonry({
     columnWidth: '.width1',
     itemSelector: '.panel'
   }).css("visibility", "visible")
     .hide()
-//    .fadeIn();
+    .fadeIn();
 
   // Set up window resize handler
 
