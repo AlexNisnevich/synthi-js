@@ -746,8 +746,20 @@ $(function () {
     $('.grid').scale(zoomLevel);
   });
 
-  // Fade in when ready
-  $('#loader').hide();
-  $('.grid').css("visibility", "visible").hide().fadeIn();
-  $(window).resize();
+  // Ready to fade in!
+  
+  function renderUI() {
+    $('#loader, #sadBrowserText').hide();
+    $('.grid').css("visibility", "visible").hide().fadeIn();
+    $(window).resize();
+  }
+
+  // Janky browser check
+  if ($.browser.webkit && (!$.browser.chrome && parseFloat($.browser.version) > 537 || 
+                            $.browser.chrome && parseFloat($.browser.version) >= 45)) {
+    renderUI();
+  } else {
+    $('#sadBrowserText').html('We recommend running SYNTHI-JS on Chrome 45+ or Safari 7.1+. <a>Proceed anyway?</a>');
+    $('#sadBrowserText a').click(renderUI);
+  }
 });

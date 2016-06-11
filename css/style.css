@@ -254,6 +254,23 @@ body {
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
+  z-index: -9999;
+}
+
+#sadBrowserText {
+  color: rgb(238, 238, 238);
+  width: 400px;
+  text-align: center;
+  margin: 40px auto;
+}
+
+#sadBrowserText a {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#sadBrowserText a:hover {
+  text-decoration: none;
 }
 
 .logo {
@@ -325,7 +342,10 @@ body {
 }
 
 #bankSelectButtons {
-  margin-top: 13px;
+  position: absolute;
+  width: 30px;
+  top: 23px;
+  right: 12px;
 }
 
 #bankSelectButtons button {
@@ -342,19 +362,20 @@ body {
 }
 
 #bankOperationButtons button {
+  font-size: 9px;
   margin-top: 3px;
   margin-right: 2px;
 }
 
 #inputSources {
-  margin-top: 15px;
+  margin-top: 12px;
   font-size: 0.75em;
 }
 
 .inputSource {
   float: left;
   width: 110px;
-  height: 108px;
+  height: 117px;
   margin-right: 7px;
   border: 1px solid #333;
   border-radius: 10px;
@@ -366,18 +387,19 @@ body {
   margin: 5px 0;
 }
 
+.inputSource div {
+  clear: both;
+  height: 21px;
+}
+
 .inputSource input {
-  width: 65px;
+  width: 45px;
 }
 
 .inputSource input[type=file] {
   float: left;
   width: 82px;
   padding-left: 5px;
-}
-
-.inputSource input.short {
-  width: 45px;
 }
 
 .inputSource .indicators span {
@@ -638,6 +660,8 @@ button#memoryDialogClose {
 
 /* adapted from https://codepen.io/james2doyle/pen/AKblD */
 button {
+  padding-top: 2px;
+  padding-bottom: 3px;
   cursor: pointer;
   float: left;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.7), 0 0 0 hsla(208.12, 44.44%, 85.88%, 0);
@@ -687,4 +711,31 @@ button.red:hover {
   background: -o-linear-gradient(top, #ff4040 0%,#cc4040 100%); /* Opera 11.10+ */
   background: -ms-linear-gradient(top, #ff4040 0%,#cc4040 100%); /* IE10+ */
   background: linear-gradient(to bottom, #ff4040 0%,#cc4040 100%); /* W3C */
+}
+
+/* BROWSER-SPECIFIC */
+
+/* Firefox */
+@media screen and (-moz-images-in-menus:0) {
+  #loader {
+    top: 100px;
+    transform: translateY(0);
+  }
+
+  .logo {
+    position: static;
+    font-size: 16px;
+    padding-top: 5px;
+  }
+
+  button::-moz-focus-inner {
+    padding: 0 !important;
+    border: 0 none !important;
+  }
+
+  .radial.metal { background-color: hsla(0,0%,90%,1) !important; }
+  .radial.metal.green { background-color: hsla(140,100%,60%,0.5) !important; }
+  .radial.metal.blue { background-color: hsla(197, 71%,60%,0.5) !important; }
+  .radial.metal.red { background-color: hsla(0, 100%,60%,0.5) !important; }
+  .radial.metal.yellow { background-color: hsla(60, 100%,60%,0.5) !important; }
 }
