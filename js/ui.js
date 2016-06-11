@@ -385,6 +385,8 @@ $(function () {
     }
   });
 
+  $("#manualTrigger button").click(manualTrigger);
+
   // Ring Modulator
 
   $("#ringModLevel").knobKnob({
@@ -550,7 +552,7 @@ $(function () {
     }
   });
 
-  // unfortunately, the trackpad JS causes too much buzz to use
+  // unfortunately, this trackpad JS by Jacob Nisnevich causes too much buzz to use.
   // TODO: figure out why!
   /*$("#joystick").trackPad({
     width: "140px",
@@ -562,9 +564,10 @@ $(function () {
   // Storage banks
 
   function updateBankDisplay() {
-    var storageIndicator = presetBanks[currentBank] ? "P" : ((localStorage["bank" + currentBank]) ? "Y" : " ")
+    var storageIndicator = presetBanks[currentBank] ? "P" : ((localStorage["bank" + currentBank]) ? "5" : " ")
     display.setValue(storageIndicator + '    ' + ("0" + currentBank).slice(-2));
     $("#bankStore, #bankClear").prop('disabled', storageIndicator == "P");
+    $("#bankLoad").prop('disabled', storageIndicator == " ");
   }
 
   var display = new SegmentDisplay("bankDisplay");
@@ -715,6 +718,10 @@ $(function () {
     }
   });
 
+  // Draggable dialogs
+  $('.modalDialog .panel').draggable({ handle: '.panelName' });
+  $('.modalDialog .panelName').disableSelection();
+
   // Close dialogs when clicking outside them
   $('.modalDialog').click(function (e) {
     if ($(e.target).closest('.panel').length === 0) {
@@ -727,12 +734,13 @@ $(function () {
 
   // Set up masonry grid layout and fade in
 
+//  $('#loader').hide();
   $('.grid').masonry({
     columnWidth: '.width1',
     itemSelector: '.panel'
   }).css("visibility", "visible")
     .hide()
-    .fadeIn();
+//    .fadeIn();
 
   // Set up window resize handler
 

@@ -28,44 +28,34 @@ var components = [];
 
 var currentBank = 0;
 
-var presetBanks = {
-  // Crashing waves
-  95: "N4IgJglghgNgziAXKAZhGAXApgJwGI5YCOArlgHYDGAnkgIwAcADADQhqa4BKWcADgHtycLPWZsO2HABksANywwxrEDgjkA5gFkBYWQqWIAzEZUC4lOgWL0ArABY25ywGUAFlD6jEjMxbou6vqKSEYATLZO/lxQALZ8wYYmKhRyAIIYGFCUANb0RgDsbKkA8uRIAJwp5HIAIliUULSIAGzVciUoKEj27QAqOJ5YAF4CEHryIcZhRSCpgRrksImhplGUYdZEyuth7kM7IM57pFCEK61+GwPQmjBYF2uqkzgARloQAB6hTEZshAo3o8ns4jFskAUwusjPsvIdQS5TudJoY2tCblA7g8UT82JQ3HR1HwSBgLr48W4wkSSWTxCByGMRLDvOT6YzsQZVip8XQBCTiRg8OgpId8WE+RgBULODhDgArATUOAYCC5AAaMU03mSbAVSpVuQAmpqNNqnjz7pzptyCXxMbiQGK7eVjEwbWFLVNWdhlbVoIZfABfNh8dQIZAgACiAFo6EgMDgyGwY2F44msGwAJLR2xppMgaQ5vMZkB4aMFYtsABCsbjiAT+bSsdT9fT1eblZAAHFY0ZO7VY/ZO9m6LnW/mANKxlrFwOBoA=",
-  
-  // Telephone signal sound (control with joystick)
-  96: "N4IgJglghgNgziAXKAZhGAXApgJwGI5YCOArlgHYDGAnkgIwAcADADQhqa4BKWcADgHtycLPWZsO2HABksANywwxrEDgjkA5gFkBYWQqWJGKgXEp0CxZW1PmAygAsofUUfEhbdO+v2KkANhMzOi4oAFs+X0MAZhUKOQBBDAwoSgBrALjyOQB5ciQATiy5ABEsSihaREC2eJyUFEza7IAVHGcsAC8BCD15Pzdi7w1yWCjrDzMAJksiCdspxw76fwYbabtSKEJx6qDKKbboTRgsXdi2QgUcACMtCAAPQpUr3Bvd43XKaNn5s2ili4/t9NiRtmd+oYapNvkcoCcIQYkBcQJQHHR1HwSBgPu40VNMdjcSpyD0RIDXJ8QKSICJdtC0XQBNisRg8OgpBN8cyMKz2ZwcBMAFYCahwDAQdIADVCmkp7hFYol6QAmrKNPKVIzTkjBmxGXx4citQ4pob8ohYiapjqBlTsOKStBDMYAL5sPjqBDIEAAUQAtHQkBgcGQ2Hh/dFg6GsGwAJL+gCs0bDIASgajiBDqYAQhmU7GQABpQPJrMxtgAKUD/gLrtdQA",
-  
-  // Overtone bell (based on Ex 4 in SYNTHI A Manual)
-  97: "N4IgJglghgNgziAXKAZhGAXApgJwGI5YCOArlgHYDGAnkgEwCsDANCGprgEpZwAOA9uThYkAZgAMLNumw4AMlgBuWGGImscEcgHMAsvzALlqxKLp1W/OJQCMBYvQBsNy9ZsBlABZReIxDYAOcVdbdy0jFTFxYJArW04oAFteCJN1EApFAEEMDChKAGskRxjMgHlyJAAWAHZWTIARLEooWkQg+vJFMpQUapcMroAVHB8sAC9+CEMlSP8OwcUw7XJYVLUYuLp7InoGAa2vMaRAzes6d1IoQnXTM8o6EegdGCxbiVENWZwAI10IAAeGy+yl+7zon1i1lEO2KVRCoiOvhOCziiKuN1mJhKCKeUBebyxUVYlE8Ni0vBIGFupxJnjoFKpNIW5CmwiRflpIFZEGEtxxIFJNn4VMpGDwMlwKJipLoIowYolHBw0tYACt+NQ4BgIIUABoJHSchYarU6woATUN2mNMrJr2MqsFZN4+OJzrorsqdztdAdcy52G1DWgJlOAF9WLwtAhkCAAKIAWhsSAwODIrDwiaqqfTWFYDWT4lzGZAAHFk3QS/mQAAJZOiausLLJnOINOlgBCrer4fDQA=",
-  
-  // Bowing effect (make sound with joystick, based on Ex 12 in SYNTHI A Manual)
-  98: "N4IgJglghgNgziAXKAZhGAXApgJwGI5YCOArlgHYDGAnkgIwAcADADQhqa4BKWcADgHtycLPWZsO2HABksANywwxrEDgjkA5gFkBYWQqWIAzEZUC4lOgWL0ArAE425ywGUAFlD6jEjMxbou6vqKSEZ0jiDOdFxQALZ8wYambBRyAIIYGFCUANZIAGwqqQDy5Ej2ReRyACJYlFC0iIUpVcUoKAWVcgAqOJ5YAF4CEHryIT7iIKmBGuSwicpOFgBM1kSLkSvu/RvOyy6kUIQLTX6Uy73QmjBYJ8mqYzgARloQAB70+UZshArPd/dnEY1rsLEZtl5QZRwYdjmNDM1NtDLlBrrd4aEVJQ3HR1HwSBgTr42NjlniCUTJuRhiIId5iSBqRARCdEdi6AICfiMHh0FINqTORhubzODgNgArATUOAYCC5AAaMU09PyESlMrluQAmsqNN4TFicTcDAKcXxUZiSW5lhaysYmEblibxgzsLLqtBDL4AL5sPjqBDIEAAUQAtHQkBgcGQ2ABxCNGKMxrBsNIRgAsydjIAAQpns6mQABJCO2QtsPAR/KFn0+oA=",
-  
-  // "Bounce" (failed attempt to do Ex 6 in SYNTHI A Manual)
-  99: "N4IgJglghgNgziAXKAZhGAXApgJwGI5YCOArlgHYDGAnkgIwAcADADQhqa4BKWcADgHtycLPWZsO2HABksANywwxrEDgjkA5gFkBYWQqWJGKgXEp0CxJACYGAFjanzAZQAWUPqKPiQTus/V9RXoATjpHMzouKABbPiDDAGYVCjkAQQwMKEoAayQANhTyOQB5ciQQorkAESxKKFpEQrZUkpQUAqqAFRwPLAAvAQg9eWDvKoCNclgE5QjKa0siejp8+es3PrnfMw3SKEJZoxCAVnWe6E0YLCPktkIFHAAjLQgAD3oAdhUH3Cej4zzRJLAprHaURKbTxIRJ3cGQ/aHUaGRiJIEXKBXG7ImEqSiuOjqPgkDAAnz46xEklklTkIYiKFeQEgOkQERHZogfF0AQk4kYPDoKTbCm8jD8wWcHDbABWAmocAwEFyAA1opomT45QqlbkAJrqjSavEE64GEUEviY3FsClW8qIZIm6xmsbM7CK6rQFHMAC+bD46gQyBAAFEALR0JAYHBkNh4cOJaOxrBsACSieTcZAAClwycs6mQABxSNJxAx7NpSN2QtsABCNcLvt9QA"
-}
-
-
 function Component(inputPins, outputPin, synthDef) {
+  if (synthDef.id === undefined) { synthDef.id = "main"; }
+  var enclosingDef = {
+    id: "output",
+    ugen: "flock.ugen.out",
+    sources: synthDef
+  };
+  if (outputPin !== null) { enclosingDef.bus = buses[outputPin]; }
+
   this.init = function () {
     this.inputPins = inputPins;
     this.connectedPins = {};
-
-    if (synthDef.id === undefined) { synthDef.id = "main"; }
-
-    var enclosingDef = {
-      id: "output",
-      ugen: "flock.ugen.out",
-      sources: synthDef
-    };
-
-    if (outputPin !== null) { enclosingDef.bus = buses[outputPin]; }
 
     this.synth = flock.synth({
       synthDef: enclosingDef
     });
 
     components.push(this);
+  };
+
+  this.restart = function () {
+    this.synth.destroy();
+
+    this.synth = flock.synth({
+      synthDef: enclosingDef
+    });
+
+    this.moveToFront();
   };
 
   this.getAllConnectedPins = function () {
@@ -151,9 +141,8 @@ function saveState() {
 }
 
 function loadState(state) {
-  console.log(state);
+  console.log("Loading " + state + " ...");
   var parsed = JSON.parse(LZString.decompressFromBase64(state));
-  console.log(parsed);
 
   // Dials
   var dials = parsed.dials;
@@ -176,6 +165,10 @@ function loadState(state) {
       connectPin(pin);
     }
   }
+}
+
+function refreshState() {
+  loadState(saveState());  // Used after manually triggering Envelope to clean up state.
 }
 
 function storeToBank() {

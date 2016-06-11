@@ -3,6 +3,8 @@
 @import url(https://fonts.googleapis.com/css?family=Orbitron:900);
 @import url(https://fonts.googleapis.com/css?family=VT323);
 
+/* GENERAL */
+
 body {
   background: url(../images/bg.png); /* http://subtlepatterns.com/dark-sharp-edges/ */
   font-family: 'Raleway', sans-serif;
@@ -41,7 +43,7 @@ body {
 
 .panelName {
   position: absolute;
-  top: 0px;
+  top: 2px;
   left: 0px;
   width: 100%;
   text-align: center;
@@ -79,12 +81,7 @@ body {
   height: 566px;
 }
 
-#gfx {
-  margin: 0 auto;
-  border: 1px solid #999;
-  border-radius: 15px;
-  background: white;
-}
+/* PATCHBOARD */
 
 #patches {
   margin: 0px auto;
@@ -145,12 +142,6 @@ body {
   border-color: black;
 }
 
-/*TODO: use something like this on all sides to make a slightly rounded patchboard
-#patches tr:nth-child(2) td:nth-child(2) {
-  border-top-left-radius: 10px;
-}
-*/
-
 #patches td:nth-child(1) {
   max-width: 120px;
   border: 1px solid black;
@@ -199,6 +190,8 @@ body {
 #patches tr:last-child td:first-child, #patches tr:last-child td:nth-child(2), #patches tr:last-child td:last-child {
   border: 0;
 }
+
+/* KNOBS */
 
 .dial {
   float: left;
@@ -251,6 +244,13 @@ body {
   pointer-events: none;
 }
 
+/* MISC UI COMPONENENTS */
+
+#loader {
+  display: block;
+  margin: 200px auto;
+}
+
 .logo {
   position: absolute;
   bottom: 0;
@@ -262,6 +262,13 @@ body {
   font-weight: 900;
   font-size: 26px;
   letter-spacing: 8px;
+}
+
+#gfx {
+  margin: 0 auto;
+  border: 1px solid #999;
+  border-radius: 15px;
+  background: white;
 }
 
 #joystick {
@@ -334,37 +341,6 @@ body {
   margin-right: 2px;
 }
 
-#memoryDialog .panel {
-  width: 400px;
-  height: auto;
-  position: relative;
-  float: none;
-  margin: 10% auto;
-  border-width: 3px;
-  border-color: #000;
-  pointer-events: auto;
-}
-
-#memoryDialog textarea {
-  margin-top: 15px;
-  width: 100%;
-  height: 180px;
-  font-family: 'VT323';
-}
-
-#memoryDialog button {
-  float: none;
-  margin-top: 5px;
-}
-
-button#bankImportExport {
-  color: yellow;
-}
-
-button#memoryDialogClose {
-  background: red;
-}
-
 #inputSources {
   margin-top: 15px;
   font-size: 0.75em;
@@ -417,21 +393,6 @@ button#memoryDialogClose {
   background-color: #F00;
 }
 
-#corsStatus {
-  margin-top: 40px;
-  font-size: 0.6em;
-}
-
-#corsStatus.disabled, #corsStatus.disabled a {
-  color: red;
-}
-
-#corsStatus.disabled a:hover {
-  color: white;
-  background-color: red;
-  text-decoration: none;
-}
-
 #envLight {
   position: absolute;
   left: 120px;
@@ -446,6 +407,85 @@ button#memoryDialogClose {
 #envLight.on {
   background-color: rgba(255, 0, 0, 0.58);
   box-shadow: inset 0 0 10px #222, inset 0 0 5px #fff;
+}
+
+#manualTrigger {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 45px;
+  height: 72px;
+  font-size: 10px;
+  text-align: center;
+}
+
+#manualTrigger button {
+  float: none;
+  width: 28px;
+  height: 28px;
+  margin: 0 auto 8px;
+  border: 3px solid black;
+  border-top-width: 4px;
+  border-radius: 0;
+}
+
+/* DIALOGS */
+
+/* taken from http://www.webdesignerdepot.com/2012/10/creating-a-modal-window-with-html5-and-css3/ */
+.modalDialog {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 99999;
+  -webkit-transition: opacity 400ms ease-in;
+  -moz-transition: opacity 400ms ease-in;
+  transition: opacity 400ms ease-in;
+}
+
+.modalDialog .panelName:first-of-type {
+  top: 4px;
+  cursor: move;
+}
+
+.modalDialog button.closeButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+#memoryDialog .panel {
+  width: 400px;
+  height: auto;
+  position: relative;
+  float: none;
+  margin: 10% auto;
+  border-width: 3px;
+  border-color: #000;
+  pointer-events: auto;
+}
+
+#memoryDialog textarea {
+  margin-top: 15px;
+  width: 100%;
+  height: 180px;
+  font-family: 'VT323';
+}
+
+#memoryDialog button {
+  float: none;
+  margin-top: 5px;
+}
+
+button#bankImportExport {
+  color: yellow;
+}
+
+button#memoryDialogClose {
+  background: red;
 }
 
 #helpButton {
@@ -473,12 +513,6 @@ button#memoryDialogClose {
 
 #helpDialog .panelName {
   margin-top: 10px;
-}
-
-.modalDialog button.closeButton {
-  position: absolute;
-  top: 5px;
-  right: 5px;
 }
 
 #helpDialog #helpArea {
@@ -595,6 +629,8 @@ button#memoryDialogClose {
   width: 150px;
 }
 
+/* BUTTONS */
+
 /* adapted from https://codepen.io/james2doyle/pen/AKblD */
 button {
   cursor: pointer;
@@ -630,17 +666,20 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* taken from http://www.webdesignerdepot.com/2012/10/creating-a-modal-window-with-html5-and-css3/ */
-.modalDialog {
-  display: none;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0,0,0,0.8);
-  z-index: 99999;
-  -webkit-transition: opacity 400ms ease-in;
-  -moz-transition: opacity 400ms ease-in;
-  transition: opacity 400ms ease-in;
+button.red {
+  background: -moz-linear-gradient(top, #f90303 0%,#bd0e0e 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f90303), color-stop(100%,#bd0e0e)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #f90303 0%,#bd0e0e 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #f90303 0%,#bd0e0e 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #f90303 0%,#bd0e0e 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #f90303 0%,#bd0e0e 100%); /* W3C */
+}
+
+button.red:hover {
+  background: -moz-linear-gradient(top, #ff4040 0%,#cc4040 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff4040), color-stop(100%,#cc4040)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #ff4040 0%,#cc4040 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #ff4040 0%,#cc4040 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #ff4040 0%,#cc4040 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #ff4040 0%,#cc4040 100%); /* W3C */
 }
