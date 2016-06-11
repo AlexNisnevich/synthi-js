@@ -6,7 +6,7 @@
 /* GENERAL */
 
 body {
-  background: url(../images/bg.png); /* http://subtlepatterns.com/dark-sharp-edges/ */
+  background: #444 url(../images/bg.png); /* http://subtlepatterns.com/dark-sharp-edges/ */
   font-family: 'Raleway', sans-serif;
   font-weight: 300;
   letter-spacing: 1.5px;
@@ -248,7 +248,12 @@ body {
 
 #loader {
   display: block;
-  margin: 200px auto;
+  margin: 0 auto;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .logo {

@@ -693,7 +693,7 @@ $(function () {
     $("#settingsDialog").hide();
   });
 
-  $('#testDial').knobKnob({
+  $('#settingsDialog #testDial').knobKnob({
     min: 0,
     max: 10,
     value: 180,
@@ -703,12 +703,12 @@ $(function () {
     endOffset: 30
   });
 
-  $('#knobMotion').val(localStorage['knobs.motion'])
+  $('#settingsDialog #knobMotion').val(localStorage['knobs.motion'])
     .change(function () {
       localStorage['knobs.motion'] = $('#knobMotion').val();
   });
 
-  $('#knobIntensity').slider({
+  $('#settingsDialog #knobIntensity').slider({
     min: 0.2,
     max: 1.8,
     step: 0.1,
@@ -732,22 +732,22 @@ $(function () {
     }
   });
 
-  // Set up masonry grid layout and fade in
-
-  $('#loader').hide();
+  // Set up masonry grid layout
   $('.grid').masonry({
     columnWidth: '.width1',
     itemSelector: '.panel'
-  }).css("visibility", "visible")
-    .hide()
-    .fadeIn();
+  })
 
   // Set up window resize handler
-
   var margin = 2 * (8 + 5);
   $(window).resize(function () {
     var zoomLevel = Math.min(window.innerWidth / ($('.grid').width() + 36), 
                              window.innerHeight / ($('.grid').height() + 46), 1);
     $('.grid').scale(zoomLevel);
-  }).resize();
+  });
+
+  // Fade in when ready
+  $('#loader').hide();
+  $('.grid').css("visibility", "visible").hide().fadeIn();
+  $(window).resize();
 });
