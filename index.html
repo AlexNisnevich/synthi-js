@@ -1,16 +1,14 @@
 <html>
 <head>
-  <!-- This includes Flocking and all its dependencies, including jQuery 2.1.3 and Infusion -->
-  <script src="lib/flocking/dist/flocking-all.js"></script>
-
-  <script src="lib/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+  <script src="lib/flocking/dist/flocking-all.js"></script> <!-- Flocking + all dependencies, including jQuery 2.1.3 and Infusion -->
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw="   crossorigin="anonymous"></script>
   <script src="lib/masonry.pkgd.min.js"></script>
   <script src="lib/segment-display.js"></script>
   
   <script src="lib/knobKnob/transform.js"></script>
   <script src="lib/knobKnob/knobKnob.jquery.js"></script>
 
-  <link href="lib/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet">
+  <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
   <link href="lib/knobKnob/knobKnob.css" rel="stylesheet">
   <link href="lib/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
@@ -32,6 +30,7 @@
   <base target="_blank">
 </head>
 <body>
+  <img id="loader" src="images/gear.svg" />
   <div class="grid">
     <div class="panel width2 enhancement">
       <div class="panelName">INPUT SOURCES</div>
@@ -551,6 +550,10 @@
       <div class="dial" id="joystickXRange"></div>
       <div class="dial" id="joystickYRange"></div>
       <div id="joystick"></div>
+      <div id="manualTrigger">
+        <button class="red"></button>
+        manual trigger
+      </div>
     </div>
 
     <div class="panel width4">
@@ -690,7 +693,9 @@
             <img src="images/memory.png" />
             <p>The memory banks can be used to store up to 100 patches. Clicking the <b>Store</b> button at a given memory
             location will store the current configuration of SYNTHI-JS (knobs and patchboard pins) into memory.
-            Memory banks that have a patch stored under them are indicated by the letter g<b>Y</b>.</p>
+            Memory banks that have a patch stored under them are indicated by the letter <b>S</b>.</p>
+            <p>Preset memory banks that can not be modified are indicated by the letter <b>P</b>. See the <b>Presets</b> page
+            of this manual for more information.</p>
             <p>The <b>Imp/Export</b> button opens the <b>Memory Import / Export</b> dialog, which can be used to
             share the current patch or to load a patch that has been shared with you by someone else.</p>
 
@@ -772,13 +777,14 @@
             <img src="images/trapezoid.png" />
             <p>Takes an input signal at <b>column D</b> and optionally a control signal at <b>column L</b> to modify
             the Decay time. Outputs the envelope-shaped signal on <b>row 12</b> and the trapezoid wave itself (for use
-            as a control signal) on <b>row 11</b>.</p>
+            as a control signal) on <b>row 11</b>. The envelope is self-triggering, but can also be manually triggered
+            with the <b>manual trigger</b> button near the joystick.</p>
             <p class="no-margin"><b>Controls:</b></p>
             <ul>
               <li><b>Attack:</b> The amount of time for the "attack" step during which a sound "grows" (up to 1 sec).</li>
               <li><b>On:</b> The amount of time for the "on" step during which a sound stays at its maximum volume (up to 2.5 sec).</li>
               <li><b>Decay:</b>  The amount of time for the "decay" step during which a sound fades away (up to 15 sec).</li>
-              <li><b>Off:</b>  The amount of time for the "attack" step during which there is no sound (up to 1 sec).</li>
+              <li><b>Off:</b>  The amount of time for the "off" step during which there is no sound (up to 10 sec). When the "off" step time is set to 9 sec or higher, the envelope shaper stops self-triggering and can only be manually triggered</li>
               <li><b>Trapezoid Lvl:</b> The level of the trapezoid wave outputted on row 11 (at maximum, -3V to +4V).</li>
               <li><b>Signal Lvl:</b> The level of the output signal outputted on row 12.</li>
             </ul>
@@ -824,11 +830,11 @@
             Preset patches occupy memory banks 95-99 and are not modifiable.</p>
             <p>Here are the current available presets:</p>
             <table border="1" cellpadding="7" cellspacing="3">
-              <tr><td>95</td><td><b>Crashing waves</b></td></tr>
-              <tr><td>96</td><td><b>Modem connection sound</b> <i>(control with joystick)</i></td></tr>
-              <tr><td>97</td><td><b>Overtone bell</b> <i>(Ex.4 in the SYNTHI manual)</i></td></tr>
-              <tr><td>98</td><td><b>Bowing effect</b> <i>(use the joystick to make sounds; Ex.12 in the SYNTHI manual)</i></td></tr>
-              <tr><td>99</td><td><b>"Bounce"</b> <i>(failed attempt at Ex.6 in SYNTHI manual)</i></td></tr>
+              <tr><td>00</td><td><b>Crashing waves</b></td></tr>
+              <tr><td>01</td><td><b>Modem connection sound</b> <i>(control with joystick)</i></td></tr>
+              <tr><td>02</td><td><b>Bowing effect</b> <i>(use the joystick to make sounds; Ex.12 in the SYNTHI manual)</i></td></tr>
+              <tr><td>03</td><td><b>"Bounce"</b> <i>(failed attempt at Ex.6 in SYNTHI manual)</i></td></tr>
+              <tr><td>04</td><td><b>Overtone bell</b> <i>(Ex.4 in the SYNTHI manual)</i></td></tr>
             </table>
           </div>
           <div id="development" class="page">
@@ -845,10 +851,6 @@
               <li>The ability to have circular chains of component dependencies <i>(for example,
               A depends on B and B depends on A)</i>. As far as I can tell, this is not possible in
               <a href="http://flockingjs.org/">Flocking</a>, but I'm open to suggestions.</li>
-              <li>The Output Ch1 and Output Ch2 output rows <b>(pins 1 and 2)</b> for the same reason
-              as above - it doesn't make sense to support these pins without the ability for feedback.</li>
-              <li>The <b>manual trigger</b> button for the envelope generator. Also, the envelope should
-                stop self-triggering when the Off time is high, but currently does not do that.</li>
               <li>The EMS DK keyboard.</li>
               <li>The EMS KS sequencer.</li>
               <li>In general, many of the components of SYNTHI-JS don't follow the specs as well
@@ -858,8 +860,9 @@
             
             <h3>Version History</h3>
             <ul>
-              <li><b>Version 1.2.0</b> <i>(2016-06-10)</i>: Settings panel with knob controls, restyled patchboard, upload support via S3.
-              <li><b>Version 1.1.0</b> <i>(2016-05-25)</i>: Preset banks 95-99, knob control improvements, some adjustments to Reverb module.</li>
+              <li><b>Version 1.2.1</b> <i>(2016-06-11)</i>: Manual Trigger button for Envelope Shaper, more accurate state loading, minor UI improvements.</li>
+              <li><b>Version 1.2.0</b> <i>(2016-06-10)</i>: Settings panel with knob controls, restyled patchboard, upload support via S3.</li>
+              <li><b>Version 1.1.0</b> <i>(2016-05-25)</i>: Preset banks 95-99 (now called 00-04), knob control improvements, some adjustments to Reverb module.</li>
               <li><b>Version 1.0.1</b> <i>(2016-05-25)</i>: Fixed bug with component order not being properly set, causing issues for patches using the Ring Modulator.</li>
               <li><b>Version 1.0.0</b> <i>(2016-05-21)</i>: Initial release.</li>
             </ul>
@@ -888,6 +891,7 @@
   <script src="js/components/reverb.js"></script>
   <script src="js/components/joystick.js"></script>
   <script src="js/aws.js"></script>
+  <script src="js/presets.js"></script>
   <script src="js/ui.js"></script>
 
   <script>

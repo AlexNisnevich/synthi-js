@@ -102,6 +102,10 @@ EnvelopeTrapezoid.connect = function (inputPin, connectedPins) {
 EnvelopeTrapezoid.set = function (property, value) {
   this.synth.set("env."+property, value);
 
+  if (this.synth.get("env.off") > 9) {
+    this.synth.set("env.off", 999999); // Max off = manual trigger only!
+  }
+
   var attackTime = this.synth.get("env.attack") + this.synth.get("env.on");
   var decayTime = this.synth.get("env.release.value");
   var totalTime = this.synth.get("env.attack") + this.synth.get("env.on") + this.synth.get("env.off");
@@ -223,6 +227,10 @@ EnvelopeShaper.connect = function (inputPin, connectedPins) {
 };
 EnvelopeShaper.set = function (property, value) {
   this.synth.set("env."+property, value);
+
+  if (this.synth.get("env.off") > 9) {
+    this.synth.set("env.off", 999999); // Max off = manual trigger only!
+  }
 
   var attackTime = this.synth.get("env.attack") + this.synth.get("env.on");
   var decayTime = this.synth.get("env.release.value");
@@ -412,3 +420,11 @@ EnvelopeLightOff.connect = function (inputPin, connectedPins) {
   this.synth.set("input-"+inputPin+"2.bus", inputBuses);
   this.moveToFront();
 };
+
+function manualTrigger() {
+  EnvelopeShaper.restart();
+  EnvelopeTrapezoid.restart();
+  EnvelopeLightOff.restart();
+  EnvelopeLightOn.restart();
+  refreshState();
+}
