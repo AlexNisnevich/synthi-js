@@ -254,14 +254,17 @@ body {
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
+  text-align: center;
+}
+
+#loader img {
   z-index: -9999;
 }
 
-#sadBrowserText {
+#loader #sadBrowserText {
   color: rgb(238, 238, 238);
   width: 400px;
-  text-align: center;
-  margin: 40px auto;
+  margin: -35px auto;
 }
 
 #sadBrowserText a {
