@@ -5,6 +5,7 @@
 
 .knob{
 	position:relative;
+  cursor: -webkit-grab;
 }
 
 .knob [draggable] {

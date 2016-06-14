@@ -5,12 +5,21 @@
 
 /* GENERAL */
 
+* {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 body {
   background: #444 url(../images/bg.png); /* http://subtlepatterns.com/dark-sharp-edges/ */
   font-family: 'Raleway', sans-serif;
   font-weight: 300;
   letter-spacing: 1.5px;
   margin-top: 26px;
+}
+
+body.grabbing * {
+  cursor: -webkit-grabbing !important;
 }
 
 .scaleContainer {
@@ -48,6 +57,7 @@ body {
   width: 100%;
   text-align: center;
   text-shadow: 1px 1px 1px #CCC;
+  cursor: default;
 }
 
 .subPanel {
@@ -232,6 +242,7 @@ body {
   right: 0px;
   bottom: 0px;
   margin: auto;
+  cursor: default;
 }
 
 .freq {
