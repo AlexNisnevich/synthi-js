@@ -14,7 +14,8 @@ var JoystickX = new Component([], 15, {
       ugen: "flock.ugen.mouse.click",
       options: {
         target: "#joystick"
-      }
+      },
+      mul: 1
     }
   }
 });
@@ -35,7 +36,8 @@ var JoystickY = new Component([], 16, {
       ugen: "flock.ugen.mouse.click",
       options: {
         target: "#joystick"
-      }
+      },
+      mul: 1
     }
   }
 });

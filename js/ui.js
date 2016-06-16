@@ -469,6 +469,12 @@ $(function () {
     height: "140px",
     markerDiameter: "40px",
     markerColor: "#DDD"
+  }).mouseover(function () {
+    JoystickX.set("mul.mul", 1);
+    JoystickY.set("mul.mul", 1);
+  }).mouseout(function () {
+    JoystickX.set("mul.mul", 0);
+    JoystickY.set("mul.mul", 0);
   });
 
   // Channel Level + Pan
