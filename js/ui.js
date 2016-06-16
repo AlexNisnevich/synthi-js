@@ -464,6 +464,13 @@ $(function () {
     }
   });
 
+  $("#joystick").trackPad({
+    width: "140px",
+    height: "140px",
+    markerDiameter: "20px",
+    markerColor: "#DDD"
+  });
+
   // Channel Level + Pan
 
   $("#ch1level").knobKnob({
@@ -551,15 +558,6 @@ $(function () {
       InputCh2.set("mul", v);
     }
   });
-
-  // unfortunately, this trackpad JS by Jacob Nisnevich causes too much buzz to use.
-  // TODO: figure out why!
-  /*$("#joystick").trackPad({
-    width: "140px",
-    height: "140px",
-    markerDiameter: "20px",
-    markerColor: "#DDD"
-  });*/
 
   // Storage banks
 

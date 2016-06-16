@@ -309,7 +309,7 @@ body.grabbing * {
 
 #joystick {
   position: relative;
-  top: 130px;
+  top: 0;
   left: 50px;
   width: 140px;
   height: 140px;

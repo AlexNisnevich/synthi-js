@@ -1,5 +1,6 @@
 var environment = flock.init({
-  numBuses: 48
+  numBuses: 48,
+  bufferSize: 4096
 });
 
 environment.start();
@@ -182,4 +183,3 @@ function loadFromBank() {
 function clearBank() {
   localStorage.removeItem("bank" + currentBank);
 }
-
