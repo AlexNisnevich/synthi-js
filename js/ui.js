@@ -467,7 +467,7 @@ $(function () {
   $("#joystick").trackPad({
     width: "140px",
     height: "140px",
-    markerDiameter: "20px",
+    markerDiameter: "40px",
     markerColor: "#DDD"
   });
 
