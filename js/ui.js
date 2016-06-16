@@ -736,6 +736,35 @@ $(function () {
     }
   });
 
+  // Keyboard
+
+  $('#piano').piano({'start': 48, 'keys': 37})
+    .bind('pianodown', function(e, note) {
+      KeyboardVco.set('freq', noteToFreq(note));
+      KeyboardVco.set('mul', 1);
+      manualTrigger();
+    })
+    .bind('pianoup', function(e, note) {
+      KeyboardVco.set('mul', 0);
+    });
+
+  var note = null;
+  $(document).keydown(function (e) {
+    var keys = ['a', 'w', 's', 'e', 'd', 'f', 't', 'g', 'y', 'h', 'u', 'j', 'k', 'o', 'l', 'p', ';', "'"];
+    var key = String.fromCharCode(event.which).toLowerCase();
+    var newNote = 60 + keys.indexOf(key);
+    if (newNote != note) {
+      $(document).keyup();
+      note = newNote;
+      if (keys.indexOf(key) > -1) {
+        $('.piano-' + note).trigger('pianodown', note);
+      }
+    }
+  }).keyup(function (e) {
+    $('.piano-' + note).trigger('pianoup', note);
+    note = null;
+  })
+
   // Set up masonry grid layout
   $('.grid').masonry({
     columnWidth: '.width1',

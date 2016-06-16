@@ -1,3 +1,7 @@
+function noteToFreq(n) {
+  return Math.pow(2, (n-69)/12) * 440;
+}
+
 function Float32Concat(first, second) {
   var firstLength = first.length,
       result = new Float32Array(firstLength + second.length);
