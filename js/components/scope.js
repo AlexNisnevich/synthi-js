@@ -7,6 +7,7 @@ var Scope = new Component(["B"], 0, {
   },
   options: {
     canvas: gfx,
+    //fps: 30,
     styles: {
       strokeColor: "#777777",
       strokeWidth: 2
