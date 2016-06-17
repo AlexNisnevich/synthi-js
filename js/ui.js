@@ -738,10 +738,6 @@ $(function () {
 
   // Keyboard
 
-  var keyboardMode = 'mono'; // 'mono' or 'duo'
-  var keyboardOutput1 = 'signal'; // 'signal' or 'control'
-  var keyboardOutput2 = 'control'; // 'signal' or 'control'
-
   // a = 60, w = 61, etc.
   var keyArray = ['a', 'w', 's', 'e', 'd', 'f', 't', 'g', 'y', 'h', 'u', 'j', 'k', 'o', 'l', 'p', ';', "'"];
 
@@ -758,9 +754,22 @@ $(function () {
       KeyboardVco2.set('add', 0);
 
     } else {
-      if (keyboardMode == 'mono') {
+      if (keyboardSettings.output1 == 'signal' && keyboardSettings.output2 == 'signal') {
+        // Duophonic operation mode (two signal outputs)
+        if (notes.length == 1) {
+          KeyboardVco1.set('freq', noteToFreq(notes[0]));
+          KeyboardVco1.set('mul', 1);
+          KeyboardVco2.set('mul', 0);
+        } else {
+          KeyboardVco1.set('freq', noteToFreq(notes[0]));
+          KeyboardVco2.set('freq', noteToFreq(notes[1]));
+          KeyboardVco1.set('mul', 1);
+          KeyboardVco2.set('mul', 1);
+        }
+
+      } else {
         // Monophonic operation mode (one signal output and one control output)
-        if (keyboardOutput1 == 'signal') {
+        if (keyboardSettings.output1 == 'signal') {
           KeyboardVco1.set('freq', noteToFreq(notes[0])); // e.g. 69 (A4) -> 440, 81 (A5) -> 880
           KeyboardVco1.set('mul', 1);
         } else {
@@ -768,27 +777,14 @@ $(function () {
           KeyboardVco1.set('mul', 0);
         }
 
-        if (keyboardOutput2 == 'signal') {
+        if (keyboardSettings.output2 == 'signal') {
           KeyboardVco2.set('freq', noteToFreq(notes[0]));
           KeyboardVco2.set('mul', 1);
         } else {
           KeyboardVco2.set('add', (lastNote - 69) / 12);
           KeyboardVco2.set('mul', 0);
         }
-        
-      } else if (keyboardMode == 'duo') {
-        // Duophonic operation mode (two signal outputs)
-        if (notes.length == 1) {
-          KeyboardVco1.set('freq', noteToFreq(notes[0]));
-          KeyboardVco1.set('mul', 1);
-          KeyboardVco2.set('mul', 0);
-        } else if (keyboardMode == 'duo') {
-          KeyboardVco1.set('freq', noteToFreq(notes[0]));
-          KeyboardVco2.set('freq', noteToFreq(notes[1]));
-          KeyboardVco1.set('mul', 1);
-          KeyboardVco2.set('mul', 1);
-        }
-      }
+      } 
     } 
   }
 

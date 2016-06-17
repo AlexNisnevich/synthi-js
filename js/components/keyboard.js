@@ -1,3 +1,8 @@
+var keyboardSettings = {
+  output1: 'signal',
+  output2: 'control'
+}
+
 var KeyboardVco1 = new Component([], 8, {
   ugen: "flock.ugen.osc",
   table: tables.ramp,
