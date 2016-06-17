@@ -426,5 +426,5 @@ function manualTrigger() {
   EnvelopeTrapezoid.restart();
   EnvelopeLightOff.restart();
   EnvelopeLightOn.restart();
-  refreshState();
+  refreshPatchboard();
 }

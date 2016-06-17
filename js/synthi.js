@@ -65,10 +65,14 @@ function Component(inputPins, outputPin, synthDef) {
       allConnectedPins = allConnectedPins.concat(this.connectedPins[inputPin]);
     }
     return allConnectedPins;
-  }
+  };
 
   this.set = function (property, value) {
     this.synth.set("main."+property, value);
+  };
+
+  this.get = function (property) {
+    return this.synth.get("main."+property);
   };
 
   this.connect = function (inputPin, connectedPins) {
@@ -85,7 +89,7 @@ function Component(inputPins, outputPin, synthDef) {
 
     components.filter(function (c) {return c.getAllConnectedPins().indexOf(outputPin) > -1})
       .forEach(function (c) {c.moveToFront();});
-  }
+  };
 
   this.init();
 }
@@ -95,7 +99,7 @@ function connectPin(pin) {
   var outputPin = pin.attr("data-out");
 
   var allConnectionsToInput = $("#patches [data-in="+inputPin+"]:checked").map(function (i, x) {return parseInt($(this).attr("data-out"));}).get();
-  console.log("Hooking up [" + allConnectionsToInput + "] to " + inputPin);
+  // console.log("Hooking up [" + allConnectionsToInput + "] to " + inputPin);
 
   try {
     components.filter(function (c) {return c.inputPins.indexOf(inputPin) > -1;})
@@ -168,8 +172,28 @@ function loadState(state) {
   }
 }
 
-function refreshState() {
-  loadState(saveState());  // Used after manually triggering Envelope to clean up state.
+function refreshPatchboard() {
+  // Used after manually triggering Envelope to clean up state.
+
+  var pins = {};
+  $("#patches input").each(function (i,x) {
+    if ($(x).is(':checked')) {
+      pins[$(x).attr("data-in") + "-" + $(x).attr("data-out")] = true
+    }
+  });
+
+  disconnectAllPins();
+  for (pinName in pins) {
+    var pinIn = pinName.split("-")[0];
+    var pinOut = pinName.split("-")[1];
+    var checked = pins[pinName];
+
+    if (checked) {
+      var pin = $("#patches input[data-in="+pinIn+"][data-out="+pinOut+"]");
+      pin.prop('checked', true);
+      connectPin(pin);
+    }
+  }
 }
 
 function storeToBank() {

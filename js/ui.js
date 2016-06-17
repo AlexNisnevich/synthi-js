@@ -738,32 +738,82 @@ $(function () {
 
   // Keyboard
 
+  var keyboardMode = 'duo'; // or 'mono'
+
+  // a = 60, w = 61, etc.
+  var keyArray = ['a', 'w', 's', 'e', 'd', 'f', 't', 'g', 'y', 'h', 'u', 'j', 'k', 'o', 'l', 'p', ';', "'"];
+
+  var lastNote = null, prevNote = null;
+  var keyStatus = {};
+  function getPressedKeys() { return Object.keys(keyStatus).filter(function (k) {return keyStatus[k];}); }
+
+  function updateKeyboardNotes(notes) {
+    if (notes.length == 0) {
+      // No keys pressed
+      KeyboardVco1.set('mul', 0);
+      KeyboardVco2.set('mul', 0);
+    } else {
+      if (keyboardMode == 'mono') {
+        // Monophonic operation mode (only one signal output)
+        KeyboardVco1.set('freq', noteToFreq(lastNote));
+        KeyboardVco1.set('mul', 1);
+        KeyboardVco2.set('mul', 0);
+      } else if (keyboardMode == 'duo') {
+        // Duophonic operation mode (two signal outputs)
+        if (notes.length == 1) {
+          KeyboardVco1.set('freq', noteToFreq(notes[0]));
+          KeyboardVco1.set('mul', 1);
+          KeyboardVco2.set('mul', 0);
+        } else if (keyboardMode == 'duo') {
+          KeyboardVco1.set('freq', noteToFreq(notes[0]));
+          KeyboardVco2.set('freq', noteToFreq(notes[1]));
+          KeyboardVco1.set('mul', 1);
+          KeyboardVco2.set('mul', 1);
+        }
+      }
+    } 
+  }
+
   $('#piano').piano({'start': 48, 'keys': 37})
-    .bind('pianodown', function(e, note) {
-      KeyboardVco.set('freq', noteToFreq(note));
-      KeyboardVco.set('mul', 1);
+    .bind('pianodown', function(e, n, notes) {
       manualTrigger();
+      updateKeyboardNotes(notes);
     })
-    .bind('pianoup', function(e, note) {
-      KeyboardVco.set('mul', 0);
+    .bind('pianoup', function(e, n, notes) {
+      updateKeyboardNotes(notes);
     });
 
-  var note = null;
   $(document).keydown(function (e) {
-    var keys = ['a', 'w', 's', 'e', 'd', 'f', 't', 'g', 'y', 'h', 'u', 'j', 'k', 'o', 'l', 'p', ';', "'"];
     var key = String.fromCharCode(event.which).toLowerCase();
-    var newNote = 60 + keys.indexOf(key);
-    if (newNote != note) {
-      $(document).keyup();
-      note = newNote;
-      if (keys.indexOf(key) > -1) {
-        $('.piano-' + note).trigger('pianodown', note);
+    var newNote = 60 + keyArray.indexOf(key);
+    if (newNote != lastNote) {
+      keyStatus[newNote] = true;
+      prevNote = (keyboardMode == 'duo') ? lastNote : null;
+      lastNote = newNote;
+
+      if (keyArray.indexOf(key) > -1) {
+        var pressedKeys = getPressedKeys();
+
+        // Kind of nasty bit of work here to limit maximum # keys allowed.
+        var maxNumKeys = {'mono': 1, 'duo': 2}[keyboardMode];
+        if (pressedKeys.length > maxNumKeys) {
+          pressedKeys.filter(function (k) { return (k != prevNote) && (k != lastNote); })
+            .forEach(function (note) {
+              $('.piano-' + note).trigger('pianoup', [note, pressedKeys]);
+          });
+          pressedKeys = pressedKeys.filter(function (k) { return (k == prevNote) || (k == lastNote); })
+        }
+
+        $('.piano-' + newNote).trigger('pianodown', [newNote, pressedKeys]);
       }
     }
   }).keyup(function (e) {
-    $('.piano-' + note).trigger('pianoup', note);
-    note = null;
-  })
+    var key = String.fromCharCode(event.which).toLowerCase();
+    var note = 60 + keyArray.indexOf(key);
+    if (note == lastNote) { lastNote = null; }
+    keyStatus[note] = false;
+    $('.piano-' + note).trigger('pianoup', [note, getPressedKeys()]);
+  });
 
   // Set up masonry grid layout
   $('.grid').masonry({
