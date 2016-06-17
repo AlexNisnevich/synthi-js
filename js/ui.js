@@ -738,7 +738,9 @@ $(function () {
 
   // Keyboard
 
-  var keyboardMode = 'duo'; // or 'mono'
+  var keyboardMode = 'mono'; // 'mono' or 'duo'
+  var keyboardOutput1 = 'signal'; // 'signal' or 'control'
+  var keyboardOutput2 = 'control'; // 'signal' or 'control'
 
   // a = 60, w = 61, etc.
   var keyArray = ['a', 'w', 's', 'e', 'd', 'f', 't', 'g', 'y', 'h', 'u', 'j', 'k', 'o', 'l', 'p', ';', "'"];
@@ -751,13 +753,29 @@ $(function () {
     if (notes.length == 0) {
       // No keys pressed
       KeyboardVco1.set('mul', 0);
+      KeyboardVco1.set('add', 0);
       KeyboardVco2.set('mul', 0);
+      KeyboardVco2.set('add', 0);
+
     } else {
       if (keyboardMode == 'mono') {
-        // Monophonic operation mode (only one signal output)
-        KeyboardVco1.set('freq', noteToFreq(lastNote));
-        KeyboardVco1.set('mul', 1);
-        KeyboardVco2.set('mul', 0);
+        // Monophonic operation mode (one signal output and one control output)
+        if (keyboardOutput1 == 'signal') {
+          KeyboardVco1.set('freq', noteToFreq(notes[0])); // e.g. 69 (A4) -> 440, 81 (A5) -> 880
+          KeyboardVco1.set('mul', 1);
+        } else {
+          KeyboardVco1.set('add', (lastNote - 69) / 12); // e.g. 69 (A4) -> 0, 81 (A5) -> 1
+          KeyboardVco1.set('mul', 0);
+        }
+
+        if (keyboardOutput2 == 'signal') {
+          KeyboardVco2.set('freq', noteToFreq(notes[0]));
+          KeyboardVco2.set('mul', 1);
+        } else {
+          KeyboardVco2.set('add', (lastNote - 69) / 12);
+          KeyboardVco2.set('mul', 0);
+        }
+        
       } else if (keyboardMode == 'duo') {
         // Duophonic operation mode (two signal outputs)
         if (notes.length == 1) {

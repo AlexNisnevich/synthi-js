@@ -5,7 +5,8 @@ var KeyboardVco1 = new Component([], 8, {
   options: {
     interpolation: "linear"
   },
-  mul: 0
+  mul: 0,
+  add: 0
 });
 
 var KeyboardVco2 = new Component([], 9, {
@@ -15,5 +16,6 @@ var KeyboardVco2 = new Component([], 9, {
   options: {
     interpolation: "linear"
   },
-  mul: 0
+  mul: 0,
+  add: 0
 });
