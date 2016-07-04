@@ -487,6 +487,19 @@ body.grabbing * {
   transition: opacity 400ms ease-in;
 }
 
+.modalDialog.noOverlay {
+  position: inherit;
+  background: none;
+  height: 0;
+}
+
+.modalDialog.noOverlay .panel:first-of-type {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  /* Must supply `margin-left: -(width);` to properly center-align. */
+}
+
 .modalDialog .panelName:first-of-type {
   top: 4px;
   cursor: move;
@@ -538,6 +551,36 @@ button#memoryDialogClose {
   width: 55px;
   padding: 3px 4px;
   font-size: 2em;
+}
+
+#settingsButton {
+  position: absolute;
+  top: 90px;
+  left: 20px;
+  z-index: 9999;
+  height: 55px;
+  width: 55px;
+  padding: 3px 4px;
+  font-size: 2em;
+}
+
+#pianoDialog .panel {
+  width: 600px;
+  margin-top: 10%;
+  margin-left: -300px;
+  height: 160px;
+  background-color: black;
+  float: none;
+}
+
+#pianoDialog .panelName {
+  color: white;
+}
+
+#pianoDialog #piano {
+  position: relative;
+  top: 60px;
+  float: right;
 }
 
 #helpDialog .panel {
@@ -632,17 +675,6 @@ button#memoryDialogClose {
 
 #helpDialog #content .no-margin {
   margin: 0;
-}
-
-#settingsButton {
-  position: absolute;
-  top: 90px;
-  left: 20px;
-  z-index: 9999;
-  height: 55px;
-  width: 55px;
-  padding: 3px 4px;
-  font-size: 2em;
 }
 
 #settingsDialog .panel {
