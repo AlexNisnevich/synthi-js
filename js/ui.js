@@ -796,7 +796,7 @@ $(function () {
     'start': 48, 
     'keys': 37, 
     'whiteWidth': 24,
-    'blackWidth': 12,
+    'blackWidth': 13,
     'whiteHeight': 160, 
     'blackHeight': 90,
     'blackColor': '#333'
@@ -807,6 +807,12 @@ $(function () {
     .bind('pianoup', function(e, n, notes) {
       updateKeyboardNotes(notes);
     });
+
+  // a = 60, w = 61, etc.
+  var keyArray = ['a', 'w', 's', 'e', 'd', 'f', 't', 'g', 'y', 'h', 'u', 'j', 'k', 'o', 'l', 'p', ';', "'"];
+  for (i = 0; i < keyArray.length; i++) {
+    $('.piano-'+(i+60)).html($("<div class='piano-key-code'>").text(keyArray[i]));
+  }
 
   $(document).keydown(keyboardHandleKeyPress).keyup(keyboardHandleKeyRelease);
 

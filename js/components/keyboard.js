@@ -100,7 +100,7 @@ function keyboardHandleKeyPress(e) {
   // Keyboard is in duophonic mode iff both outputs are set to the same mode.
   var keyboardMode = (keyboardSettings.output1 == keyboardSettings.output2) ? 'duo' : 'mono';
 
-  var key = String.fromCharCode(event.which).toLowerCase();
+  var key = e.key || String.fromCharCode(e.which).toLowerCase();
   var newNote = 60 + keyArray.indexOf(key);
   if (newNote != lastNote) {
     keyStatus[newNote] = true;
@@ -126,7 +126,7 @@ function keyboardHandleKeyPress(e) {
 }
 
 function keyboardHandleKeyRelease(e) {
-  var key = String.fromCharCode(event.which).toLowerCase();
+  var key = e.key || String.fromCharCode(e.which).toLowerCase();
   var note = 60 + keyArray.indexOf(key);
   if (note == lastNote) { lastNote = null; }
   keyStatus[note] = false;
