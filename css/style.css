@@ -500,7 +500,7 @@ body.grabbing * {
   /* Must supply `margin-left: -(width);` to properly center-align. */
 }
 
-.modalDialog .panelName:first-of-type {
+.modalDialog .panel:first-of-type > .panelName {
   top: 4px;
   cursor: move;
 }
@@ -564,23 +564,70 @@ button#memoryDialogClose {
   font-size: 2em;
 }
 
-#pianoDialog .panel {
-  width: 600px;
+#pianoDialog .panel:first-of-type {
+  width: 850px;
+  height: 200px;
+  margin-left: -425px;
   margin-top: 10%;
-  margin-left: -300px;
-  height: 160px;
   background-color: black;
   float: none;
 }
 
-#pianoDialog .panelName {
+#pianoDialog .panel:first-of-type > .panelName {
   color: white;
 }
 
 #pianoDialog #piano {
+  position: absolute;
+  top: 50px;
+  right: 5px;
+}
+
+#pianoDialog #pianoControls {
+  top: 40px;
+  width: 280px;
+  height: auto;
+  padding: 0;
+}
+
+#pianoDialog #pianoControls .subPanel {
+  margin: 0;
+  height: 80px;
+}
+
+#pianoDialog #pianoControls .subPanel .panelName {
+  font-size: 0.7em;
+  width: auto;
+  border: 1px solid black;
+  padding: 2px;
+  margin-left: 5px;
+}
+
+#pianoDialog #pianoControls .subPanel#pianoControlsInputs {
+  height: 50px;
+  padding: 3px;
+}
+
+#pianoDialog #pianoControls .subPanel#pianoControlsInputs > div {
   position: relative;
-  top: 60px;
+  height: 50%;
+}
+
+#pianoDialog #pianoControls .dial {
+  width: 85px;
+  height: 95px;
+}
+
+#pianoDialog #pianoControls .knob-label {
+  top: 13px !important;
+  font-size: 0.8em;
+}
+
+#pianoDialog #pianoControls .inputSelector {
   float: right;
+  width: 200px;
+  margin-top: 3px;
+  font-size: 0.8em;
 }
 
 #helpDialog .panel {

@@ -603,8 +603,36 @@
 
   <div id="pianoDialog" class="modalDialog noOverlay">
     <div class="panel">
-      <div class="panelName">EMS DK2 KEYBOARD</div>
+      <div class="panelName">SYNTHI DK.2</div>
       <button id="pianoDialogClose" class="closeButton">X</button>
+      <div id="pianoControls" class="panel">
+        <div class="subPanel" id="pianoControlsOscillator">
+          <div class="panelName">KEYBOARD OSCILLATOR</div>
+          <div class="dial" id="keyboardFrequency"></div>
+          <div class="dial" id="keyboardTuningSpread"></div>
+          <div class="dial" id="keyboardLevel"></div>
+        </div>
+        <div class="subPanel" id="pianoControlsInputs">
+          <div>
+            <div class="panelName">INPUT CH 1</div>
+            <div class="inputSelector">
+              <label for="pianoInputCh1Signal">signal </label>
+              <input type="radio" name="pianoInputCh1" id="pianoInputCh1Signal" checked="checked" />
+              <input type="radio" name="pianoInputCh1" id="pianoInputCh1Voltage" />
+              <label for="pianoInputCh1Voltage"> voltage</label>
+            </div>
+          </div>
+          <div>
+            <div class="panelName">INPUT CH 2</div>
+            <div class="inputSelector">
+              <label for="pianoInputCh2Signal">signal </label>
+              <input type="radio" name="pianoInputCh2" id="pianoInputCh2Signal" />
+              <input type="radio" name="pianoInputCh2" id="pianoInputCh2Voltage" checked="checked" />
+              <label for="pianoInputCh2Voltage"> voltage</label>
+            </div>
+          </div>
+        </div>
+      </div>
       <div id="piano"></div>
     </div>
   </div>

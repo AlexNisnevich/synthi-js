@@ -723,7 +723,7 @@ $(function () {
   });
 
   // Draggable dialogs
-  $('.modalDialog .panel').draggable({ handle: '.panelName' });
+  $('.modalDialog .panel:first-of-type').draggable({ handle: '.panelName' });
   $('.modalDialog .panelName').disableSelection();
 
   // Close dialogs when clicking outside them
@@ -736,10 +736,55 @@ $(function () {
     }
   });
 
-  // Set up keyboard click and key handlers.
+  // Keyboard dialog + key handlers
 
-  $('#piano').piano({'start': 48, 'keys': 37})
-    .bind('pianodown', function(e, n, notes) {
+  $("#keyboardFrequency").knobKnob({
+    min: 0,
+    max: 10,
+    value: 180,
+    diameter: 50,
+    label: 'freq',
+    color: 'blue',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+    }
+  });
+
+  $("#keyboardTuningSpread").knobKnob({
+    min: 0,
+    max: 10,
+    value: 180,
+    diameter: 50,
+    label: 'spread',
+    color: 'blue',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+    }
+  });
+
+  $("#keyboardLevel").knobKnob({
+    min: 0,
+    max: 10,
+    value: 180,
+    diameter: 50,
+    label: 'level',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+    }
+  });
+
+  $('#piano').piano({
+    'start': 48, 
+    'keys': 37, 
+    'whiteWidth': 24,
+    'blackWidth': 12,
+    'whiteHeight': 160, 
+    'blackHeight': 90,
+    'blackColor': '#333'
+  }).bind('pianodown', function(e, n, notes) {
       manualTrigger();
       updateKeyboardNotes(notes);
     })
