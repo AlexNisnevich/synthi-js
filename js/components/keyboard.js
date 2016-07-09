@@ -54,6 +54,18 @@ function updateKeyboardNotes(notes) {
         KeyboardVco2.set('mul', 1);
       }
 
+    } else if (keyboardSettings.output1 == 'control' && keyboardSettings.output2 == 'control') {
+      // Duophonic operation mode (two control outputs)
+      KeyboardVco1.set('mul', 0);
+      KeyboardVco2.set('mul', 0);
+      if (notes.length == 1) {
+        KeyboardVco1.set('add', (notes[0] - 69) / 12);
+        KeyboardVco2.set('add', 0);
+      } else {
+        KeyboardVco1.set('add', (notes[0] - 69) / 12);
+        KeyboardVco2.set('add', (notes[1] - 69) / 12);
+      }
+
     } else {
       // Monophonic operation mode (one signal output and one control output)
       if (keyboardSettings.output1 == 'signal') {
@@ -76,8 +88,8 @@ function updateKeyboardNotes(notes) {
 }
 
 function keyboardHandleKeyPress(e) {
-  // Keyboard is in duophonic mode iff both outputs are set to 'signal'.
-  var keyboardMode = (keyboardSettings.output1 == 'signal' && keyboardSettings.output2 == 'signal') ? 'duo' : 'mono';
+  // Keyboard is in duophonic mode iff both outputs are set to the same mode.
+  var keyboardMode = (keyboardSettings.output1 == keyboardSettings.output2) ? 'duo' : 'mono';
 
   var key = String.fromCharCode(event.which).toLowerCase();
   var newNote = 60 + keyArray.indexOf(key);

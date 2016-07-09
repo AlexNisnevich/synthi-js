@@ -741,7 +741,7 @@ $(function () {
   $("#keyboardFrequency").knobKnob({
     min: 0,
     max: 10,
-    value: 180,
+    value: 165,
     diameter: 50,
     label: 'freq',
     color: 'blue',
@@ -754,7 +754,7 @@ $(function () {
   $("#keyboardTuningSpread").knobKnob({
     min: 0,
     max: 10,
-    value: 180,
+    value: 165,
     diameter: 50,
     label: 'spread',
     color: 'blue',
@@ -767,13 +767,21 @@ $(function () {
   $("#keyboardLevel").knobKnob({
     min: 0,
     max: 10,
-    value: 180,
+    value: 165,
     diameter: 50,
     label: 'level',
     startOffset: 30,
     endOffset: 30,
     turn: function (v) {
     }
+  });
+
+  $('[name=pianoInputCh1]').change(function () {
+    keyboardSettings.output1 = $(this).val();
+  });
+
+  $('[name=pianoInputCh2]').change(function () {
+    keyboardSettings.output2 = $(this).val();
   });
 
   $('#piano').piano({
