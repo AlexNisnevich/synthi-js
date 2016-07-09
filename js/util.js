@@ -1,5 +1,5 @@
-function noteToFreq(n) {
-  return Math.pow(2, (n-69)/12) * 440;
+function noteToFreq(n, spread, baseFreq) {
+  return Math.pow(2, (n-69)/spread) * baseFreq;
 }
 
 function Float32Concat(first, second) {

@@ -741,19 +741,23 @@ $(function () {
   $("#keyboardFrequency").knobKnob({
     min: 0,
     max: 10,
-    value: 165,
+    value: 180,
     diameter: 50,
     label: 'freq',
     color: 'blue',
     startOffset: 30,
     endOffset: 30,
     turn: function (v) {
+      var freq = 440 * Math.pow(2, v - 5);
+      keyboardSettings.baseFreq = freq;
+      $('#A4Freq').text(Math.floor(noteToFreq(69, keyboardSettings.spread, keyboardSettings.baseFreq)));
+      $('#A5Freq').text(Math.floor(noteToFreq(81, keyboardSettings.spread, keyboardSettings.baseFreq)));
     }
   });
 
   $("#keyboardTuningSpread").knobKnob({
-    min: 0,
-    max: 10,
+    min: 1,
+    max: 20,
     value: 165,
     diameter: 50,
     label: 'spread',
@@ -761,18 +765,22 @@ $(function () {
     startOffset: 30,
     endOffset: 30,
     turn: function (v) {
+      keyboardSettings.spread = 12 * 10 / Math.round(v);
+      $('#A4Freq').text(Math.floor(noteToFreq(69, keyboardSettings.spread, keyboardSettings.baseFreq)));
+      $('#A5Freq').text(Math.floor(noteToFreq(81, keyboardSettings.spread, keyboardSettings.baseFreq)));
     }
   });
 
   $("#keyboardLevel").knobKnob({
     min: 0,
     max: 10,
-    value: 165,
+    value: 180,
     diameter: 50,
     label: 'level',
     startOffset: 30,
     endOffset: 30,
     turn: function (v) {
+      keyboardSettings.level = v / 5;
     }
   });
 

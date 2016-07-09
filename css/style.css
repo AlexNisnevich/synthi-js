@@ -583,6 +583,22 @@ button#memoryDialogClose {
   right: 5px;
 }
 
+#pianoDialog #A4Freq, #pianoDialog #A5Freq {
+  position: absolute;
+  color: white;
+  top: -16px;
+  font-size: 0.6em;
+  width: 50px;
+}
+
+#pianoDialog #A4Freq {
+  left: 291px;
+}
+
+#pianoDialog #A5Freq {
+  left: 467px;
+}
+
 #pianoDialog #pianoControls {
   top: 40px;
   width: 280px;

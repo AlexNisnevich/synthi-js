@@ -1,6 +1,9 @@
 var keyboardSettings = {
   output1: 'signal',
-  output2: 'control'
+  output2: 'control',
+  spread: 12,
+  baseFreq: 440,
+  level: 1
 }
 
 var KeyboardVco1 = new Component([], 8, {
@@ -33,6 +36,12 @@ var keyStatus = {};
 function getPressedKeys() { return Object.keys(keyStatus).filter(function (k) {return keyStatus[k];}); }
 
 function updateKeyboardNotes(notes) {
+  var output1 = keyboardSettings.output1;
+  var output2 = keyboardSettings.output2;
+  var spread = keyboardSettings.spread;
+  var baseFreq = keyboardSettings.baseFreq;
+  var level = keyboardSettings.level;
+
   if (notes.length == 0) {
     // No keys pressed
     KeyboardVco1.set('mul', 0);
@@ -41,20 +50,20 @@ function updateKeyboardNotes(notes) {
     KeyboardVco2.set('add', 0);
 
   } else {
-    if (keyboardSettings.output1 == 'signal' && keyboardSettings.output2 == 'signal') {
+    if (output1 == 'signal' && output2 == 'signal') {
       // Duophonic operation mode (two signal outputs)
       if (notes.length == 1) {
-        KeyboardVco1.set('freq', noteToFreq(notes[0]));
-        KeyboardVco1.set('mul', 1);
+        KeyboardVco1.set('freq', noteToFreq(notes[0], spread, baseFreq));
+        KeyboardVco1.set('mul', level);
         KeyboardVco2.set('mul', 0);
       } else {
-        KeyboardVco1.set('freq', noteToFreq(notes[0]));
-        KeyboardVco2.set('freq', noteToFreq(notes[1]));
-        KeyboardVco1.set('mul', 1);
-        KeyboardVco2.set('mul', 1);
+        KeyboardVco1.set('freq', noteToFreq(notes[0], spread, baseFreq));
+        KeyboardVco2.set('freq', noteToFreq(notes[1], spread, baseFreq));
+        KeyboardVco1.set('mul', level);
+        KeyboardVco2.set('mul', level);
       }
 
-    } else if (keyboardSettings.output1 == 'control' && keyboardSettings.output2 == 'control') {
+    } else if (output1 == 'control' && output2 == 'control') {
       // Duophonic operation mode (two control outputs)
       KeyboardVco1.set('mul', 0);
       KeyboardVco2.set('mul', 0);
@@ -68,17 +77,17 @@ function updateKeyboardNotes(notes) {
 
     } else {
       // Monophonic operation mode (one signal output and one control output)
-      if (keyboardSettings.output1 == 'signal') {
-        KeyboardVco1.set('freq', noteToFreq(notes[0])); // e.g. 69 (A4) -> 440, 81 (A5) -> 880
-        KeyboardVco1.set('mul', 1);
+      if (output1 == 'signal') {
+        KeyboardVco1.set('freq', noteToFreq(notes[0], spread, baseFreq)); // e.g. 69 (A4) -> 440, 81 (A5) -> 880
+        KeyboardVco1.set('mul', level);
       } else {
         KeyboardVco1.set('add', (lastNote - 69) / 12); // e.g. 69 (A4) -> 0, 81 (A5) -> 1
         KeyboardVco1.set('mul', 0);
       }
 
-      if (keyboardSettings.output2 == 'signal') {
-        KeyboardVco2.set('freq', noteToFreq(notes[0]));
-        KeyboardVco2.set('mul', 1);
+      if (output2 == 'signal') {
+        KeyboardVco2.set('freq', noteToFreq(notes[0], spread, baseFreq));
+        KeyboardVco2.set('mul', level);
       } else {
         KeyboardVco2.set('add', (lastNote - 69) / 12);
         KeyboardVco2.set('mul', 0);
