@@ -1,6 +1,9 @@
 var environment = flock.init({
   numBuses: 48,
-  bufferSize: 4096
+  bufferSize: 4096  
+  // TODO: Change bufferSize back to 1024 when Flocking adds support for
+  // WebAudio API native nodes.
+  // (see https://github.com/colinbdclark/Flocking/issues/146#issuecomment-226057461)
 });
 
 environment.start();
