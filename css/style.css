@@ -542,26 +542,33 @@ button#memoryDialogClose {
   background: red;
 }
 
-#helpButton {
+#toolbar {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 9999;
-  height: 55px;
-  width: 55px;
-  padding: 3px 4px;
-  font-size: 2em;
+  right: 0;
+  bottom: 0;
+  margin: 3px;
 }
 
-#settingsButton {
-  position: absolute;
-  top: 90px;
-  left: 20px;
-  z-index: 9999;
-  height: 55px;
-  width: 55px;
-  padding: 3px 4px;
-  font-size: 2em;
+#toolbar button {
+  float: right;
+  height: 30px;
+  width: 30px;
+  padding: 3px;
+  font-size: 1.1em;
+  margin-right: 5px;
+}
+
+#toolbar button#pianoButton {
+  padding: 0;
+}
+
+#toolbar button img {
+  width: 100%;
+  height: 100%;
+}
+
+#toolbar button:hover {
+  border: 2px solid orange;
 }
 
 #pianoDialog .panel:first-of-type {

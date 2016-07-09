@@ -738,6 +738,14 @@ $(function () {
 
   // Keyboard dialog + key handlers
 
+  $("#pianoButton").click(function () {
+    $("#pianoDialog").show();
+  });
+
+  $("#pianoDialogClose").click(function () {
+    $("#pianoDialog").hide();
+  });
+
   $("#keyboardFrequency").knobKnob({
     min: 0,
     max: 10,
@@ -815,8 +823,6 @@ $(function () {
   }
 
   $(document).keydown(keyboardHandleKeyPress).keyup(keyboardHandleKeyRelease);
-
-  $('#pianoDialog').show();
 
   // Set up masonry grid layout
   $('.grid').masonry({
