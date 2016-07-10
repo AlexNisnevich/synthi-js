@@ -488,7 +488,6 @@ body.grabbing * {
 }
 
 .modalDialog.noOverlay {
-  position: inherit;
   background: none;
   height: 0;
 }

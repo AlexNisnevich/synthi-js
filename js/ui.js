@@ -723,7 +723,25 @@ $(function () {
   });
 
   // Draggable dialogs
-  $('.modalDialog .panel:first-of-type').draggable({ handle: '.panelName' });
+  var click = {x: 0, y: 0}; // (store click coordinates here.)
+  $('.modalDialog .panel:first-of-type').draggable({
+    handle: '.panelName',
+    start: function(e) {
+      click = {x: e.clientX, y: e.clientY};
+    },
+    drag: function(e, ui) {
+      // This is an awful hack to get scalable dialogs (namely, the keyboard)
+      // dragging correctly. It's weird that jQuery UI doesn't work correctly
+      // with scaled elements by default.
+      var zoom = parseFloat($(e.target).parent().css('transform').split('(')[1]);
+      if (zoom) {
+        ui.position = {
+          left: (e.clientX - click.x - 80) / zoom + ui.originalPosition.left,
+          top:  (e.clientY - click.y + 20) / zoom + ui.originalPosition.top
+        };
+      }
+    }
+  });
   $('.modalDialog .panelName').disableSelection();
 
   // Close dialogs when clicking outside them
@@ -836,6 +854,7 @@ $(function () {
     var zoomLevel = Math.min(window.innerWidth / ($('.grid').width() + 36), 
                              window.innerHeight / ($('.grid').height() + 46), 1);
     $('.grid').scale(zoomLevel);
+    $('#pianoDialog').css('transform', 'scale(' + zoomLevel + ')');
   });
 
   // Ready to fade in!
