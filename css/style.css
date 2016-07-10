@@ -290,7 +290,7 @@ body.grabbing * {
 .logo {
   position: absolute;
   bottom: 0;
-  right: 0;
+  left: 0;
   border-top: 5px solid black;
   width: 100%;
   padding-top: 8px;
@@ -298,6 +298,8 @@ body.grabbing * {
   font-weight: 900;
   font-size: 26px;
   letter-spacing: 8px;
+  text-align: left;
+  padding-left: 100px;
 }
 
 #gfx {
@@ -586,7 +588,7 @@ button#memoryDialogClose {
 #pianoDialog #piano {
   position: absolute;
   top: 50px;
-  right: 5px;
+  right: 10px;
 }
 
 #pianoDialog .piano-ivory .piano-key-code {
@@ -668,6 +670,7 @@ button#memoryDialogClose {
 #helpDialog .panel {
   width: 800px;
   height: 600px;
+  top: -50px;
   position: relative;
   float: none;
   margin: 10% auto;

@@ -575,35 +575,6 @@
     </div>
   </div>
 
-  <div id="memoryDialog" class="modalDialog">
-    <div class="panel">
-      <div class="panelName">MEMORY IMPORT / EXPORT</div>
-      <textarea>
-      </textarea>
-      <button id="memoryImport">Import Into Memory</button>
-      <button id="memoryDialogClose">Close</button>
-    </div>
-  </div>
-
-  <div id="settingsDialog" class="modalDialog">
-    <div class="panel">
-      <div class="panelName">SETTINGS</div>
-      <button id="settingsDialogClose" class="closeButton">X</button>
-      <div class="subPanel">
-        <div class="panelName">Knobs</div>
-        <div class="dial" id="testDial"></div>
-        <div class="setting">
-          Motion: <select id="knobMotion">
-            <option selected value="radial">Radial (skeumorphic)</option>
-            <option value="vertical">Vertical (Ableton-style)</option>
-            <option value="hybrid">Hybrid</option>
-          </select>
-        </div>
-        <div class="setting">Speed: <div id="knobIntensity"></div></div>
-      </div>
-    </div>
-  </div>
-
   <div id="pianoDialog" class="modalDialog noOverlay">
     <div class="panel">
       <div class="panelName">SYNTHI DK.2</div>
@@ -643,6 +614,35 @@
     </div>
   </div>
 
+  <div id="memoryDialog" class="modalDialog">
+    <div class="panel">
+      <div class="panelName">MEMORY IMPORT / EXPORT</div>
+      <textarea>
+      </textarea>
+      <button id="memoryImport">Import Into Memory</button>
+      <button id="memoryDialogClose">Close</button>
+    </div>
+  </div>
+
+  <div id="settingsDialog" class="modalDialog">
+    <div class="panel">
+      <div class="panelName">SETTINGS</div>
+      <button id="settingsDialogClose" class="closeButton">X</button>
+      <div class="subPanel">
+        <div class="panelName">Knobs</div>
+        <div class="dial" id="testDial"></div>
+        <div class="setting">
+          Motion: <select id="knobMotion">
+            <option selected value="radial">Radial (skeumorphic)</option>
+            <option value="vertical">Vertical (Ableton-style)</option>
+            <option value="hybrid">Hybrid</option>
+          </select>
+        </div>
+        <div class="setting">Speed: <div id="knobIntensity"></div></div>
+      </div>
+    </div>
+  </div>
+
   <div id="helpDialog" class="modalDialog">
     <div class="panel">
       <div class="panelName">SYNTHI-JS MANUAL</div>
@@ -655,6 +655,7 @@
             <li value="usage">Usage</li>
             <li value="components">Components</li>
             <li value="synthi-manual">Synthi A Manual (1971)</li>
+            <li value="dk2-keyboard">DK2 Keyboard</li>
             <li value="presets">Presets</li>
             <li value="development">Development</li>
             <li value="contact-me">Contact Me</li>
@@ -874,6 +875,21 @@
           <div id="synthi-manual" class="page">
             <iframe src="//docs.google.com/gview?url=http://www.thesynthi.de/data/Synthiusermanual.pdf&amp;embedded=true"  frameborder="0"></iframe>
           </div>
+          <div id="dk2-keyboard" class="page">
+            <p>As of version 1.3.0, SYNTHI-JS includes an emulation of the classic <a href="http://www.phutney.com/EMSDK2.html">EMS DK2 keyboard</a>.</p>
+            <p><img src="images/dk2.png"></p>
+            <p>The DK2 can be controlled with either the keyboard (by pressing the keys indicated on the keyboard) or the mouse. (For duophonic control, only the keyboard can be used.) Its outputs are on input ch 1 and 2 (pins 8 and 9, respectively). On each channel, it can output either a sawtooth signal using its built-in oscillator or a control voltage that can be used to modulate other oscillators.</p>
+            <p>The DK2 has two modes of operation. When both channels are set to the same output mode (<i>signal</i> or <i>voltage</i>), it is in <i>duophonic</i> mode: two keys can be pressed at once, with the lower key signal or voltage being sent to ch 1 and the upper key signal or voltage (if any) being sent to ch 2. On the other hand, when one channel is set to <i>signal</i> and the other channel is set to <i>voltage</i>, the keyboard is in <i>monophonic</i> mode: only one key can be pressed at once, with its signal being sent to one channel and voltage being sent to the other.</p>
+            <p>Whenever a key is pressed on the DK2, the envelope generator is re-triggered.</p>
+            <p class="no-margin"><b>Controls:</b></p>
+            <ul>
+              <li><b>Frequency:</b> Controls the frequency of the built-in sawtooth oscillator.</li>
+              <li><b>Spread:</b> Controls the tuning of the built-in sawtooth oscillator. By default, each pair of notes is a semitone apart, but this can be customized from 1/10 semitone up to 2 semitones.</li>
+              <li><b>Level:</b> The signal level of the built-in sawtooth wave (up to +/- 2V).</li>
+              <li><b>Input Ch 1:</b> Specifies the output mode of Input Ch 1 (pin 8): <i>signal</i> or <i>voltage</i>.</li>
+              <li><b>Input Ch 2:</b> Specifies the output mode of Input Ch 2 (pin 9): <i>signal</i> or <i>voltage</i>.</li>
+            </ul>
+          </div>
           <div id="presets" class="page">
             <p>As of version 1.1.0, SYNTHI-JS comes with some preset patches to give you some examples of what you can do!
             Preset patches occupy memory banks 95-99 and are not modifiable.</p>
@@ -900,8 +916,10 @@
               <li>The ability to have circular chains of component dependencies <i>(for example,
               A depends on B and B depends on A)</i>. As far as I can tell, this is not possible in
               <a href="http://flockingjs.org/">Flocking</a>, but I'm open to suggestions.</li>
-              <li>The EMS DK keyboard.</li>
               <li>The EMS KS sequencer.</li>
+              <li>Dynamic voltage output from the DK2 keyboard. (This could only be done if there were
+              some way to interact with a MIDI controller in JavaScript, which doesn't seem to be possible yet.)</li>
+              <li>The Filter/Oscillator doesn't behave as expected yet.</li>
               <li>In general, many of the components of SYNTHI-JS don't follow the specs as well
               as they could. As I don't personally have a Synthi A to test, I've been doing the best
               I could from videos and spec sheets. All feedback is much appreciated.</li>
@@ -909,6 +927,7 @@
             
             <h3>Version History</h3>
             <ul>
+              <li><b>Version 1.3.0</b> <i>(2016-07-09)</i>: DK2 duophonic keyboard emulator, increased buffer size to reduce lag, minor UI improvements.
               <li><b>Version 1.2.1</b> <i>(2016-06-11)</i>: Manual Trigger button for Envelope Shaper, more accurate state loading, minor UI improvements.</li>
               <li><b>Version 1.2.0</b> <i>(2016-06-10)</i>: Settings panel with knob controls, restyled patchboard, upload support via S3.</li>
               <li><b>Version 1.1.0</b> <i>(2016-05-25)</i>: Preset banks 95-99 (now called 00-04), knob control improvements, some adjustments to Reverb module.</li>
