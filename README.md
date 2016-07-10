@@ -15,11 +15,12 @@ SYNTHI-JS is an emulator of the legendary [EMS Synthi A](https://en.wikipedia.or
    * analog-style reverberator
    * self-triggering envelope generator
 * 16x16 control patchboard
-* Bidirectional trackpad ("joystick") controller
+* Bidirectional joystick controller
 * Scope module displaying "voltage" over time
 * 100 patch memory banks with import/export functionality and _(new in v1.1!)_ 5 built-in presets
 * _(new in v1.2!)_ File upload functionality for input sources via S3
 * _(new in v1.2!)_ Customizable knob behavior
+* _(new in v1.3!)_ Emulation of the [EMS DK2](http://www.phutney.com/EMSDK2.html) keyboard
 
 ## Getting Started
 
@@ -63,4 +64,5 @@ SYNTHI-JS was created by [Alex Nisnevich](https://alexnisnevich.github.io/synthi
 I'd like to thank:
 * [Colin Clark](https://github.com/colinbdclark), without whose [Flocking](http://flockingjs.org/) library this wouldn't be possible.
 * the [Vintage Synth Museum](http://www.vintagesynthmuseum.com/VSM_Home.html) in Oakland, for showing me my first Synthi A, and Sasha for taking me there.
-* My beta testers: Jacob, Greg, Matt, Kyan, Joseph, Tyler, Dmitry, Michael, did I miss anyone?
+* [Jacob Nisnevich](https://github.com/jacobnisnevich), for helping me make the UI look nice.
+* My beta testers: Greg, Matt, Kyan, Joseph, Tyler, Dmitry, Michael, did I miss anyone?
