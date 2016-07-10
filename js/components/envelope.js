@@ -426,5 +426,10 @@ function manualTrigger() {
   EnvelopeTrapezoid.restart();
   EnvelopeLightOff.restart();
   EnvelopeLightOn.restart();
-  refreshState();
+
+  $('#envelopeShaper .knob').each(function () {
+    ($(this).data("set"))(parseInt($(this).attr("data-value"))); 
+  });
+  refreshPatchboard();
+  $('#envLight').addClass('on');
 }

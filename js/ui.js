@@ -723,7 +723,25 @@ $(function () {
   });
 
   // Draggable dialogs
-  $('.modalDialog .panel').draggable({ handle: '.panelName' });
+  var click = {x: 0, y: 0}; // (store click coordinates here.)
+  $('.modalDialog .panel:first-of-type').draggable({
+    handle: '.panelName',
+    start: function(e) {
+      click = {x: e.clientX, y: e.clientY};
+    },
+    drag: function(e, ui) {
+      // This is an awful hack to get scalable dialogs (namely, the keyboard)
+      // dragging correctly. It's weird that jQuery UI doesn't work correctly
+      // with scaled elements by default.
+      var zoom = parseFloat($(e.target).parent().css('transform').split('(')[1]);
+      if (zoom) {
+        ui.position = {
+          left: (e.clientX - click.x - 80) / zoom + ui.originalPosition.left,
+          top:  (e.clientY - click.y + 20) / zoom + ui.originalPosition.top
+        };
+      }
+    }
+  });
   $('.modalDialog .panelName').disableSelection();
 
   // Close dialogs when clicking outside them
@@ -735,6 +753,94 @@ $(function () {
       }
     }
   });
+
+  // Keyboard dialog + key handlers
+
+  $("#pianoButton").click(function () {
+    $("#pianoDialog").show();
+  });
+
+  $("#pianoDialogClose").click(function () {
+    $("#pianoDialog").hide();
+  });
+
+  $("#keyboardFrequency").knobKnob({
+    min: 0,
+    max: 10,
+    value: 180,
+    diameter: 50,
+    label: 'freq',
+    color: 'blue',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+      var freq = 440 * Math.pow(2, v - 5);
+      keyboardSettings.baseFreq = freq;
+      $('#A4Freq').text(Math.floor(noteToFreq(69, keyboardSettings.spread, keyboardSettings.baseFreq)));
+      $('#A5Freq').text(Math.floor(noteToFreq(81, keyboardSettings.spread, keyboardSettings.baseFreq)));
+    }
+  });
+
+  $("#keyboardTuningSpread").knobKnob({
+    min: 1,
+    max: 20,
+    value: 165,
+    diameter: 50,
+    label: 'spread',
+    color: 'blue',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+      keyboardSettings.spread = 12 * 10 / Math.round(v);
+      $('#A4Freq').text(Math.floor(noteToFreq(69, keyboardSettings.spread, keyboardSettings.baseFreq)));
+      $('#A5Freq').text(Math.floor(noteToFreq(81, keyboardSettings.spread, keyboardSettings.baseFreq)));
+    }
+  });
+
+  $("#keyboardLevel").knobKnob({
+    min: 0,
+    max: 10,
+    value: 180,
+    diameter: 50,
+    label: 'level',
+    startOffset: 30,
+    endOffset: 30,
+    turn: function (v) {
+      keyboardSettings.level = v / 5;
+    }
+  });
+
+  $('[name=pianoInputCh1]').change(function () {
+    keyboardSettings.output1 = $(this).val();
+  });
+
+  $('[name=pianoInputCh2]').change(function () {
+    keyboardSettings.output2 = $(this).val();
+  });
+
+  $('#piano').piano({
+    'start': 48, 
+    'keys': 37, 
+    'whiteWidth': 24,
+    'blackWidth': 13,
+    'whiteHeight': 160, 
+    'blackHeight': 90,
+    'blackColor': '#333'
+  }).bind('pianodown', function(e, n, notes) {
+      manualTrigger();
+      updateKeyboardNotes(notes);
+    })
+    .bind('pianoup', function(e, n, notes) {
+      updateKeyboardNotes(notes);
+    });
+
+  // a = 60, w = 61, etc.
+  var keyArray = ['a', 'w', 's', 'e', 'd', 'f', 't', 'g', 'y', 'h', 'u', 'j', 'k', 'o', 'l', 'p', ';', "'"];
+  for (i = 0; i < keyArray.length; i++) {
+    $('.piano-'+(i+60)).html($("<div class='piano-key-code'>").text(keyArray[i]));
+  }
+
+  $(document).keydown(keyboardHandleKeyPress).keyup(keyboardHandleKeyRelease);
 
   // Set up masonry grid layout
   $('.grid').masonry({
@@ -748,6 +854,7 @@ $(function () {
     var zoomLevel = Math.min(window.innerWidth / ($('.grid').width() + 36), 
                              window.innerHeight / ($('.grid').height() + 46), 1);
     $('.grid').scale(zoomLevel);
+    $('#pianoDialog').css('transform', 'scale(' + zoomLevel + ')');
   });
 
   // Ready to fade in!

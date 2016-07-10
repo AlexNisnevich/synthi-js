@@ -1,12 +1,13 @@
 <html>
 <head>
   <script src="lib/flocking/dist/flocking-all.js"></script> <!-- Flocking + all dependencies, including jQuery 2.1.3 and Infusion -->
-  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw="   crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw="crossorigin="anonymous"></script>
   <script src="lib/masonry.pkgd.min.js"></script>
   <script src="lib/segment-display.js"></script>
   <script src="lib/knobKnob/transform.js"></script>
   <script src="lib/knobKnob/knobKnob.jquery.js"></script>
   <script src="lib/jquery.trackpad.js"></script>
+  <script src="lib/jquery.l90r.piano.js"></script>
 
   <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
   <link href="lib/knobKnob/knobKnob.css" rel="stylesheet">
@@ -126,8 +127,6 @@
       <div class="dial" id="osc2TriangleLevel"></div>
     </div>
     <div class="panel width4 height4" id="patchboard">
-      <button id="helpButton" title="Help" alt="Help"><i class="fa fa-question fa-lg" aria-hidden="true"></i></button>
-      <button id="settingsButton" title="Settings" alt="Settings"><i class="fa fa-gear fa-lg" aria-hidden="true"></i></button>
       <table id="patches">
         <tr>
           <th></th>
@@ -520,6 +519,11 @@
         </tr>
       </table>
       <div class="logo">SYNTHI-JS</div>
+      <div id="toolbar">
+        <button id="helpButton" title="Help" alt="Help"><i class="fa fa-question fa-lg" aria-hidden="true"></i></button>
+        <button id="settingsButton" title="Settings" alt="Settings"><i class="fa fa-gear fa-lg" aria-hidden="true"></i></button>
+        <button id="pianoButton" title="Keyboard" alt="Keyboard"><img src="images/1468117249_piano.png" /></button>
+      </div>
     </div>
     <div class="panel width2" id="reverb">
       <div class="panelName">REVERBERATION</div>
@@ -596,6 +600,45 @@
           </select>
         </div>
         <div class="setting">Speed: <div id="knobIntensity"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="pianoDialog" class="modalDialog noOverlay">
+    <div class="panel">
+      <div class="panelName">SYNTHI DK.2</div>
+      <button id="pianoDialogClose" class="closeButton">X</button>
+      <div id="pianoControls" class="panel">
+        <div class="subPanel" id="pianoControlsOscillator">
+          <div class="panelName">KEYBOARD OSCILLATOR</div>
+          <div class="dial" id="keyboardFrequency"></div>
+          <div class="dial" id="keyboardTuningSpread"></div>
+          <div class="dial" id="keyboardLevel"></div>
+        </div>
+        <div class="subPanel" id="pianoControlsInputs">
+          <div>
+            <div class="panelName">INPUT CH 1</div>
+            <div class="inputSelector">
+              <label for="pianoInputCh1Signal">signal </label>
+              <input type="radio" name="pianoInputCh1" id="pianoInputCh1Signal" value="signal" checked="true" />
+              <input type="radio" name="pianoInputCh1" id="pianoInputCh1Voltage" value="control" />
+              <label for="pianoInputCh1Voltage"> voltage</label>
+            </div>
+          </div>
+          <div>
+            <div class="panelName">INPUT CH 2</div>
+            <div class="inputSelector">
+              <label for="pianoInputCh2Signal">signal </label>
+              <input type="radio" name="pianoInputCh2" id="pianoInputCh2Signal" value="signal" />
+              <input type="radio" name="pianoInputCh2" id="pianoInputCh2Voltage" value="control" checked="true" />
+              <label for="pianoInputCh2Voltage"> voltage</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="piano">
+        <div id="A4Freq"></div>
+        <div id="A5Freq"></div>
       </div>
     </div>
   </div>
@@ -896,6 +939,7 @@
   <script src="js/components/ring-modulator.js"></script>
   <script src="js/components/reverb.js"></script>
   <script src="js/components/joystick.js"></script>
+  <script src="js/components/keyboard.js"></script>
   <script src="js/aws.js"></script>
   <script src="js/presets.js"></script>
   <script src="js/ui.js"></script>

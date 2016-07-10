@@ -487,7 +487,19 @@ body.grabbing * {
   transition: opacity 400ms ease-in;
 }
 
-.modalDialog .panelName:first-of-type {
+.modalDialog.noOverlay {
+  background: none;
+  height: 0;
+}
+
+.modalDialog.noOverlay .panel:first-of-type {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  /* Must supply `margin-left: -(width);` to properly center-align. */
+}
+
+.modalDialog .panel:first-of-type > .panelName {
   top: 4px;
   cursor: move;
 }
@@ -529,15 +541,128 @@ button#memoryDialogClose {
   background: red;
 }
 
-#helpButton {
+#toolbar {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 9999;
-  height: 55px;
-  width: 55px;
-  padding: 3px 4px;
-  font-size: 2em;
+  right: 0;
+  bottom: 0;
+  margin: 3px;
+}
+
+#toolbar button {
+  float: right;
+  height: 30px;
+  width: 30px;
+  padding: 3px;
+  font-size: 1.1em;
+  margin-right: 5px;
+}
+
+#toolbar button#pianoButton {
+  padding: 0;
+}
+
+#toolbar button img {
+  width: 100%;
+  height: 100%;
+}
+
+#toolbar button:hover {
+  border: 2px solid orange;
+}
+
+#pianoDialog .panel:first-of-type {
+  width: 850px;
+  height: 200px;
+  margin-left: -425px;
+  margin-top: 10%;
+  background-color: black;
+  float: none;
+}
+
+#pianoDialog .panel:first-of-type > .panelName {
+  color: white;
+}
+
+#pianoDialog #piano {
+  position: absolute;
+  top: 50px;
+  right: 5px;
+}
+
+#pianoDialog .piano-ivory .piano-key-code {
+  padding-top: 110px;
+  padding-left: 2px;
+  color: #999;
+}
+
+#pianoDialog .piano-ebony .piano-key-code {
+  padding-top: 50px;
+  padding-left: 1px;
+  color: #888;
+  font-size: 0.9em;
+}
+
+#pianoDialog #A4Freq, #pianoDialog #A5Freq {
+  position: absolute;
+  color: white;
+  top: -16px;
+  font-size: 0.6em;
+  width: 50px;
+}
+
+#pianoDialog #A4Freq {
+  left: 291px;
+}
+
+#pianoDialog #A5Freq {
+  left: 467px;
+}
+
+#pianoDialog #pianoControls {
+  top: 40px;
+  width: 280px;
+  height: auto;
+  padding: 0;
+}
+
+#pianoDialog #pianoControls .subPanel {
+  margin: 0;
+  height: 80px;
+}
+
+#pianoDialog #pianoControls .subPanel .panelName {
+  font-size: 0.7em;
+  width: auto;
+  border: 1px solid black;
+  padding: 2px;
+  margin-left: 5px;
+}
+
+#pianoDialog #pianoControls .subPanel#pianoControlsInputs {
+  height: 50px;
+  padding: 3px;
+}
+
+#pianoDialog #pianoControls .subPanel#pianoControlsInputs > div {
+  position: relative;
+  height: 50%;
+}
+
+#pianoDialog #pianoControls .dial {
+  width: 85px;
+  height: 95px;
+}
+
+#pianoDialog #pianoControls .knob-label {
+  top: 13px !important;
+  font-size: 0.8em;
+}
+
+#pianoDialog #pianoControls .inputSelector {
+  float: right;
+  width: 200px;
+  margin-top: 3px;
+  font-size: 0.8em;
 }
 
 #helpDialog .panel {
@@ -632,17 +757,6 @@ button#memoryDialogClose {
 
 #helpDialog #content .no-margin {
   margin: 0;
-}
-
-#settingsButton {
-  position: absolute;
-  top: 90px;
-  left: 20px;
-  z-index: 9999;
-  height: 55px;
-  width: 55px;
-  padding: 3px 4px;
-  font-size: 2em;
 }
 
 #settingsDialog .panel {
