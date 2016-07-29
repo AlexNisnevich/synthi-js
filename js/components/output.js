@@ -1,4 +1,4 @@
-var Output = new Component(["A", "C", "O", "P"], null, [{
+var Output = new Component(["B", "C", "O", "P"], null, [{
   id: "left",
   ugen: "flock.ugen.filter.biquad.bp",
   freq: 440,
@@ -11,7 +11,7 @@ var Output = new Component(["A", "C", "O", "P"], null, [{
         ugen: "flock.ugen.math",
         inputs: {
           source: {
-            id: "input-A1",
+            id: "input-B1",
             ugen: "flock.ugen.in"
           },
           mul: {
@@ -59,7 +59,7 @@ var Output = new Component(["A", "C", "O", "P"], null, [{
         ugen: "flock.ugen.math",
         inputs: {
           source: {
-            id: "input-A2",
+            id: "input-B2",
             ugen: "flock.ugen.in"
           },
           mul: {

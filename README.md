@@ -28,11 +28,11 @@ First, open up [SYNTHI-JS](https://alexnisnevich.github.io/synthi-js/) and take 
 
 SYNTHI-JS can look daunting at first, but creating patches with it is actually quite straightforward. The patchboard functions as a _routing_ mechanism: device outputs on the left side of the patchboard get routed to device inputs on the top side of the patchboard.
 
-Let's make our first patch! Click on the button at A1 at the patchboard to connect the sine-wave output of Oscillator 1 to Output Channel 1. You should hear a 440 Hz sine wave coming out of your left speaker – congratulations!
+Let's make our first patch! Click on the button at B1 at the patchboard to connect the sine-wave output of Oscillator 1 to Output Channel 1. You should hear a 440 Hz sine wave coming out of your left speaker – congratulations!
 
-We can now try messing around with it a little. Try plugging the oscillator first into another component - perhaps the filter or the reverb module, and then try plugging _that_ into an output channel (for example, G1 and A14). Try turning some knobs to alter the sound. Or perhaps try mixing two oscillator together into the ring modulator and outputting the result (E1, F3, A13). Try turning some knobs and see how it affects the output.
+We can now try messing around with it a little. Try plugging the oscillator first into another component - perhaps the filter or the reverb module, and then try plugging _that_ into an output channel (for example, G1 and B14). Try turning some knobs to alter the sound. Or perhaps try mixing two oscillator together into the ring modulator and outputting the result (E1, F3, B13). Try turning some knobs and see how it affects the output.
 
-In addition to hooking up your final output to the Output Channels (columns A and C), you can also hook it up to the Scope (column B) to be able to observe the waveform. The scope is a great tool for debugging issues in your patch.
+In addition to hooking up your final output to the Output Channels (columns B and C), you can also hook it up to the Scope (column A) to be able to observe the waveform. The scope is a great tool for debugging issues in your patch.
 
 Now that you have a sense of how the patchboard works, try loading some presets to get a feel for what this thing can do. The presets are currently stored in memory banks `00`-`04` (and indicated with a `P`). Note that preset `02` only produces sound when you touch the joystick control.
 
@@ -51,7 +51,6 @@ I do admit that importing dozens of separate JavaScript files is not the best us
 My goal is to make as faithful a reproduction of the Synthi A as possible, but there have been features of it that I have been unable to reproduce, whether because of conceptual difficulties or just lack of time. Here are the ones that I know of at the moment:
 
 * The ability to have circular chains of component dependencies (for example, A depends on B and B depends on A). As far as I can tell, this is not possible in Flocking, but I'm open to suggestions.
-* An emulation of the [EMS DK](http://www.rlmusic.co.uk/rlm3/wp-content/uploads/2014/09/EMS_DK2_914_01.jpg) keyboard.
 * An emulation of the [EMS KS](http://www.phutney.com/EMSAKS/WebKSDetail.JPG) sequencer.
 * In general, many of the components of SYNTHI-JS don't follow the specs as well as they could. As I don't personally have a Synthi A to test, I've been doing the best I could from videos and spec sheets. All feedback is much appreciated.
 

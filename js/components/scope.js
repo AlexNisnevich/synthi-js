@@ -1,7 +1,7 @@
-var Scope = new Component(["B"], 0, {
+var Scope = new Component(["A"], 0, {
   ugen: "flock.ugen.scope",
   source: {
-    id: "input-B",
+    id: "input-A",
     ugen: "flock.ugen.in",
     mul: 1/6  // up to 6V p-p input -> 1V p-p scope output
   },
