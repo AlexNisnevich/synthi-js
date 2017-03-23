@@ -15,6 +15,7 @@ ratings:
   paths:
   - "**.css"
   - "**.js"
-exclude_paths: 
-  - lib/*
+exclude_paths:
+  - images/ 
+  - lib/
 
