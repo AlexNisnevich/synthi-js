@@ -1,6 +1,13 @@
+function ensureAudioContextRunning() {
+  var ctx = fluid.staticEnvironment.webAudioContextWrapper.context;
+  if (ctx.state !== 'running') {
+    ctx.resume();
+  }
+}
+
 var environment = flock.init({
   numBuses: 48,
-  bufferSize: 4096  
+  bufferSize: 4096
   // TODO: Change bufferSize back to 1024 when Flocking adds support for
   // WebAudio API native nodes.
   // (see https://github.com/colinbdclark/Flocking/issues/146#issuecomment-226057461)
@@ -98,6 +105,8 @@ function Component(inputPins, outputPin, synthDef) {
 }
 
 function connectPin(pin) {
+  ensureAudioContextRunning();
+
   var inputPin = pin.attr("data-in");
   var outputPin = pin.attr("data-out");
 
@@ -131,8 +140,8 @@ function disconnectAllPins() {
 
 function saveState() {
   var dialValues = {};
-  $(".dial").each(function (i, x) { 
-    dialValues[$(x).attr("id")] = parseInt($(".knob", x).attr("data-value")); 
+  $(".dial").each(function (i, x) {
+    dialValues[$(x).attr("id")] = parseInt($(".knob", x).attr("data-value"));
   });
 
   var pinValues = {};
@@ -204,6 +213,7 @@ function storeToBank() {
 }
 
 function loadFromBank() {
+  ensureAudioContextRunning();
   loadState(presetBanks[currentBank] || localStorage["bank" + currentBank]);
 }
 

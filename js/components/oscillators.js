@@ -11,7 +11,7 @@ var Vco1sin = new Component(["I"], 1, {
         pow: {
           id: "input-I",
           ugen: "flock.ugen.in",
-          add: 1
+          add: 0
         }
       }
     }
@@ -33,7 +33,7 @@ var Vco1ramp = new Component(["I"], 2, {
         pow: {
           id: "input-I",
           ugen: "flock.ugen.in",
-          add: 1
+          add: 0
         }
       }
     }
@@ -57,7 +57,7 @@ var Vco2square = new Component(["J"], 3, {
         pow: {
           id: "input-J",
           ugen: "flock.ugen.in",
-          add: 1
+          add: 0
         }
       }
     }
@@ -78,7 +78,7 @@ var Vco2triangle = new Component(["J"], 4, {
         pow: {
           id: "input-J",
           ugen: "flock.ugen.in",
-          add: 1
+          add: 0
         }
       }
     }
@@ -99,7 +99,7 @@ var Vco3square = new Component(["K"], 5, {
         pow: {
           id: "input-K",
           ugen: "flock.ugen.in",
-          add: 1
+          add: 0
         }
       }
     }
@@ -120,7 +120,7 @@ var Vco3triangle = new Component(["K"], 6, {
         pow: {
           id: "input-K",
           ugen: "flock.ugen.in",
-          add: 1
+          add: 0
         }
       }
     }
