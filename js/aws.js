@@ -16,7 +16,7 @@ function bindUploadControlToInputChannelViaS3(control, channel, opts) {
     if (file) {
       if (opts.start) { opts.start(); }
 
-      var bucket = 'https://synthi-js-files.s3.amazonaws.com/';
+      var bucket = 'https://synthi-js-files.s3-us-west-2.amazonaws.com/';
       var key = "uploads/" + (new Date).getTime() + '-' + file.name;
       var url = bucket + key;
       console.log('Uploading ' + file.name + ' to ' + url + ' ...');
