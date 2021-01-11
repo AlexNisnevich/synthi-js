@@ -33,7 +33,7 @@ $(function () {
     color: "blue",
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
+    turn: function (v) {
       Vco1sin.set("table", tables.sin(v));
     }
   });
@@ -59,7 +59,7 @@ $(function () {
     value: 60,
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
+    turn: function (v) {
       Vco1ramp.set("mul", v * 4 / 10);  // up to 4V p-p output
     }
   });
@@ -119,7 +119,7 @@ $(function () {
     value: 60,
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
+    turn: function (v) {
       Vco2triangle.set("mul", v * 6 / 10);  // up to 6V p-p output
     }
   });
@@ -186,7 +186,7 @@ $(function () {
     value: 60,
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
+    turn: function (v) {
       Vco3triangle.set("mul", v * 6 / 10);  // up to 6V p-p output
     }
   });
@@ -201,7 +201,7 @@ $(function () {
     label: 'level',
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
+    turn: function (v) {
       NoiseGenerator.set("source.mul", v * 3 / 10);  // up to 3V p-p output
     }
   });
@@ -215,7 +215,7 @@ $(function () {
     color: 'blue',
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
+    turn: function (v) {
       NoiseGenerator.set("freq", 440 * Math.pow(2, v - 5));  // modulate filter frequency to simulate colored noise
     }
   });
@@ -263,7 +263,7 @@ $(function () {
     color: 'blue',
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
+    turn: function (v) {
       FilterOscillator.set("cutoff.value", 440 * Math.pow(2, v - 5) + 80);
     }
   });
@@ -277,7 +277,7 @@ $(function () {
     color: 'yellow',
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
+    turn: function (v) {
       FilterOscillator.set("resonance", v * 4 / 10);  // 0-4 scale (4 = self-oscillation)
     }
   });
@@ -290,7 +290,7 @@ $(function () {
     label: 'level',
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
+    turn: function (v) {
       FilterOscillator.set("mul", v / 10);
     }
   });
@@ -306,7 +306,7 @@ $(function () {
     color: "red",
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
+    turn: function (v) {
       EnvelopeShaper.set("attack", v);
       EnvelopeTrapezoid.set("attack", v);
     }
@@ -321,7 +321,7 @@ $(function () {
     color: "red",
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
+    turn: function (v) {
       EnvelopeShaper.set("on", v);
       EnvelopeTrapezoid.set("on", v);
     }
@@ -351,7 +351,7 @@ $(function () {
     color: "red",
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
+    turn: function (v) {
       EnvelopeShaper.set("off", v);
       EnvelopeTrapezoid.set("off", v);
     }
@@ -397,7 +397,7 @@ $(function () {
     label: 'level',
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
+    turn: function (v) {
       RingModulator.set("source.mul", v / 10);
     }
   });
@@ -412,7 +412,7 @@ $(function () {
     label: 'mix',
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
+    turn: function (v) {
       Reverb.set("mix.value", v / 10);
       Reverb.set("add", v / 5);  // not sure why this is necessary ..
     }
@@ -426,7 +426,7 @@ $(function () {
     label: 'level',
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
+    turn: function (v) {
       Reverb.set("source.mul", v / 5);  // up to 2V p-p
       Reverb.set("source.add", - v / 10);
     }
@@ -443,7 +443,7 @@ $(function () {
     color: "green",
     startOffset: 30,
     endOffset: 30,
-    turn: function (v) { 
+    turn: function (v) {
       JoystickX.set("source.mul", v / 5);  // up to 2V p-p
       JoystickX.set("source.add", - v / 10);
     }
@@ -629,12 +629,30 @@ $(function () {
 
   // Input Sources
 
-  bindUploadControlToInputChannelViaS3($('#inputFile1'), InputCh1, {
+  function bindUploadControlToInputChannel(control, channel, opts) {
+    control.change(function () {
+      var file = control.get()[0].files[0];
+      if (file) {
+        if (opts.start) { opts.start(); }
+
+        const reader = new FileReader();
+        reader.addEventListener("load", function () {
+          channel.set("buffer", { url: reader.result });
+          if (opts['success']) { opts['success'](); }
+        }, false);
+        reader.addEventListener("error", opts['failure'] || (() => {}));
+        reader.addEventListener("abort", opts['failure'] || (() => {}));
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
+  bindUploadControlToInputChannel($('#inputFile1'), InputCh1, {
     start: function () { $('#inputFile1Indicators span').hide(); $('#inputFile1Progress').css('display', 'inline-block'); },
     success: function () { $('#inputFile1Indicators span').hide(); $('#inputFile1Success').css('display', 'inline-block'); },
     failure: function () { $('#inputFile1Indicators span').hide(); $('#inputFile1Failure').css('display', 'inline-block'); }
   });
-  bindUploadControlToInputChannelViaS3($('#inputFile2'), InputCh2, {
+  bindUploadControlToInputChannel($('#inputFile2'), InputCh2, {
     start: function () { $('#inputFile2Indicators span').hide(); $('#inputFile2Progress').css('display', 'inline-block'); },
     success: function () { $('#inputFile2Indicators span').hide(); $('#inputFile2Success').css('display', 'inline-block'); },
     failure: function () { $('#inputFile2Indicators span').hide(); $('#inputFile2Failure').css('display', 'inline-block'); }
@@ -819,11 +837,11 @@ $(function () {
   });
 
   $('#piano').piano({
-    'start': 48, 
-    'keys': 37, 
+    'start': 48,
+    'keys': 37,
     'whiteWidth': 24,
     'blackWidth': 13,
-    'whiteHeight': 160, 
+    'whiteHeight': 160,
     'blackHeight': 90,
     'blackColor': '#333'
   }).bind('pianodown', function(e, n, notes) {
@@ -851,14 +869,14 @@ $(function () {
   // Set up window resize handler
   var margin = 2 * (8 + 5);
   $(window).resize(function () {
-    var zoomLevel = Math.min(window.innerWidth / ($('.grid').width() + 36), 
+    var zoomLevel = Math.min(window.innerWidth / ($('.grid').width() + 36),
                              window.innerHeight / ($('.grid').height() + 46), 1);
     $('.grid').scale(zoomLevel);
     $('#pianoDialog').css('transform', 'scale(' + zoomLevel + ')');
   });
 
   // Ready to fade in!
-  
+
   function renderUI() {
     $('#loader, #sadBrowserText').hide();
     $('.grid').css("visibility", "visible").hide().fadeIn();
@@ -866,7 +884,7 @@ $(function () {
   }
 
   // Janky browser check
-  if ($.browser.webkit && (!$.browser.chrome && parseFloat($.browser.version) > 537 || 
+  if ($.browser.webkit && (!$.browser.chrome && parseFloat($.browser.version) > 537 ||
                             $.browser.chrome && parseFloat($.browser.version) >= 45)) {
     renderUI();
   } else {
