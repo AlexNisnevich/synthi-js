@@ -633,15 +633,15 @@ $(function () {
     control.change(function () {
       var file = control.get()[0].files[0];
       if (file) {
-        if (opts.start) { opts.start(); }
+        opts.start();
 
         const reader = new FileReader();
         reader.addEventListener("load", function () {
           channel.set("buffer", { url: reader.result });
-          if (opts['success']) { opts['success'](); }
+          opts['success']();
         }, false);
-        reader.addEventListener("error", opts['failure'] || (() => {}));
-        reader.addEventListener("abort", opts['failure'] || (() => {}));
+        reader.addEventListener("error", opts['failure']);
+        reader.addEventListener("abort", opts['failure']);
         reader.readAsDataURL(file);
       }
     });
@@ -656,13 +656,6 @@ $(function () {
     start: function () { $('#inputFile2Indicators span').hide(); $('#inputFile2Progress').css('display', 'inline-block'); },
     success: function () { $('#inputFile2Indicators span').hide(); $('#inputFile2Success').css('display', 'inline-block'); },
     failure: function () { $('#inputFile2Indicators span').hide(); $('#inputFile2Failure').css('display', 'inline-block'); }
-  });
-
-  $("#inputUrl1").on('keyup change', function() {
-    InputCh1.set("buffer", {url: $(this).val()});
-  });
-  $("#inputUrl2").on('keyup change', function() {
-    InputCh2.set("buffer", {url: $(this).val()});
   });
 
   $("#speed1").on('keyup change', function() {
